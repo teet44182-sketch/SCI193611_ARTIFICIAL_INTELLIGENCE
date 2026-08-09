@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>บทบรรยายที่ 2: การแก้ปัญหาด้วยการค้นหา</title>
+    <meta charset="utf-8">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Lato:300,400,900);
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,900);
+        @import url(https://fonts.googleapis.com/css?family=Sarabun:300,400,600,700);
+
+        body {
+            font-family: 'Sarabun', 'Roboto', 'Segoe UI', sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            font-weight: 300;
+            line-height: 1.5; 
+            color: #354046;
+            font-size: 11pt;
+            word-wrap: break-word;
+        }
+
+        .remark-container {
+            background: #eee;
+        }
+
+        .remark-slide-content {
+            font-size: 1.4em;
+        }
+
+        .remark-slide-content h1 {
+            font-family: 'Sarabun', Lato, sans-serif;
+            font-weight: bold;
+            font-size: 2em;
+            margin: 0 0 .5em 0;
+            color: #356aaf;
+        }
+
+        .remark-slide-content h2 {
+            font-family: 'Sarabun', Lato, sans-serif;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 0 0 .5em 0;
+        }
+
+        .remark-slide-content h3 {
+            font-size: 1.0em;
+            font-weight: normal;
+            margin: 0 0 .5em 0;
+        }
+
+        .remark-slide-number {
+            font-size: 0.5em;
+            bottom: 2em;
+        }
+
+        .remark-slide-scaler {
+            box-shadow: 0 0 20px #ccc; 
+        }
+
+        .footnote:before {
+            content: "\2015";
+            display: block;
+        }
+
+        a {
+            color: #5b82b5;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .red {
+            color: #d11a01;
+        }
+
+        .Q, .green {
+            color: #009933;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        em {
+            color: #0288d1;
+            font-style: normal;
+        }
+
+        strong {
+            color: #d11a01;
+            font-style: normal;
+            font-weight: 300;
+        }
+
+        .highlight{ 
+            background-color: #FFFF00; 
+        }
+
+        .smaller {
+            font-size: 1.2em;
+        }
+
+        .smaller-x {
+            font-size: 0.8em;
+        }
+
+        .smaller-xx {
+            font-size: 0.7em;
+        }
+
+        .smaller-xxx {
+            font-size: 0.4em;
+        }
+
+        .katex {
+            color: #356aaf;
+            font-size: 24pt;
+        }
+
+        .black-slide .katex, .black-slide h1 {
+            color: white;
+        }
+
+        .black-slide a, .black-slide .footnote a {
+            color: #89c2ce;
+        }
+
+        .remark-code, .remark-inline-code {
+            font-size: 0.9em;
+        }
+
+        ul > li, ol > li {
+             margin: 0.6em 0;
+        }
+
+        ul > li > ul > li {
+            font-size: 0.8em;
+        }
+
+        table {
+            border-spacing: 0;
+            border: 1px solid #e2e2e2;
+            font-size: .8em;
+            margin: auto;
+            padding: 0;
+        }
+
+        thead {
+            border: 0;
+            margin: 0;
+        }
+
+        th {
+            background: #e2e2e2;
+            border: 0;
+            font-weight: bold;
+            margin: 0;
+            padding: 7px 0;
+            text-align: center;
+        }
+
+        tbody {
+            background: white;
+            font-size: .8em;
+            margin: 0;
+        }
+
+        tr {
+            margin: 0;
+            padding: 0;
+        }
+
+        tr:nth-child(odd) {
+            background: #fcfcfc;
+        }
+
+        td {
+            margin: 0;
+            padding: 5px 8px;
+        }
+
+        .caption {
+            display: block;
+            text-align: center;
+            font-size: 0.8em;
+            font-style: italic;
+        }
+
+        .circle img {
+            border-radius: 50%;
+        }
+
+        .stretch img {
+            width: 100%;
+            height: auto;
+        }
+
+        .solid {
+          border-style: solid;
+        }
+
+        .dashed {
+          border-style: dashed;
+        }
+
+        .avatars {
+            position: absolute;
+            right: 1em;
+            top: 1em;
+        }
+
+        .avatars img {
+            width: 2.5em;
+            border-radius: 50%;
+        }
+
+        .footnote {
+          position: absolute;
+          bottom: 2em;
+          font-size: 0.5em;
+          opacity: 0.75;
+          margin-left: -5.5em;
+        }
+
+        .footnote a{
+            color: #0288d1;
+        }
+
+        .inactive {
+            color: lightgray;
+        }
+
+        .exercise {
+            background-color: rgba(40,167,69,0.25);
+            border: 2px solid rgb(40,167,69);
+            border-radius: 5px;
+            width: 95%;
+            display: block;
+            padding: 1em;
+        }
+
+        .exercise:before {
+            content: "แบบฝึกหัด";
+            font-weight: bold;
+            display: block;
+        }
+
+        .question, .success {
+            background-color: rgba(40,167,69,0.25);
+            border: 2px solid rgb(40,167,69);
+            border-radius: 5px;
+            width: 95%;
+            display: block;
+            padding: 1em;
+        }
+
+        .alert {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 2px solid #f5c6cb;
+            border-radius: 5px;
+            width: 95%;
+            display: block;
+            padding: 1em;
+        }
+
+        .pull-left {
+            float: left;
+            margin-right: 1em;
+        }
+
+        .pull-right {
+            float: right;
+            margin-left: 1em;
+        }
+
+        .width-5 * {
+            width: 5%;
+        }
+
+        .width-10 * {
+            width: 10%;
+        }
+
+        .width-15 * {
+            width: 15%;
+        }
+
+        .width-20 * {
+            width: 20%;
+        }
+
+        .width-25 * {
+            width: 25%;
+        }
+
+        .width-30 * {
+            width: 30%;
+        }
+
+        .width-35 * {
+            width: 35%;
+        }
+
+        .width-40 * {
+            width: 40%;
+        }
+
+        .width-45 * {
+            width: 45%;
+        }
+
+        .width-50 * {
+            width: 50%;
+        }
+
+        .width-55 * {
+            width: 55%;
+        }
+
+        .width-60 * {
+            width: 60%;
+        }
+
+        .width-65 * {
+            width: 65%;
+        }
+
+        .width-70 * {
+            width: 70%;
+        }
+
+        .width-75 * {
+            width: 75%;
+        }
+
+        .width-80 * {
+            width: 80%;
+        }
+
+        .width-85 * {
+            width: 85%;
+        }
+
+        .width-90 * {
+            width: 90%;
+        }
+
+        .width-93 * {
+            width: 93.7%;
+        }
+
+        .width-95 * {
+            width: 95%;
+        }
+
+        .width-100 * {
+            width: 100%;
+        }
+
+        .width-105 * {
+            width: 105%;
+        }
+
+        .width-110 * {
+            width: 110%;
+        }
+
+        .width-115 * {
+            width: 115%;
+        }
+
+        .width-120 * {
+            width: 120%;
+        }
+
+        .width-125 * {
+            width: 125%;
+        }
+
+        .width-130 * {
+            width: 130%;
+        }
+
+        .width-135 * {
+            width: 135%;
+        }
+
+        .width-140 * {
+            width: 140%;
+        }
+
+        .width-145 * {
+            width: 145%;
+        }
+
+        .width-150 * {
+            width: 150%;
+        }
+
+        .width-155 * {
+            width: 155%;
+        }
+
+        .width-160 * {
+            width: 160%;
+        }
+
+        .width-165 * {
+            width: 165%;
+        }
+
+        .width-170 * {
+            width: 170%;
+        }
+
+        .width-175 * {
+            width: 175%;
+        }
+
+        .width-180 * {
+            width: 180%;
+        }
+
+        .width-185 * {
+            width: 185%;
+        }
+
+        .width-190 * {
+            width: 190%;
+        }
+
+        .width-195 * {
+            width: 195%;
+        }
+
+        .width-200 * {
+            width: 200%;
+        }
+
+        .title-slide:after {
+            content: '';
+            background: url("../assets/logo_ulg.png") no-repeat;
+            background-size: 75% 75%;
+            width: 150px;
+            height: 73px;
+            position: absolute;
+            bottom: -0.5em;
+            left: 0.5em;
+            display: inline-block;
+        }
+
+        .title-slide, .section {
+            vertical-align: middle;
+        }
+
+        .end-slide {
+            background-color: #356aaf;
+            color: white;
+            vertical-align: middle;
+        }
+
+        .black-slide {
+            background-color: black;
+            color: white;
+            border-top: solid 0px;
+        }
+
+        .red-slide {
+            background-color: red;
+            color: white;
+            border-top: solid 0px;
+        }
+
+        .shadow {
+            background-color: rgba(0,0,0,0.75);
+            padding: 10px;
+        }
+
+        /* Grid CSS */
+        [class*='grid'],
+        [class*='kol-'],
+        .grid:after {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        [class*='kol-'] {
+            float: left;
+            min-height: 1px;
+            padding-right: 20px;
+        }
+
+        [class*='kol-']:last-child {
+            padding-right: 0px;
+        }
+
+        .grid {
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .grid-half {
+            width: 50%;
+        }
+
+        .grid:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .grid-pad {
+            padding-top: 20px;
+            padding-left: 20px;
+            padding-right: 0;
+        }
+
+        .push-left {
+            float: left;
+        }
+
+        .push-right {
+            float: right;
+        }
+
+        .kol-1-1 {
+            width: 100%;
+        }
+        .kol-2-3, .kol-8-12 {
+            width: 66.66%;
+        }
+
+        .kol-1-2, .kol-6-12 {
+            width: 50%;
+        }
+
+        .kol-1-3, .kol-4-12 {
+            width: 33.33%;
+        }
+
+        .kol-1-4, .kol-3-12 {
+            width: 25%;
+        }
+
+        .kol-1-5 {
+            width: 20%;
+        }
+
+        .kol-1-6, .kol-2-12 {
+            width: 16.667%;
+        }
+
+        .kol-1-7 {
+            width: 14.28%;
+        }
+
+        .kol-1-8 {
+            width: 12.5%;
+        }
+
+        .kol-1-9 {
+            width: 11.1%;
+        }
+
+        .kol-1-10 {
+            width: 10%;
+        }
+
+        .kol-1-11 {
+            width: 9.09%;
+        }
+
+        .kol-1-12 {
+            width: 8.33%
+        }
+
+        .kol-3-8 {
+            width: 37.5%;
+        }
+
+        .kol-5-8 {
+            width: 62.5%;
+        }
+
+        .kol-11-12 {
+            width: 91.66%
+        }
+
+        .kol-10-12 {
+            width: 83.333%;
+        }
+
+        .kol-9-12, .kol-3-4 {
+            width: 75%;
+        }
+
+        .kol-5-12 {
+            width: 41.66%;
+        }
+
+        .kol-7-12 {
+            width: 58.33%;
+        }
+
+        .kol-2-5 {
+            width: 40%;
+        }
+
+        .kol-3-5 {
+            width: 60%;
+        }
+
+        .kol-4-5 {
+            width: 80%;
+        }
+
+        /* Pushing blocks */
+
+        .push-2-3, .push-8-12 {
+            margin-left: 66.66%;
+        }
+
+        .push-1-2, .push-6-12 {
+            margin-left: 50%;
+        }
+
+        .push-1-3, .push-4-12 {
+            margin-left: 33.33%;
+        }
+
+        .push-1-4, .push-3-12 {
+            margin-left: 25%;
+        }
+
+        .push-1-5 {
+            margin-left: 20%;
+        }
+
+        .push-1-6, .push-2-12 {
+            margin-left: 16.667%;
+        }
+
+        .push-1-7 {
+            margin-left: 14.28%;
+        }
+
+        .push-1-8 {
+            margin-left: 12.5%;
+        }
+
+        .push-1-9 {
+            margin-left: 11.1%;
+        }
+
+        .push-1-10 {
+            margin-left: 10%;
+        }
+
+        .push-1-11 {
+            margin-left: 9.09%;
+        }
+
+        .push-1-12 {
+            margin-left: 8.33%
+        }
+
+        /* KaTeX styles are included here for mathematical expressions */
+        @font-face{font-family:KaTeX_AMS;src:url(fonts/KaTeX_AMS-Regular.eot);src:url(fonts/KaTeX_AMS-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_AMS-Regular.woff2) format('woff2'),url(fonts/KaTeX_AMS-Regular.woff) format('woff'),url(fonts/KaTeX_AMS-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url(fonts/KaTeX_Caligraphic-Bold.eot);src:url(fonts/KaTeX_Caligraphic-Bold.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Caligraphic-Bold.woff2) format('woff2'),url(fonts/KaTeX_Caligraphic-Bold.woff) format('woff'),url(fonts/KaTeX_Caligraphic-Bold.ttf) format('truetype');font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url(fonts/KaTeX_Caligraphic-Regular.eot);src:url(fonts/KaTeX_Caligraphic-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Caligraphic-Regular.woff2) format('woff2'),url(fonts/KaTeX_Caligraphic-Regular.woff) format('woff'),url(fonts/KaTeX_Caligraphic-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url(fonts/KaTeX_Fraktur-Bold.eot);src:url(fonts/KaTeX_Fraktur-Bold.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Fraktur-Bold.woff2) format('woff2'),url(fonts/KaTeX_Fraktur-Bold.woff) format('woff'),url(fonts/KaTeX_Fraktur-Bold.ttf) format('truetype');font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url(fonts/KaTeX_Fraktur-Regular.eot);src:url(fonts/KaTeX_Fraktur-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Fraktur-Regular.woff2) format('woff2'),url(fonts/KaTeX_Fraktur-Regular.woff) format('woff'),url(fonts/KaTeX_Fraktur-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Bold.eot);src:url(fonts/KaTeX_Main-Bold.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Main-Bold.woff2) format('woff2'),url(fonts/KaTeX_Main-Bold.woff) format('woff'),url(fonts/KaTeX_Main-Bold.ttf) format('truetype');font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Italic.eot);src:url(fonts/KaTeX_Main-Italic.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Main-Italic.woff2) format('woff2'),url(fonts/KaTeX_Main-Italic.woff) format('woff'),url(fonts/KaTeX_Main-Italic.ttf) format('truetype');font-weight:400;font-style:italic}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Regular.eot);src:url(fonts/KaTeX_Main-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Main-Regular.woff2) format('woff2'),url(fonts/KaTeX_Main-Regular.woff) format('woff'),url(fonts/KaTeX_Main-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Math;src:url(fonts/KaTeX_Math-Italic.eot);src:url(fonts/KaTeX_Math-Italic.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Math-Italic.woff2) format('woff2'),url(fonts/KaTeX_Math-Italic.woff) format('woff'),url(fonts/KaTeX_Math-Italic.ttf) format('truetype');font-weight:400;font-style:italic}@font-face{font-family:KaTeX_SansSerif;src:url(fonts/KaTeX_SansSerif-Regular.eot);src:url(fonts/KaTeX_SansSerif-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_SansSerif-Regular.woff2) format('woff2'),url(fonts/KaTeX_SansSerif-Regular.woff) format('woff'),url(fonts/KaTeX_SansSerif-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Script;src:url(fonts/KaTeX_Script-Regular.eot);src:url(fonts/KaTeX_Script-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Script-Regular.woff2) format('woff2'),url(fonts/KaTeX_Script-Regular.woff) format('woff'),url(fonts/KaTeX_Script-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size1;src:url(fonts/KaTeX_Size1-Regular.eot);src:url(fonts/KaTeX_Size1-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Size1-Regular.woff2) format('woff2'),url(fonts/KaTeX_Size1-Regular.woff) format('woff'),url(fonts/KaTeX_Size1-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size2;src:url(fonts/KaTeX_Size2-Regular.eot);src:url(fonts/KaTeX_Size2-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Size2-Regular.woff2) format('woff2'),url(fonts/KaTeX_Size2-Regular.woff) format('woff'),url(fonts/KaTeX_Size2-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size3;src:url(fonts/KaTeX_Size3-Regular.eot);src:url(fonts/KaTeX_Size3-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Size3-Regular.woff2) format('woff2'),url(fonts/KaTeX_Size3-Regular.woff) format('woff'),url(fonts/KaTeX_Size3-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size4;src:url(fonts/KaTeX_Size4-Regular.eot);src:url(fonts/KaTeX_Size4-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Size4-Regular.woff2) format('woff2'),url(fonts/KaTeX_Size4-Regular.woff) format('woff'),url(fonts/KaTeX_Size4-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Typewriter;src:url(fonts/KaTeX_Typewriter-Regular.eot);src:url(fonts/KaTeX_Typewriter-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Typewriter-Regular.woff2) format('woff2'),url(fonts/KaTeX_Typewriter-Regular.woff) format('woff'),url(fonts/KaTeX_Typewriter-Regular.ttf) format('truetype');font-weight:400;font-style:normal}.katex-display{display:block;margin:1em 0;text-align:center}.katex .base,.katex .katex-html,.katex .strut{display:inline-block}.katex-display>.katex{display:inline-block;text-align:initial}.katex{font:400 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;white-space:nowrap;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important}.katex .katex-mathml{position:absolute;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}.katex .base{position:relative}.katex .mathrm{font-style:normal}.katex .mainit,.katex .mathit,.katex .textit{font-style:italic}.katex .mathit{font-family:KaTeX_Math}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .amsrm,.katex .mathbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak{font-family:KaTeX_Fraktur}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr{font-family:KaTeX_Script}.katex .mathsf{font-family:KaTeX_SansSerif}.katex .mainit{font-family:KaTeX_Main}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .mord+.mop{margin-left:.16667em}.katex .mord+.mbin{margin-left:.22222em}.katex .mord+.mrel{margin-left:.27778em}.katex .mop+.mop,.katex .mop+.mord,.katex .mord+.minner{margin-left:.16667em}.katex .mop+.mrel{margin-left:.27778em}.katex .mop+.minner{margin-left:.16667em}.katex .mbin+.minner,.katex .mbin+.mop,.katex .mbin+.mopen,.katex .mbin+.mord{margin-left:.22222em}.katex .mrel+.minner,.katex .mrel+.mop,.katex .mrel+.mopen,.katex .mrel+.mord{margin-left:.27778em}.katex .mclose+.mop{margin-left:.16667em}.katex .mclose+.mbin{margin-left:.22222em}.katex .mclose+.mrel{margin-left:.27778em}.katex .mclose+.minner,.katex .minner+.mop,.katex .minner+.mord,.katex .mpunct+.mclose,.katex .mpunct+.minner,.katex .mpunct+.mop,.katex .mpunct+.mopen,.katex .mpunct+.mord,.katex .mpunct+.mpunct,.katex .mpunct+.mrel{margin-left:.16667em}.katex .minner+.mbin{margin-left:.22222em}.katex .minner+.mrel{margin-left:.27778em}.katex .minner+.minner,.katex .minner+.mopen,.katex .minner+.mpunct{margin-left:.16667em}.katex .mbin.mtight,.katex .mclose.mtight,.katex .minner.mtight,.katex .mop.mtight,.katex .mopen.mtight,.katex .mord.mtight,.katex .mpunct.mtight,.katex .mrel.mtight{margin-left:0}.katex .mclose+.mop.mtight,.katex .minner+.mop.mtight,.katex .mop+.mop.mtight,.katex .mop+.mord.mtight,.katex .mord+.mop.mtight{margin-left:.16667em}.katex .vlist-t{display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;vertical-align:bottom;position:relative}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;vertical-align:bottom;font-size:1px;width:2px}.katex .fontsize-ensurer,.katex .llap>.fix,.katex .mfrac .frac-line,.katex .mspace,.katex .mtable .arraycolsep,.katex .mtable .vertical-separator,.katex .nulldelimiter,.katex .rlap>.fix,.katex .rule,.katex .sizing{display:inline-block}.katex .msupsub{text-align:left}.katex .accent>.vlist-t,.katex .mfrac>span>span,.katex .mtable .col-align-c>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .mfrac .frac-line{width:100%;border-bottom-style:solid}.katex .mspace.negativethinspace{margin-left:-.16667em}.katex .mspace.thinspace{width:.16667em}.katex .mspace.negativemediumspace{margin-left:-.22222em}.katex .mspace.mediumspace{width:.22222em}.katex .mspace.thickspace{width:.27778em}.katex .mspace.sixmuspace{width:.333333em}.katex .mspace.eightmuspace{width:.444444em}.katex .mspace.enspace{width:.5em}.katex .mspace.twelvemuspace{width:.666667em}.katex .mspace.quad{width:1em}.katex .mspace.qquad{width:2em}.katex .llap,.katex .rlap{width:0;position:relative}.katex .llap>.inner,.katex .rlap>.inner{position:absolute}        .katex .llap>.inner{right:0}.katex .rlap>.inner{left:0}.katex .katex-logo .a{font-size:.75em;margin-left:-.32em;position:relative;top:-.2em}.katex .katex-logo .t{margin-left:-.23em}.katex .katex-logo .e{margin-left:-.1667em;position:relative;top:.2155em}.katex .katex-logo .x{margin-left:-.125em}.katex .rule{border:0 solid;position:relative}.katex .overline .overline-line,.katex .underline .underline-line{display:inline-block;width:100%;border-bottom-style:solid}.katex .sqrt>.root{margin-left:.27777778em;margin-right:-.55555556em}
+        .katex-display {
+         display: inline-block;
+         margin: 0;
+        }
+
+    </style>
+    <link rel="stylesheet" href="/Users/aof_mac/Desktop/AI_comsci/SCI193611-ai-master/assets/katex.min.css">
+</head>
+<body>
+    <textarea id="source">
+
+class: middle, center, title-slide
+
+# บทนำสู่ปัญญาประดิษฐ์
+
+บทบรรยายที่ 2: การแก้ปัญหาด้วยการค้นหา
+
+<br><br>
+อิทธิพล ฟองแก้ว<br>
+[ittipon@g.sut.ac.th]
+
+---
+
+class: middle, center
+
+.width-35[![](figures/lec0/map.png)]
+
+---
+
+# วันนี้เราจะเรียน
+
+.grid[
+.kol-1-2[
+- Planning agents
+- Search problems
+- วิธีการค้นหาแบบไม่มีข้อมูล
+    - Depth-first search
+    - Breadth-first search
+    - Uniform-cost search
+- วิธีการค้นหาแบบมีข้อมูล
+    - A*
+    - Heuristics
+]
+.kol-1-2[
+.center.width-100[![](figures/lec2/planning-agent.png)]
+
+]
+]
+
+.footnote[เครดิต: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+# Planning agents
+
+---
+
+# Reflex agents
+
+Reflex agents
+- เลือกการกระทำบนพื้นฐานของการรับรู้ในขณะนั้น
+- อาจมี model ของสถานะปัจจุบันของโลก
+- ไม่พิจารณาผลลัพธ์ในอนาคตของการกระทำ
+- พิจารณาเพียง **โลกในขณะนี้เป็นอย่างไร**
+
+.grid[
+.kol-1-2[
+.width-100[![](figures/lec2/pacman-reflex.png)]]
+.kol-1-2[
+.width-100[![](figures/lec2/pacman-reflex2.png)]]
+]
+.caption[ตัวอย่างเช่น reflex agent ธรรมดาที่ใช้กฎเงื่อนไข-การกระทำ สามารถเคลื่อนที่<br>
+         ไปยังจุดถ้ามีจุดอยู่ในบริเวณใกล้เคียง
+         ไม่มีการวางแผนในการตัดสินใจนี้]
+
+---
+
+# Problem-solving agents
+
+สมมติฐาน:
+- สภาพแวดล้อมแบบ *single-agent*, *observable*, *deterministic* และ *known*
+
+Problem-solving agents
+- ตัดสินใจบนพื้นฐานของผลลัพธ์ (สมมติ) ของการกระทำ โดยพิจารณา **โลกจะเป็นอย่างไร**
+- ต้องมี model ของวิธีที่โลกพัฒนาไปตามการกระทำ
+- กำหนดเป้าหมายอย่างชัดเจน
+
+.grid[
+.kol-1-2[
+.width-100[![](figures/lec2/pacman-goal.png)]
+]
+.kol-1-2[
+.width-100[![](figures/lec2/pacman-goal2.png)]
+]
+]
+.caption[Planning agent มองหาลำดับการกระทำเพื่อกินจุดทั้งหมด]
+
+---
+
+class: middle
+
+.width-80[![](figures/lec2/problem-solving-agent.png)]
+
+---
+
+class: middle
+
+## Offline vs. Online solving
+
+- Problem-solving agents เป็นแบบ **offline** การแก้ปัญหาจะดำเนินการ "หลับตา" โดยไม่สนใจการรับรู้
+- การแก้ปัญหาแบบ *Online* เกี่ยวข้องกับการกระทำโดยไม่มีความรู้ที่สมบูรณ์ ในกรณีนี้ลำดับการกระทำอาจถูกคำนวณใหม่ในแต่ละขั้นตอน
+
+---
+
+class: middle
+
+# Search problems
+
+---
+
+# Search problems
+
+**Search problem** ประกอบด้วยส่วนประกอบต่อไปนี้:
+- การแทนค่าของ *states* ของ agent และสภาพแวดล้อม
+- *Initial state* ของ agent
+- คำอธิบายของ *actions* ที่ใช้ได้กับ agent ในสถานะ *s* แสดงด้วย *actions* *(s)*
+- *Transition model* ที่คืนค่าสถานะ *s' = result(s, a)*  ที่เกิดจากการทำ action *a* ในสถานะ *s*
+- *Goal test* *a* ในสถานะ *s*
+    - เราบอกว่า *s'* เป็น *successor* ของ *s* ถ้ามี action ที่ยอมรับได้จาก *s* ไป *s'*
+
+<div class="center-25"></div>[![](figures/lec2/pacman-successor.png)]
+
+---
+
+class: middle
+
+.center[![](figures/lec2/pacman-space.png)]
+
+- รวมกัน initial state, actions และ transition model จะกำหนด **state space** ของปัญหา คือ เซตของสถานะทั้งหมดที่สามารถเข้าถึงได้จาก initial state ด้วยลำดับ action ใดๆ
+    - State space สร้าง directed graph:
+        - nodes = states
+        - links = actions
+    - Path คือลำดับของ states ที่เชื่อมต่อด้วย actions
+- *Goal test* ที่กำหนดว่าการแก้ปัญหาบรรลุเป้าหมายในสถานะ *s* หรือไม่
+- *Path cost* ที่กำหนดค่าตัวเลขให้กับแต่ละ path
+  - ในคอร์สนี้ เราจะสมมติด้วยว่า path cost สอดคล้องกับผลรวมของ *step costs* เชิงบวก *c(s,a,s')* ที่เกี่ยวข้องกับ action *a* ใน *s* ที่นำไปสู่ *s'*
+
+---
+
+class: middle
+
+*Solution* ของปัญหาคือลำดับ action ที่นำจาก initial state ไปสู่ goal state
+- คุณภาพของ solution วัดด้วย path cost function
+- **Optimal solution** มี path cost ต่ำสุดในบรรดา solutions ทั้งหมด
+
+.exercise[จะเป็นอย่างไรถ้าสภาพแวดล้อมเป็นแบบ partially observable? non-deterministic?]
+
+---
+
+class: middle
+
+## ตัวอย่าง: การเดินทางในโรมาเนีย
+
+.center.width-75[![](figures/lec2/romania.svg)]
+
+.caption[จะไปจาก Arad ถึง Bucharest ได้อย่างไร?]
+
+---
+
+class: middle
+
+- การแทนค่า states: เมืองที่เราอยู่
+    - $s \in \\{ \text{in}(\text{Arad}), \text{in}(\text{Bucharest}), \ldots \\}$
+- Initial state = เมืองที่เราเริ่มต้น
+    - $s_0 = \text{in}(\text{Arad})$
+- Actions = การไปจากเมืองปัจจุบันไยังเมืองที่เชื่อมต่อโดยตรง
+    - $\text{actions}(s_0) = \\{ \text{go}(\text{Sibiu}), \text{go}(\text{Timisoara}), \text{go}(\text{Zerind}) \\}$
+- Transition model = เมืองที่เราไปถึงหลังจากขับรถไป
+    - $\text{result}(\text{in}(\text{Arad}), \text{go}(\text{Zerind})) = \text{in}(\text{Zerind})$
+- Goal test: ว่าเราอยู่ใน Bucharest หรือไม่
+    - $s \in \\{ \text{in}(\text{Bucharest}) \\}$
+- Step cost: ระยะทางระหว่างเมือง
+
+---
+
+# การเลือก state space
+
+โลกจริงมีความ**ซับซ้อนอย่างไร้ขีดจำกัด**
+- *World state* รวมรายละเอียดทุกอย่างของสภาพแวดล้อม
+- *Search state* เก็บเฉพาะรายละเอียดที่จำเป็นสำหรับการวางแผน
+
+.width-55.center[![](figures/lec2/search-problems-models.png)]
+.center[Search problems เป็น **models**]
+
+.footnote[เครดิต: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+##  ตัวอย่าง: eat-all-dots
+- States: $\{(x, y), \text{dot booleans}\}$
+- Actions: NSEW
+- Transition: อัปเดตตำแหน่งและอาจจะอัปเดต dot boolean
+- Goal test: dots ทั้งหมดเป็น false
+
+.width-100.center[![](figures/lec2/pacman-world.png)]
+
+---
+
+class: middle
+
+## ขนาดของ State space
+
+.grid[
+.kol-1-2[
+- *World state*:
+    - ตำแหน่ง Agent: 120
+    - จำนวนที่พบ: 30
+    - ตำแหน่ง Ghost: 12
+    - ทิศทาง Agent: NSEW
+- *มีกี่สถานะ?*
+    - World states?
+        - $120 \times 2^{30} \times 12^2 \times 4$
+    - States สำหรับ eat-all-dots?
+        - $120 \times 2^{30}$
+]
+.kol-1-2[
+.width-100[![](figures/lec2/pacman-size.png)]
+]
+]
+
+---
+
+# Search trees
+
+เซตของลำดับที่ยอมรับได้ที่เริ่มต้นจาก initial state สร้าง **search tree**
+- Nodes สอดคล้องกับ states ใน state space โดย initial state เป็น root node
+- Branches สอดคล้องกับ actions ที่ใช้ได้ โดย child nodes สอดคล้องกับ successors
+
+สำหรับปัญหาส่วนใหญ่ เราไม่สามารถสร้าง tree ทั้งหมดได้จริง แต่เราต้องการหา branch ที่เหมาะสมที่สุด!
+
+.center[![](figures/lec2/pacman-tree.png)]
+
+---
+
+# Tree search algorithms
+
+.width-100[![](figures/lec2/tree-search.png)]
+
+## แนวคิดสำคัญ
+- Fringe (หรือ frontier) ของแผนบางส่วนที่อยู่ระหว่างการพิจารณา
+- Expansion
+- Exploration
+
+---
+
+class: middle
+
+.exercise[จะสำรวจ fringe nodes ใดก่อน? จะ expand nodes ให้น้อยที่สุดเพื่อบรรลุเป้าหมายได้อย่างไร?]
+
+---
+
+class: middle
+
+.center.width-70[![](figures/lec2/search-map.svg)]
+
+---
+
+# Uninformed search strategies
+
+**Uninformed** search strategies ใช้เฉพาะข้อมูลที่มีในคำจำกัดความของปัญหา
+พวกมันไม่รู้ว่าสถานะใดดูมีแนวโน้มดีกว่าสถานะอื่น
+
+## กลยุทธ์
+- Depth-first search
+- Breadth-first search
+- Uniform-cost search
+- Iterative deepening
+
+---
+
+# คุณสมบัติของ search strategies
+
+- กลยุทธ์ถูกกำหนดโดยการเลือก**ลำดับของการ expansion**
+- กลยุทธ์ถูกประเมินตามมิติต่อไปนี้:
+    - *Completeness*: หาผลลัพธ์ได้เสมอหรือไม่ถ้ามีคำตอบ?
+    - *Optimality*: หาผลลัพธ์ที่มีต้นทุนน้อยที่สุดเสมอหรือไม่?
+    - *Time complexity*: ใช้เวลานานแค่ไหนในการหาผลลัพธ์?
+    - *Space complexity*: ใช้หน่วยความจำเท่าไหร่ในการค้นหา?
+- Time และ space complexity วัดในแง่ของ
+    - *b*: branching factor สูงสุดของ search tree
+    - *d*: ความลึกของ least-cost solution
+       - ความลึกของ *s* คือจำนวน actions จาก initial state ถึง *s*
+    - *m*: ความยาวสูงสุดของ path ใดๆ ใน state space (อาจเป็น *infty*)
+
+---
+
+class: middle
+
+.center.width-70[![](figures/lec2/search-properties.png)]
+
+---
+
+# Depth-first search
+
+<br><br>
+.width-70[![](figures/lec2/dfs-cartoon.png)]
+
+.footnote[เครดิต: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+- *กลยุทธ์*: expand node ที่ลึกที่สุดใน fringe
+- *การใช้งาน*: fringe เป็น **LIFO stack**
+
+.width-50.center[![](figures/lec2/dfs-progress.svg)]
+
+---
+
+class: middle
+
+.center.width-80[![](figures/lec2/dfs-properties.png)]
+
+---
+
+class: middle
+
+## คุณสมบัติของ DFS
+
+- *Completeness*:
+    - *m* อาจเป็นอนันต์ ดังนั้นจึงสำเร็จก็ต่อเมื่อเราป้องกัน cycles (รายละเอียดเพิ่มเติมในภายหลัง)
+- *Optimality*:
+    - ไม่ DFS หา solution ทางซ้ายสุด ไม่ว่าความลึกหรือต้นทุน
+- *Time complexity*:
+    - อาจสร้าง tree ทั้งหมด (หรือส่วนใหญ่ ไม่ว่า *d*) ดังนั้น 
+      $O(b^m)$ ซึ่งอาจมากกว่าขนาดของ state space มาก!
+- *Space complexity*:
+    - เก็บเฉพาะ siblings บน path ไป root ดังนั้น $O(bm)$
+    - เมื่อ descendants ทั้งหมดของ node ถูกเยี่ยมชมแล้ว node สามารถลบออกจากหน่วยความจำได้
+
+---
+
+# Breadth-first search
+
+<br><br>
+.width-80[![](figures/lec2/bfs-cartoon.png)]
+
+.footnote[เครดิต: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+- *กลยุทธ์*: expand node ที่ตื้นที่สุดใน fringe
+- *การใช้งาน*: fringe เป็น **FIFO queue**
+
+.width-80.center[![](figures/lec2/bfs-progress.svg)]
+
+---
+
+class: middle
+
+.center.width-80[![](figures/lec2/bfs-properties.png)]
+
+---
+
+class: middle
+
+## คุณสมบัติของ BFS
+
+- *Completeness*:
+    - ถ้า goal node ที่ตื้นที่สุดอยู่ที่ความลึก *d* BFS จะหามันได้ในที่สุดหลังจากสร้าง nodes ที่ตื้นกว่าทั้งหมด (ถ้า *b* เป็นจำกัด)
+- *Optimality*:
+    - Goal ที่ตื้นที่สุดไม่จำเป็นต้องเป็น optimal
+    - BFS เป็น optimal เฉพาะเมื่อ path cost เป็นฟังก์ชันที่ไม่ลดลงของความลึกของ node
+- *Time complexity*:
+    - ถ้า solution อยู่ที่ความลึก *d* จำนวน nodes ทั้งหมดที่สร้างก่อนหา node นี้คือ $b+b^2+b^3+...+b^d = O(b^d)$
+- *Space complexity*:
+    - จำนวน nodes ที่ต้องเก็บในหน่วยความจำคือขนาดของ fringe ซึ่งจะใหญ่ที่สุดที่ tier สุดท้าย คือ $O(b^d)$
+---
+
+class: middle, center
+
+(demo)
+
+---
+
+# Iterative deepening
+
+แนวคิด: ได้ข้อดีด้าน space ของ DFS กับข้อดีด้าน time/shallow solution ของ BFS
+- รัน DFS ด้วย depth limit 1
+- ถ้าไม่มี solution รัน DFS ด้วย depth limit 2
+- ถ้าไม่มี solution รัน DFS ด้วย depth limit 3
+    - ...
+
+.grid[
+.kol-1-2[
+.exercise[
+- คุณสมบัติของ iterative deepening คืออะไร?
+- กระบวนการนี้ไม่เสียเวลาโดยไม่จำเป็นหรือ?
+]
+]
+.kol-1-2[
+.center.width-50[![](figures/lec2/id-properties.png)]
+]
+]
+
+---
+
+# Uniform-cost search
+
+<br><br>
+.width-70[![](figures/lec2/ucs-cartoon.png)]
+
+.footnote[เครดิต: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+- *กลยุทธ์*: expand node ที่มีต้นทุนต่ำสุดใน fringe
+- *การใช้งาน*: fringe เป็น **priority queue** ใช้ต้นทุนสะสม **g(n)** จาก initial state ถึง node **n** เป็น priority
+
+---
+
+class: middle
+
+.center.width-70[![](figures/lec2/ucs-properties.png)]
+
+---
+
+class: middle
+
+## คุณสมบัติของ UCS
+
+- *Completeness*:
+    - ใช่ ถ้า step costs ทั้งหมดเป็น $c(s,a,s') \geq \epsilon > 0$ (ทำไม?)
+- *Optimality*:
+    - ใช่ เนื่องจาก UCS expand nodes ตามลำดับของ optimal path cost
+- *Time complexity*:
+     - สมมติ $C^\*$ เป็นต้นทุนของ optimal solution และ step costs ทั้งหมด $\geq \epsilon$
+     - "Effective depth" คือประมาณ $C^\*/\epsilon$
+     - Time complexity ในกรณีเลวร้ายที่สุดคือ $O(b^{C^\*/\epsilon})$
+- *Space complexity*:
+     - จำนวน nodes ที่ต้องเก็บคือขนาดของ fringe เท่ากับใน tier สุดท้าย $O(b^{C^\*/\epsilon})$
+
+---
+
+class: middle, center
+
+(demo)
+
+---
+
+# Informed search strategies
+
+.center.width-70[![](figures/lec2/ucs-issues.png)]
+
+หนึ่งใน**ปัญหาของ UCS** คือมันสำรวจ state space ไปทุก*ทิศทาง*
+โดยไม่ใช้ประโยชน์จากข้อมูลเกี่ยวกับตำแหน่ง (ที่เป็นไปได้) ของ goal node
+
+**Informed** search strategies มีจุดประสงค์เพื่อแก้ปัญหานี้โดยการ expand nodes ใน
+fringe ตามลำดับ*ความต้องการ*ที่ลดลง
+- Greedy search
+- A*
+
+---
+
+# Greedy search
+
+<br>
+.width-80[![](figures/lec2/gs-cartoon.png)]
+
+.footnote[เครดิต: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+## Heuristics
+
+**Heuristic** (หรือ evaluation) function $h(n)$ คือ:
+- ฟังก์ชันที่*ประมาณ*ต้นทุนของ path ที่ถูกที่สุดจาก node $n$ ไป goal state
+    - $h(n) \geq 0$ สำหรับ nodes ทั้งหมด $n$
+    - $h(n) = 0$ สำหรับ goal state
+- ถูกออกแบบสำหรับ search problem *เฉพาะ*
+
+<br>
+.center.width-60[![](figures/lec2/heuristic-pacman.png)]
+
+---
+
+class: middle
+
+## Greedy search
+
+- *กลยุทธ์*: expand node $n$ ใน fringe ที่ $h(n)$ ต่ำที่สุด
+- *การใช้งาน*: fringe เป็น **priority queue** ใช้ $h(n)$ เป็น priority
+
+---
+
+class: middle, center
+
+.width-50[![](figures/lec2/gs-progress.svg)]
+
+$h(n)$ = ระยะทางเส้นตรงถึง Bucharest
+
+---
+
+class: middle
+
+.center.width-90[![](figures/lec2/gs-properties.png)]
+
+.center[ในกรณีดีที่สุด greedy search นำคุณตรงไปสู่เป้าหมาย<br>
+ในกรณีเลวร้ายที่สุด มันเหมือน BFS ที่ถูกนำทางผิด]
+
+---
+
+class: middle
+
+## คุณสมบัติของ greedy search
+
+- *Completeness*:
+    - ไม่ เว้นแต่เราป้องกัน cycles (รายละเอียดเพิ่มเติมในภายหลัง)
+- *Optimality*:
+    - ไม่ เช่น path ผ่าน Sibiu และ Fagaras ยาวกว่า path ผ่าน Rimnicu Vilcea และ Pitesti 32km
+- *Time complexity*:
+    - $O(b^m)$ เว้นแต่เราจะมี heuristic function ที่ดี
+- *Space complexity*:
+    - $O(b^m)$ เว้นแต่เราจะมี heuristic function ที่ดี
+
+---
+
+# A*
+
+<br><br>
+.width-100[![](figures/lec2/as-cartoon.png)]
+
+.footnote[เครดิต: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+.grid[
+.kol-1-2[<br><br><br><br>
+## Shakey the Robot
+
+- A\* ถูกเสนอครั้งแรกใน **1968** เพื่อปรับปรุงการวางแผนของหุ่นยนต์
+- เป้าหมายคือการนำทางผ่านห้องที่มีสิ่งกีดขวาง
+]
+.kol-1-2[
+.center.width-60[![](figures/lec2/shakey.jpg)]
+]
+]
+
+---
+
+class: middle
+
+## A*
+
+- Uniform-cost เรียงลำดับตาม path cost หรือ *backward cost* $g(n)$
+- Greedy เรียงลำดับตามความใกล้เป้าหมาย หรือ *forward cost* $h(n)$
+- **A*** รวมสองอัลกอริทึมและเรียงลำดับตามผลรวม $f(n) = g(n) + h(n)$
+- $f(n)$ คือต้นทุนประมาณของ solution ที่ถูกที่สุดผ่าน $n$
+
+---
+
+class: middle
+
+.center.width-50[![](figures/lec2/as-progress1.png)]
+
+---
+
+class: middle
+
+.center.width-50[![](figures/lec2/as-progress2.png)]
+
+.exercise[ทำไม A* ไม่หยุดที่ขั้นตอน (e) ถึงแม้ Bucharest อยู่ใน fringe?]
+
+---
+
+class: middle
+
+## Admissible heuristics
+
+Heuristic $h$ เป็น **admissible** ถ้า $0 \leq h(n) \leq h^\*(n)$ โดย $h^\*(n)$ คือต้นทุนจริงไปยัง goal ที่ใกล้ที่สุด
+
+.center.width-80[![](figures/lec2/admissible.png)]
+.caption[Manhattan distance เป็น admissible]
+
+---
+
+class: middle
+
+## Optimality ของ A*
+
+.grid[
+.kol-2-3[
+สมมติฐาน:
+- $A$ เป็น optimal goal node
+- $B$ เป็น suboptimal goal node
+- $h$ เป็น admissible
+
+ข้อกล่าวอ้าง:
+$A$ จะออกจาก fringe ก่อน $B$
+]
+.kol-1-3[
+.width-100[![](figures/lec2/astar-proof1.png)]
+]
+]
+
+---
+
+class: middle
+
+.grid[
+.kol-2-3[
+## การพิสูจน์
+
+สมมติ $B$ อยู่บน fringe
+บรรพบุรุษ $n$ ของ $A$ อยู่บน fringe ด้วย
+
+- $f(n) \leq f(A)$
+    - $f(n) = g(n) + h(n)$ (ตามคำจำกัดความ)
+    - $f(n) \leq g(A)$ (admissibility ของ $h$)
+    - $f(A) = g(A) + h(A) = g(A)$ ($h=0$ ที่ goal)
+- $f(A) < f(B)$
+    - $g(A) < g(B)$ ($B$ เป็น suboptimal)
+    - $f(A) < f(B)$ ($h=0$ ที่ goal)
+- ดังนั้น $n$ expand ก่อน $B$
+    - เนื่องจาก $f(n) \leq f(A) < f(B)$
+]
+.kol-1-3[
+.width-100[![](figures/lec2/astar-proof2.png)]
+]
+]
+ในทำนองเดียวกัน บรรพบุรุษทั้งหมดของ $A$ expand ก่อน $B$ รวมถึง $A$ ดังนั้น **A* เป็น optimal**
+
+---
+
+class: middle
+
+## A* contours
+
+- สมมติ $f$-costs ไม่ลดลงตาม path ใดๆ
+- เราสามารถกำหนด **contour levels** $t$ ใน state space ที่รวม nodes ทั้งหมด $n$ ที่ $f(n) \leq t$
+
+.center[
+![](figures/lec2/contours-ucs.png)
+![](figures/lec2/contours-as.png)]
+.grid[
+.kol-1-2[สำหรับ UCS ($h(n)=0$ สำหรับ $n$ ทั้งหมด) bands เป็นวงกลมรอบจุดเริ่มต้น]
+.kol-1-2[สำหรับ A* ที่มี heuristics ที่แม่นยำ bands ยืดไปทางเป้าหมาย]
+]
+
+---
+
+class: middle
+
+.grid[
+.kol-1-3[
+.width-100[![](figures/lec2/cmp-greedy.jpg)]
+]
+.kol-1-3[
+.width-100[![](figures/lec2/cmp-ucs.jpg)]
+]
+.kol-1-3[
+.width-100[![](figures/lec2/cmp-as.jpg)]
+]
+]
+.center.grid[
+.kol-1-3[
+Greedy search
+]
+.kol-1-3[
+UCS
+]
+.kol-1-3[
+A*
+]
+]
+
+.footnote[เครดิต: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle, center
+
+(demo)
+
+---
+
+# การสร้าง admissible heuristics
+
+งานส่วนใหญ่ในการแก้ปัญหาการค้นหาที่ยากอย่างเหมาะสมที่สุดอยู่ที่การหา admissible heuristics
+
+Admissible heuristics สามารถมาจากผลลัพธ์ที่แน่นอนของ *relaxed problems* โดยมี actions ใหม่
+
+<br><br>
+.center.width-65[![](figures/lec2/admissible-relax.png)]
+
+---
+
+class: middle
+
+## Dominance
+
+- ถ้า $h_1$ และ $h_2$ เป็น admissible ทั้งคู่ และถ้า $h_2(n) \geq h_1(n)$ สำหรับ $n$ ทั้งหมด แล้ว $h_2$ **dominates** $h_1$ และ*ดีกว่า*สำหรับการค้นหา
+- ให้ admissible heuristics $h_a$ และ $h_b$ ใดๆ $h(n) = \max(h_a(n), h_b(n))$ ก็เป็น admissible และ dominates $h_a$ และ $h_b$
+
+---
+
+class: middle
+
+## การเรียนรู้ heuristics จากประสบการณ์
+
+- สมมติสภาพแวดล้อมแบบ *episodic* agent สามารถ**เรียนรู้** heuristics ที่ดีโดยการเล่นเกมหลายครั้ง
+- แต่ละ optimal solution $s^\*$ ให้ *training examples* ที่ $h(n)$ สามารถเรียนรู้ได้
+- แต่ละตัวอย่างประกอบด้วยสถานะ $n$ จาก solution path และต้นทุนจริง $g(s^\*)$ ของ solution จากจุดนั้น
+- การแมป $n \to g(s^\*)$ สามารถเรียนรู้ด้วยอัลกอริทึม **supervised learning**
+    - Linear models, Neural networks, ฯลฯ
+
+---
+
+# Graph search
+
+<br>
+.center.width-70[![](figures/lec2/redundant.png)]
+<br>
+
+ความล้มเหลวในการตรวจจับ**repeated states** สามารถเปลี่ยนปัญหาเชิงเส้นให้เป็นแบบเลขชี้กำลังได้ และอาจนำไปสู่การค้นหาที่ไม่สิ้นสุด
+
+Redundant paths และ cycles สามารถหลีกเลี่ยงได้โดย**การติดตาม** states ที่ได้รับการ*สำรวจ*แล้ว
+นี่เท่ากับการปลูก tree โดยตรงบน state-space graph
+
+---
+
+class: middle
+
+.width-90[![](figures/lec2/graph-search.png)]
+
+---
+
+class: middle
+
+.grid[
+.kol-1-2[<br><br>
+## A* graph-search ผิดพลาด?
+- เราเริ่มที่ $S$ และ $G$ เป็น goal state
+- Graph search หา path ใด?
+]
+.kol-1-2[.width-90[![](figures/lec2/astar-gone-wrong.png)]]
+]
+
+---
+
+class: middle
+
+.grid[
+.kol-2-3[## Consistent heuristics
+Heuristic $h$ เป็น consistent ถ้าสำหรับทุก $n$ และทุก successor $n'$ ที่สร้างโดย action $a$ ใดๆ
+$h(n) \leq c(n,a,n') + h(n').$
+]
+.kol-1-3[.width-85[![](figures/lec2/consistent-heuristic.png)]]
+]
+
+ผลลัพธ์ของ consistent heuristics:
+- $f(n)$ ไม่ลดลงตาม path ใดๆ
+- $h(n)$ เป็น admissible
+- ด้วย consistent heuristic, graph-search A* เป็น optimal
+
+---
+
+# สรุปตัวอย่าง: Super Mario
+
+.center.width-50[![](figures/lec2/mario.jpg)]
+
+- *Task environment*?
+    - performance measure, environment, actuators, sensors?
+- *ประเภท* ของ environment?
+- *Search problem*?
+    - initial state, actions, transition model, goal test, path cost?
+- *Heuristic ที่ดี*?
+
+---
+
+class: center, middle, black-slide
+
+<iframe width="600" height="400" src="https://www.youtube.com/embed/DlkMs4ZHHr8" frameborder="0" allowfullscreen></iframe>
+
+A* ในการทำงาน
+
+---
+
+# สรุป
+
+- การกำหนดปัญหามักต้องการการทำ abstraction รายละเอียดโลกจริงเพื่อกำหนด state space ที่สามารถสำรวจได้
+- วิธีการ uninformed search หลากหลาย (*DFS*, *BFS*, *UCS*, *Iterative deepening*)
+- Heuristic functions ประมาณต้นทุนของ shortest paths Heuristic ที่ดีสามารถลดต้นทุนการค้นหาได้อย่างมาก
+- Greedy best-first search expand $h$ ต่ำสุด ซึ่งแสดงให้เห็นว่าไม่สมบูรณ์และไม่เหมาะสมเสมอไป
+- **A*** search expand $f=g+h$ ต่ำสุด กลยุทธ์นี้สมบูรณ์และเหมาะสม
+- Graph search สามารถมีประสิทธิภาพมากกว่า tree search แบบเลขชี้กำลัง
+
+---
+
+class: end-slide, center
+count: false
+
+จบ
+
+    </textarea>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/contrib/auto-render.min.js"></script>
+    <script>
+        var slideshow = remark.create({
+            highlightStyle: 'github',
+            highlightLines: true,
+            countIncrementalSlides: false,
+            ratio: '16:9'
+        });
+
+        // KaTeX auto-render
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    </script>
+</body>
+</html>

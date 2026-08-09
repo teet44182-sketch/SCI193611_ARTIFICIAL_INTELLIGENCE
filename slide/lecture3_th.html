@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>บทบรรยายที่ 2: การแก้ปัญหาด้วยการค้นหา</title>
+    <meta charset="utf-8">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Lato:300,400,900);
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,900);
+        @import url(https://fonts.googleapis.com/css?family=Sarabun:300,400,600,700);
+
+        body {
+            font-family: 'Sarabun', 'Roboto', 'Segoe UI', sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            font-weight: 300;
+            line-height: 1.5; 
+            color: #354046;
+            font-size: 11pt;
+            word-wrap: break-word;
+        }
+
+        /*.remark-container {
+            background: #eee;
+        }*/
+        .remark-container {
+            background: #eee !important;
+            margin: 20;
+            padding: 20;
+            width: 50vw;
+            height: 50vh;
+        }
+
+
+        .remark-slide-content {
+            font-size: 1.5em;
+        }
+
+        .remark-slide-content h1 {
+            font-family: 'Sarabun', Lato, sans-serif;
+            font-weight: bold;
+            font-size: 2em;
+            margin: 0 0 .5em 0;
+            color: #356aaf;
+        }
+
+        .remark-slide-content h2 {
+            font-family: 'Sarabun', Lato, sans-serif;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 0 0 .5em 0;
+        }
+
+        .remark-slide-content h3 {
+            font-size: 1.0em;
+            font-weight: normal;
+            margin: 0 0 .5em 0;
+        }
+
+        .remark-slide-number {
+            font-size: 0.5em;
+            bottom: 2em;
+        }
+
+        .remark-slide-scaler {
+            box-shadow: 0 0 20px #ccc; 
+        }
+   
+        .footnote:before {
+            content: "\2015";
+            display: block;
+        }
+
+        a {
+            color: #5b82b5;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .red {
+            color: #d11a01;
+        }
+
+        .Q, .green {
+            color: #009933;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        em {
+            color: #0288d1;
+            font-style: normal;
+        }
+
+        strong {
+            color: #d11a01;
+            font-style: normal;
+            font-weight: 300;
+        }
+
+        .highlight{ 
+            background-color: #FFFF00; 
+        }
+
+        .smaller {
+            font-size: 1.6em;
+        }
+
+        .smaller-x {
+            font-size: 0.8em;
+        }
+
+        .smaller-xx {
+            font-size: 0.7em;
+        }
+
+        .smaller-xxx {
+            font-size: 0.4em;
+        }
+
+        .katex {
+            color: #356aaf;
+            font-size: 24pt;
+        }
+
+        .black-slide .katex, .black-slide h1 {
+            color: white;
+        }
+
+        .black-slide a, .black-slide .footnote a {
+            color: #89c2ce;
+        }
+
+        .remark-code, .remark-inline-code {
+            font-size: 0.9em;
+        }
+
+        ul > li, ol > li {
+             margin: 0.6em 0;
+        }
+
+        ul > li > ul > li {
+            font-size: 0.8em;
+        }
+
+        table {
+            border-spacing: 0;
+            border: 1px solid #e2e2e2;
+            font-size: .8em;
+            margin: auto;
+            padding: 0;
+        }
+
+        thead {
+            border: 0;
+            margin: 0;
+        }
+
+        th {
+            background: #e2e2e2;
+            border: 0;
+            font-weight: bold;
+            margin: 0;
+            padding: 7px 0;
+            text-align: center;
+        }
+
+        tbody {
+            background: white;
+            font-size: .8em;
+            margin: 0;
+        }
+
+        tr {
+            margin: 0;
+            padding: 0;
+        }
+
+        tr:nth-child(odd) {
+            background: #fcfcfc;
+        }
+
+        td {
+            margin: 0;
+            padding: 5px 8px;
+        }
+
+        .caption {
+            display: block;
+            text-align: center;
+            font-size: 0.8em;
+            font-style: italic;
+        }
+
+        .circle img {
+            border-radius: 50%;
+        }
+
+        .stretch img {
+            width: 100%;
+            height: auto;
+        }
+
+        .solid {
+          border-style: solid;
+        }
+
+        .dashed {
+          border-style: dashed;
+        }
+
+        .avatars {
+            position: absolute;
+            right: 1em;
+            top: 1em;
+        }
+
+        .avatars img {
+            width: 2.5em;
+            border-radius: 50%;
+        }
+
+        .footnote {
+          position: absolute;
+          bottom: 2em;
+          font-size: 0.5em;
+          opacity: 0.75;
+          margin-left: -5.5em;
+        }
+
+        .footnote a{
+            color: #0288d1;
+        }
+
+        .inactive {
+            color: lightgray;
+        }
+
+        .exercise {
+            background-color: rgba(40,167,69,0.25);
+            border: 2px solid rgb(40,167,69);
+            border-radius: 5px;
+            width: 95%;
+            display: block;
+            padding: 1em;
+        }
+
+        .exercise:before {
+            content: "คำถาม";
+            font-weight: bold;
+            display: block;
+        }
+
+        .question, .success {
+            background-color: rgba(40,167,69,0.25);
+            border: 2px solid rgb(40,167,69);
+            border-radius: 5px;
+            width: 95%;
+            display: block;
+            padding: 1em;
+        }
+
+        .alert {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 2px solid #f5c6cb;
+            border-radius: 5px;
+            width: 95%;
+            display: block;
+            padding: 1em;
+        }
+
+        .pull-left {
+            float: left;
+            margin-right: 1em;
+        }
+
+        .pull-right {
+            float: right;
+            margin-left: 1em;
+        }
+
+        .width-5 * {
+            width: 5%;
+        }
+
+        .width-10 * {
+            width: 10%;
+        }
+
+        .width-15 * {
+            width: 15%;
+        }
+
+        .width-20 * {
+            width: 20%;
+        }
+
+        .width-25 * {
+            width: 25%;
+        }
+
+        .width-30 * {
+            width: 30%;
+        }
+
+        .width-35 * {
+            width: 35%;
+        }
+
+        .width-40 * {
+            width: 40%;
+        }
+
+        .width-45 * {
+            width: 45%;
+        }
+
+        .width-50 * {
+            width: 50%;
+        }
+
+        .width-55 * {
+            width: 55%;
+        }
+
+        .width-60 * {
+            width: 60%;
+        }
+
+        .width-65 * {
+            width: 65%;
+        }
+
+        .width-70 * {
+            width: 70%;
+        }
+
+        .width-75 * {
+            width: 75%;
+        }
+
+        .width-80 * {
+            width: 80%;
+        }
+
+        .width-85 * {
+            width: 85%;
+        }
+
+        .width-90 * {
+            width: 90%;
+        }
+
+        .width-93 * {
+            width: 93.7%;
+        }
+
+        .width-95 * {
+            width: 95%;
+        }
+
+        .width-100 * {
+            width: 100%;
+        }
+
+        .width-105 * {
+            width: 105%;
+        }
+
+        .width-110 * {
+            width: 110%;
+        }
+
+        .width-115 * {
+            width: 115%;
+        }
+
+        .width-120 * {
+            width: 120%;
+        }
+
+        .width-125 * {
+            width: 125%;
+        }
+
+        .width-130 * {
+            width: 130%;
+        }
+
+        .width-135 * {
+            width: 135%;
+        }
+
+        .width-140 * {
+            width: 140%;
+        }
+
+        .width-145 * {
+            width: 145%;
+        }
+
+        .width-150 * {
+            width: 150%;
+        }
+
+        .width-155 * {
+            width: 155%;
+        }
+
+        .width-160 * {
+            width: 160%;
+        }
+
+        .width-165 * {
+            width: 165%;
+        }
+
+        .width-170 * {
+            width: 170%;
+        }
+
+        .width-175 * {
+            width: 175%;
+        }
+
+        .width-180 * {
+            width: 180%;
+        }
+
+        .width-185 * {
+            width: 185%;
+        }
+
+        .width-190 * {
+            width: 190%;
+        }
+
+        .width-195 * {
+            width: 195%;
+        }
+
+        .width-200 * {
+            width: 200%;
+        }
+
+        .title-slide:after {
+            content: '';
+            background: url("../assets/logo_ulg.png") no-repeat;
+            background-size: 75% 75%;
+            width: 150px;
+            height: 73px;
+            position: absolute;
+            bottom: -0.5em;
+            left: 0.5em;
+            display: inline-block;
+        }
+
+        .title-slide, .section {
+            vertical-align: middle;
+        }
+
+        .end-slide {
+            background-color: #356aaf;
+            color: white;
+            vertical-align: middle;
+        }
+
+        .black-slide {
+            background-color: black;
+            color: white;
+            border-top: solid 0px;
+        }
+
+        .red-slide {
+            background-color: red;
+            color: white;
+            border-top: solid 0px;
+        }
+
+        .shadow {
+            background-color: rgba(0,0,0,0.75);
+            padding: 10px;
+        }
+
+        /* Grid CSS */
+        [class*='grid'],
+        [class*='kol-'],
+        .grid:after {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        [class*='kol-'] {
+            float: left;
+            min-height: 1px;
+            padding-right: 20px;
+        }
+
+        [class*='kol-']:last-child {
+            padding-right: 0px;
+        }
+
+        .grid {
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .grid-half {
+            width: 50%;
+        }
+
+        .grid:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .grid-pad {
+            padding-top: 20px;
+            padding-left: 20px;
+            padding-right: 0;
+        }
+
+        .push-left {
+            float: left;
+        }
+
+        .push-right {
+            float: right;
+        }
+
+        .kol-1-1 {
+            width: 100%;
+        }
+        .kol-2-3, .kol-8-12 {
+            width: 66.66%;
+        }
+
+        .kol-1-2, .kol-6-12 {
+            width: 50%;
+        }
+
+        .kol-1-3, .kol-4-12 {
+            width: 33.33%;
+        }
+
+        .kol-1-4, .kol-3-12 {
+            width: 25%;
+        }
+
+        .kol-1-5 {
+            width: 20%;
+        }
+
+        .kol-1-6, .kol-2-12 {
+            width: 16.667%;
+        }
+
+        .kol-1-7 {
+            width: 14.28%;
+        }
+
+        .kol-1-8 {
+            width: 12.5%;
+        }
+
+        .kol-1-9 {
+            width: 11.1%;
+        }
+
+        .kol-1-10 {
+            width: 10%;
+        }
+
+        .kol-1-11 {
+            width: 9.09%;
+        }
+
+        .kol-1-12 {
+            width: 8.33%
+        }
+
+        .kol-3-8 {
+            width: 37.5%;
+        }
+
+        .kol-5-8 {
+            width: 62.5%;
+        }
+
+        .kol-11-12 {
+            width: 91.66%
+        }
+
+        .kol-10-12 {
+            width: 83.333%;
+        }
+
+        .kol-9-12, .kol-3-4 {
+            width: 75%;
+        }
+
+        .kol-5-12 {
+            width: 41.66%;
+        }
+
+        .kol-7-12 {
+            width: 58.33%;
+        }
+
+        .kol-2-5 {
+            width: 40%;
+        }
+
+        .kol-3-5 {
+            width: 60%;
+        }
+
+        .kol-4-5 {
+            width: 80%;
+        }
+
+        /* Pushing blocks */
+
+        .push-2-3, .push-8-12 {
+            margin-left: 66.66%;
+        }
+
+        .push-1-2, .push-6-12 {
+            margin-left: 50%;
+        }
+
+        .push-1-3, .push-4-12 {
+            margin-left: 33.33%;
+        }
+
+        .push-1-4, .push-3-12 {
+            margin-left: 25%;
+        }
+
+        .push-1-5 {
+            margin-left: 20%;
+        }
+
+        .push-1-6, .push-2-12 {
+            margin-left: 16.667%;
+        }
+
+        .push-1-7 {
+            margin-left: 14.28%;
+        }
+
+        .push-1-8 {
+            margin-left: 12.5%;
+        }
+
+        .push-1-9 {
+            margin-left: 11.1%;
+        }
+
+        .push-1-10 {
+            margin-left: 10%;
+        }
+
+        .push-1-11 {
+            margin-left: 9.09%;
+        }
+
+        .push-1-12 {
+            margin-left: 8.33%
+        }
+
+        /* KaTeX styles are included here for mathematical expressions */
+        @font-face{font-family:KaTeX_AMS;src:url(fonts/KaTeX_AMS-Regular.eot);src:url(fonts/KaTeX_AMS-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_AMS-Regular.woff2) format('woff2'),url(fonts/KaTeX_AMS-Regular.woff) format('woff'),url(fonts/KaTeX_AMS-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url(fonts/KaTeX_Caligraphic-Bold.eot);src:url(fonts/KaTeX_Caligraphic-Bold.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Caligraphic-Bold.woff2) format('woff2'),url(fonts/KaTeX_Caligraphic-Bold.woff) format('woff'),url(fonts/KaTeX_Caligraphic-Bold.ttf) format('truetype');font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url(fonts/KaTeX_Caligraphic-Regular.eot);src:url(fonts/KaTeX_Caligraphic-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Caligraphic-Regular.woff2) format('woff2'),url(fonts/KaTeX_Caligraphic-Regular.woff) format('woff'),url(fonts/KaTeX_Caligraphic-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url(fonts/KaTeX_Fraktur-Bold.eot);src:url(fonts/KaTeX_Fraktur-Bold.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Fraktur-Bold.woff2) format('woff2'),url(fonts/KaTeX_Fraktur-Bold.woff) format('woff'),url(fonts/KaTeX_Fraktur-Bold.ttf) format('truetype');font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url(fonts/KaTeX_Fraktur-Regular.eot);src:url(fonts/KaTeX_Fraktur-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Fraktur-Regular.woff2) format('woff2'),url(fonts/KaTeX_Fraktur-Regular.woff) format('woff'),url(fonts/KaTeX_Fraktur-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Bold.eot);src:url(fonts/KaTeX_Main-Bold.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Main-Bold.woff2) format('woff2'),url(fonts/KaTeX_Main-Bold.woff) format('woff'),url(fonts/KaTeX_Main-Bold.ttf) format('truetype');font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Italic.eot);src:url(fonts/KaTeX_Main-Italic.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Main-Italic.woff2) format('woff2'),url(fonts/KaTeX_Main-Italic.woff) format('woff'),url(fonts/KaTeX_Main-Italic.ttf) format('truetype');font-weight:400;font-style:italic}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Regular.eot);src:url(fonts/KaTeX_Main-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Main-Regular.woff2) format('woff2'),url(fonts/KaTeX_Main-Regular.woff) format('woff'),url(fonts/KaTeX_Main-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Math;src:url(fonts/KaTeX_Math-Italic.eot);src:url(fonts/KaTeX_Math-Italic.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Math-Italic.woff2) format('woff2'),url(fonts/KaTeX_Math-Italic.woff) format('woff'),url(fonts/KaTeX_Math-Italic.ttf) format('truetype');font-weight:400;font-style:italic}@font-face{font-family:KaTeX_SansSerif;src:url(fonts/KaTeX_SansSerif-Regular.eot);src:url(fonts/KaTeX_SansSerif-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_SansSerif-Regular.woff2) format('woff2'),url(fonts/KaTeX_SansSerif-Regular.woff) format('woff'),url(fonts/KaTeX_SansSerif-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Script;src:url(fonts/KaTeX_Script-Regular.eot);src:url(fonts/KaTeX_Script-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Script-Regular.woff2) format('woff2'),url(fonts/KaTeX_Script-Regular.woff) format('woff'),url(fonts/KaTeX_Script-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size1;src:url(fonts/KaTeX_Size1-Regular.eot);src:url(fonts/KaTeX_Size1-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Size1-Regular.woff2) format('woff2'),url(fonts/KaTeX_Size1-Regular.woff) format('woff'),url(fonts/KaTeX_Size1-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size2;src:url(fonts/KaTeX_Size2-Regular.eot);src:url(fonts/KaTeX_Size2-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Size2-Regular.woff2) format('woff2'),url(fonts/KaTeX_Size2-Regular.woff) format('woff'),url(fonts/KaTeX_Size2-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size3;src:url(fonts/KaTeX_Size3-Regular.eot);src:url(fonts/KaTeX_Size3-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Size3-Regular.woff2) format('woff2'),url(fonts/KaTeX_Size3-Regular.woff) format('woff'),url(fonts/KaTeX_Size3-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size4;src:url(fonts/KaTeX_Size4-Regular.eot);src:url(fonts/KaTeX_Size4-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Size4-Regular.woff2) format('woff2'),url(fonts/KaTeX_Size4-Regular.woff) format('woff'),url(fonts/KaTeX_Size4-Regular.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Typewriter;src:url(fonts/KaTeX_Typewriter-Regular.eot);src:url(fonts/KaTeX_Typewriter-Regular.eot#iefix) format('embedded-opentype'),url(fonts/KaTeX_Typewriter-Regular.woff2) format('woff2'),url(fonts/KaTeX_Typewriter-Regular.woff) format('woff'),url(fonts/KaTeX_Typewriter-Regular.ttf) format('truetype');font-weight:400;font-style:normal}.katex-display{display:block;margin:1em 0;text-align:center}.katex .base,.katex .katex-html,.katex .strut{display:inline-block}.katex-display>.katex{display:inline-block;text-align:initial}.katex{font:400 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;white-space:nowrap;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important}.katex .katex-mathml{position:absolute;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}.katex .base{position:relative}.katex .mathrm{font-style:normal}.katex .mainit,.katex .mathit,.katex .textit{font-style:italic}.katex .mathit{font-family:KaTeX_Math}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .amsrm,.katex .mathbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak{font-family:KaTeX_Fraktur}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr{font-family:KaTeX_Script}.katex .mathsf{font-family:KaTeX_SansSerif}.katex .mainit{font-family:KaTeX_Main}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .mord+.mop{margin-left:.16667em}.katex .mord+.mbin{margin-left:.22222em}.katex .mord+.mrel{margin-left:.27778em}.katex .mop+.mop,.katex .mop+.mord,.katex .mord+.minner{margin-left:.16667em}.katex .mop+.mrel{margin-left:.27778em}.katex .mop+.minner{margin-left:.16667em}.katex .mbin+.minner,.katex .mbin+.mop,.katex .mbin+.mopen,.katex .mbin+.mord{margin-left:.22222em}.katex .mrel+.minner,.katex .mrel+.mop,.katex .mrel+.mopen,.katex .mrel+.mord{margin-left:.27778em}.katex .mclose+.mop{margin-left:.16667em}.katex .mclose+.mbin{margin-left:.22222em}.katex .mclose+.mrel{margin-left:.27778em}.katex .mclose+.minner,.katex .minner+.mop,.katex .minner+.mord,.katex .mpunct+.mclose,.katex .mpunct+.minner,.katex .mpunct+.mop,.katex .mpunct+.mopen,.katex .mpunct+.mord,.katex .mpunct+.mpunct,.katex .mpunct+.mrel{margin-left:.16667em}.katex .minner+.mbin{margin-left:.22222em}.katex .minner+.mrel{margin-left:.27778em}.katex .minner+.minner,.katex .minner+.mopen,.katex .minner+.mpunct{margin-left:.16667em}.katex .mbin.mtight,.katex .mclose.mtight,.katex .minner.mtight,.katex .mop.mtight,.katex .mopen.mtight,.katex .mord.mtight,.katex .mpunct.mtight,.katex .mrel.mtight{margin-left:0}.katex .mclose+.mop.mtight,.katex .minner+.mop.mtight,.katex .mop+.mop.mtight,.katex .mop+.mord.mtight,.katex .mord+.mop.mtight{margin-left:.16667em}.katex .vlist-t{display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;vertical-align:bottom;position:relative}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;vertical-align:bottom;font-size:1px;width:2px}.katex .fontsize-ensurer,.katex .llap>.fix,.katex .mfrac .frac-line,.katex .mspace,.katex .mtable .arraycolsep,.katex .mtable .vertical-separator,.katex .nulldelimiter,.katex .rlap>.fix,.katex .rule,.katex .sizing{display:inline-block}.katex .msupsub{text-align:left}.katex .accent>.vlist-t,.katex .mfrac>span>span,.katex .mtable .col-align-c>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .mfrac .frac-line{width:100%;border-bottom-style:solid}.katex .mspace.negativethinspace{margin-left:-.16667em}.katex .mspace.thinspace{width:.16667em}.katex .mspace.negativemediumspace{margin-left:-.22222em}.katex .mspace.mediumspace{width:.22222em}.katex .mspace.thickspace{width:.27778em}.katex .mspace.sixmuspace{width:.333333em}.katex .mspace.eightmuspace{width:.444444em}.katex .mspace.enspace{width:.5em}.katex .mspace.twelvemuspace{width:.666667em}.katex .mspace.quad{width:1em}.katex .mspace.qquad{width:2em}.katex .llap,.katex .rlap{width:0;position:relative}.katex .llap>.inner,.katex .rlap>.inner{position:absolute}        .katex .llap>.inner{right:0}.katex .rlap>.inner{left:0}.katex .katex-logo .a{font-size:.75em;margin-left:-.32em;position:relative;top:-.2em}.katex .katex-logo .t{margin-left:-.23em}.katex .katex-logo .e{margin-left:-.1667em;position:relative;top:.2155em}.katex .katex-logo .x{margin-left:-.125em}.katex .rule{border:0 solid;position:relative}.katex .overline .overline-line,.katex .underline .underline-line{display:inline-block;width:100%;border-bottom-style:solid}.katex .sqrt>.root{margin-left:.27777778em;margin-right:-.55555556em}
+        .katex-display {
+         display: inline-block;
+         margin: 0;
+        }
+
+    </style>
+    <link rel="stylesheet" href="/Users/aof_mac/Desktop/AI_comsci/SCI193611-ai-master/assets/katex.min.css">
+    <script defer src="/Users/aof_mac/Desktop/AI_comsci/SCI193611-ai-master/assets/katex.min.js"></script>
+</head>
+<body>
+    <textarea id="source">
+
+class: middle, center, title-slide
+
+# ปัญญาประดิษฐ์ SCI193611
+
+การบรรยายที่ 3: เกมและการค้นหาแบบประชันกัน
+(Games and Adversarial search)
+<br><br>
+อิทธิพล ฟองแก้ว<br>
+[ittipon@g.sut.ac.th]
+
+---
+
+class: center, black-slide, middle
+
+<iframe width="600" height="450" src="https://www.youtube.com/embed/N7KpcYKRm1M" frameborder="0" allowfullscreen></iframe>
+
+---
+
+# วันนี้
+
+- จะทำอย่างไรเพื่อทำงานอย่างมีเหตุผลในสภาพแวดล้อม *multi-agent*?
+- จะคาดการณ์และตอบสนองต่อ **พฤติกรรมที่ไม่แน่นอน** ของ agent อื่นๆ ได้อย่างไร?
+- การค้นหาแบบประชันกัน (Adversarial search)
+    - Minimax
+    - $\alpha-\beta$ pruning
+    - H-Minimax
+    - Expectiminimax
+    - Monte Carlo Tree Search
+- สมมติฐานการสร้างแบบจำลอง
+- Agent ที่ทันสมัย
+
+---
+
+class: middle
+
+# Minimax
+
+---
+
+# เกม (Games)
+
+- **เกม** เป็นสภาพแวดล้อม multi-agent ที่ agent อาจมีผลประโยชน์ที่ *ขัดแย้งกัน* หรือ *ร่วมกัน*
+- ฝ่ายตรงข้ามอาจทำงานได้ **อย่างไรก็ได้** แม้ว่าเราจะสมมติสภาพแวดล้อมที่กำหนดได้และสังเกตได้อย่างสมบูรณ์
+    - วิธีการแก้ปัญหาเกมคือ *กลยุทธ์* ที่ระบุการเคลื่อนไหวสำหรับทุกการตอบสนองของฝ่ายตรงข้ามที่เป็นไปได้
+    - นี่แตกต่างจากการค้นหาที่วิธีการแก้ปัญหาคือ *ลำดับการกระทำที่คงที่*
+- เวลามักจะ **จำกัด**
+
+---
+
+class: middle
+
+## ประเภทของเกม
+
+- **กำหนดได้ (Deterministic)** หรือ *สุ่ม (stochastic)*?
+- ข้อมูล **สมบูรณ์ (Perfect)** หรือ *ไม่สมบูรณ์ (imperfect)*?
+- **สองผู้เล่น** หรือ *หลายผู้เล่น*?
+
+---
+
+class: middle
+
+## คำนิยามแบบเป็นทางการ
+
+**เกม** มีคำนิยามอย่างเป็นทางการเป็นปัญหาการค้นหาชนิดหนึ่งที่มีองค์ประกอบดังนี้:
+- การแสดงของ *สถานะ* ของ agent และสภาพแวดล้อม
+- *สถานะเริ่มต้น* $s_0$ ของเกม
+- ฟังก์ชัน $\text{player}(s)$ ที่กำหนดว่า *ผู้เล่น* $p \in \\{1, ..., N \\}$ คนไหนเป็นผู้เล่นในสถานะ $s$
+- คำอธิบายของ *การกระทำ* (หรือ *การเคลื่อนไหว*) ที่ถูกต้องที่มีในสถานะ $s$ แสดงด้วย $\text{actions}(s)$
+- *โมเดลการเปลี่ยนแปลง* ที่ส่งกลับสถานะ $s' = \text{result}(s, a)$ ที่เป็นผลมาจากการกระทำ $a$ ในสถานะ $s$
+- *การทดสอบสถานะสิ้นสุด* ที่กำหนดว่าเกมจบหรือไม่
+
+---
+
+class: middle
+
+- *ฟังก์ชัน utility* $\text{utility}(s, p)$ (หรือ payoff) ที่กำหนดค่าตัวเลขสุดท้ายสำหรับเกมที่จบในสถานะ $s$ สำหรับผู้เล่น $p$
+    - เช่น $1$, $0$ หรือ $\frac{1}{2}$ หากผลลัพธ์คือชนะ แพ้ หรือเสมอ
+- เมื่อรวมกัน สถานะเริ่มต้น ฟังก์ชัน $\text{actions}(s)$ และฟังก์ชัน $\text{result}(s, a)$ จะกำหนด **ต้นไม้เกม**
+    - โหนดคือสถานะของเกม
+    - ขอบคือการกระทำ
+
+---
+
+class: middle
+
+## เกม Zero-sum
+
+- ในเกม **zero-sum** ผลตอบแทนรวมให้กับผู้เล่นทั้งหมดจะ *คงที่* สำหรับทุกเกม
+    - เช่น ในหมากรุก: $0+1$, $1+0$ หรือ $\frac{1}{2} + \frac{1}{2}$
+- สำหรับเกมสองผู้เล่น agent มี **ฟังก์ชัน utility เดียวกัน** แต่ฝ่ายหนึ่งต้องการ *เพิ่ม* ขณะที่อีกฝ่ายต้องการ *ลด*
+    - MAX เพิ่มฟังก์ชัน $\text{utility}$ ของเกม
+    - MIN ลดฟังก์ชัน $\text{utility}$ ของเกม
+- *การแข่งขันที่เข้มงวด*
+    - หากฝ่ายหนึ่งชนะ อีกฝ่ายก็แพ้ และในทางกลับกัน
+
+<br>
+.center.width-40[![](figures/lec3/zero-sum-cartoon.png)]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+## ต้นไม้เกม Tic-Tac-Toe
+
+.width-50[![](figures/lec3/tictactoe.png)]
+
+.question[กลยุทธ์ที่เหมาะสมที่สุด (หรือการเล่นที่สมบูรณ์) คืออะไร? เราจะหาได้อย่างไร?]
+
+---
+
+# สมมติฐาน
+
+- เราสมมติว่าเป็นเกม **zero-sum** สำหรับ *สองผู้เล่น* แบบ *กำหนดได้* *ผลัดกันเล่น* ที่มีข้อมูล *สมบูรณ์*
+    - เช่น Tic-Tac-Toe, หมากรุก, หมากฮอส, โกะ เป็นต้น
+- เราจะเรียกผู้เล่นสองคนว่า **MAX** และ **MIN** โดย **MAX** เคลื่อนไหวก่อน
+
+<br><br><br>
+.center.width-50[![](figures/lec3/tictactoe-cartoon.png)]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+# การค้นหาแบบประชันกัน
+
+.grid[.kol-2-3[
+- ในปัญหาการค้นหา วิธีแก้ปัญหาที่เหมาะสมที่สุดคือลำดับการกระทำที่นำไปสู่สถานะเป้าหมาย
+    - กล่าวคือ สถานะสิ้นสุดที่ MAX ชนะ
+- ในเกม ฝ่ายตรงข้าม (MIN) อาจตอบสนองต่อการเคลื่อนไหวได้ *อย่างไรก็ได้*
+- ดังนั้น ผู้เล่น (MAX) จะต้องกำหนด **กลยุทธ์** ที่เป็นเงื่อนไขซึ่งระบุ
+    - การเคลื่อนไหวในสถานะเริ่มต้น
+    - การเคลื่อนไหวในสถานะที่เป็นผลมาจากการตอบสนองทุกอย่างที่เป็นไปได้โดย MIN
+    - การเคลื่อนไหวในสถานะที่เป็นผลมาจากการตอบสนองทุกอย่างที่เป็นไปได้โดย MIN ในสถานะเหล่านั้น...
+]
+.kol-1-3.width-100[
+![](figures/lec3/adversarial-search-cartoon.png)
+]
+]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+# Minimax
+
+**ค่า minimax** $\text{minimax}(s)$ เป็นผลตอบแทนที่ใหญ่ที่สุดที่สามารถบรรลุได้ (สำหรับ MAX) จากสถานะ $s$ โดยสมมติว่ามี *ฝ่ายตรงข้ามที่เหมาะสม* (MIN)
+
+.center.width-100[![](figures/lec3/minimax.png)]
+
+การเคลื่อนไหวครั้งต่อไปที่ **เหมาะสม** (สำหรับ MAX) คือการกระทำที่เพิ่มค่า minimax ในสถานะที่เป็นผลลัพธ์ให้มากที่สุด
+- โดยสมมติว่า MIN เป็นฝ่ายตรงข้ามที่เหมาะสมที่เพิ่มผลลัพธ์ *กรณีเลวร้ายที่สุด* สำหรับ MAX ให้มากที่สุด
+- สิ่งนี้เทียบเท่ากับการไม่ทำสมมติฐานเกี่ยวกับความแข็งแกร่งของฝ่ายตรงข้าม
+
+---
+
+class: middle
+
+.width-100[![](figures/lec3/minimax-example.png)]
+
+---
+
+class: middle
+
+## คุณสมบัติของ Minimax
+
+- *ความสมบูรณ์ (Completeness)*:
+    - ใช่ หากต้นไม้มีจำกัด
+- *ความเหมาะสม (Optimality)*:
+    - ใช่ หาก MIN เป็นฝ่ายตรงข้ามที่เหมาะสม
+    - จะเป็นอย่างไรหาก MIN ไม่เหมาะสม?
+        - แสดงว่า MAX จะทำได้ดีกว่า
+    - จะเป็นอย่างไรหาก MIN ไม่เหมาะสมและคาดการณ์ได้?
+        - กลยุทธ์อื่นๆ อาจทำได้ดีกว่า Minimax แต่อาจทำได้แย่กว่าฝ่ายตรงข้ามที่เหมาะสม
+
+---
+
+class: middle
+
+## ประสิทธิภาพของ Minimax
+
+- สมมติว่า $\text{minimax}(s)$ ถูกใช้งานโดยใช้คำนิยามแบบเวียนเกิด
+- Minimax มี *ประสิทธิภาพ* อย่างไร?
+    - ความซับซ้อนของเวลา: เหมือนกับ DFS กล่าวคือ $O(b^m)$
+    - ความซับซ้อนของพื้นที่:
+        - $O(bm)$ หากการกระทำทั้งหมดถูกสร้างขึ้นในครั้งเดียว หรือ
+        - $O(m)$ หากการกระทำถูกสร้างขึ้นครั้งละหนึ่งรายการ
+
+.question[เราจำเป็นต้องสำรวจต้นไม้เกมทั้งหมดหรือไม่?]
+
+---
+
+# การตัดแต่ง (Pruning)
+
+.center.width-70[![](figures/lec3/minimax-incomplete-tree.png)]
+
+.width-100[![](figures/lec3/minimax-incomplete-formula.png)]
+
+ดังนั้น จึงเป็นไปได้ที่จะคำนวณการตัดสินใจ minimax ที่ **ถูกต้อง** *โดยไม่ต้องดูทุกโหนด* ในต้นไม้
+
+---
+
+class: middle
+
+.center.width-65[![](figures/lec3/minimax-incomplete-stepbystep.png)]
+
+---
+
+class: middle
+
+.grid[
+.kol-2-3[
+เราต้องการคำนวณ $v = \text{minimax}(n)$ สำหรับ $\text{player(n)}$=MIN
+- เราวนลูปผ่านลูกของ $n$
+- ค่า minimax กำลังถูกคำนวณทีละค่าและ $v$ ได้รับการปรับปรุงแบบซ้ำ
+- ให้ $\alpha$ เป็นค่าที่ดีที่สุด (กล่าวคือ สูงสุด) ที่จุดเลือกใดๆ ตามเส้นทางสำหรับ MAX
+- หาก $v$ กลายเป็นต่ำกว่า $\alpha$ แล้ว **$n$ จะไม่ถูกเข้าถึง** ในการเล่นจริง
+- ดังนั้น เราสามารถ *หยุดการวนซ้ำ* ผ่านลูกคนอื่นๆ ที่เหลือของ $n$
+]
+.kol-1-3[<br><br>.center.width-80[![](figures/lec3/alpha-beta.png)]]
+]
+
+---
+
+class: middle
+
+เช่นเดียวกัน $\beta$ ถูกกำหนดให้เป็นค่าที่ดีที่สุด (กล่าวคือ ต่ำสุด) ที่จุดเลือกใดๆ ตามเส้นทางสำหรับ MIN เราสามารถหยุดการขยายของโหนด MAX ทันทีที่ $v$ กลายเป็นใหญ่กว่า $\beta$
+
+## การตัดแต่ง $\alpha$-$\beta$
+- ปรับปรุงค่าของ $\alpha$ และ $\beta$ เมื่อเส้นทางถูกขยาย
+- ตัดแต่งกิ่งที่เหลือ (กล่าวคือ ยุติการเรียกแบบเวียนเกิด) ทันทีที่ค่าของโหนดปัจจุบันเป็นที่ทราบว่าแย่กว่าค่า $\alpha$ หรือ $\beta$ ปัจจุบันสำหรับ MAX หรือ MIN ตามลำดับ
+
+---
+
+# การค้นหา $\alpha$-$\beta$
+
+.width-70[![](figures/lec3/alpha-beta-impl.png)]
+
+---
+
+class: middle
+
+## คุณสมบัติของการค้นหา $\alpha$-$\beta$
+
+- การตัดแต่ง **ไม่มีผลกระทบ** ต่อค่า minimax ดังนั้น *ความสมบูรณ์* และ *ความเหมาะสม* จึงถูกรักษาไว้จาก Minimax
+- *ความซับซ้อนของเวลา*:
+    - ประสิทธิภาพขึ้นอยู่กับลำดับที่สถานะถูกตรวจสอบ
+    - หากสถานะสามารถตรวจสอบใน *ลำดับที่สมบูรณ์* แล้วการค้นหา $\alpha-\beta$ จะตรวจสอบเพียง $O(b^{m/2})$ โหนดเพื่อเลือกการเคลื่อนไหวที่ดีที่สุด เทียบกับ $O(b^m)$ สำหรับ minimax
+        - $\alpha-\beta$ สามารถแก้ปัญหาต้นไม้ที่ลึกกว่าสองเท่าของ minimax ได้ในระยะเวลาเดียวกัน
+        - เทียบเท่ากับ branching factor ที่มีประสิทธิภาพ $\sqrt{b}$
+- *ความซับซ้อนของพื้นที่*: $O(m)$ เช่นเดียวกับ Minimax
+
+---
+
+# ขนาดของต้นไม้เกม
+
+.center.width-10[![](figures/lec3/chess.jpg)]
+
+หมากรุก:
+- $b \approx 35$ (branching factor เฉลี่ยโดยประมาณ)
+- $d \approx 100$ (ความลึกของต้นไม้เกมสำหรับเกมทั่วไป)
+- $b^d \approx 35^{100} \approx 10^{154}$
+- สำหรับการค้นหา $\alpha-\beta$ และการจัดลำดับที่สมบูรณ์ เราได้ $b^{d/2} \approx 35^{50} = 10^{77}$
+
+การหาวิธีแก้ปัญหาที่แน่นอนด้วย Minimax ยังคง **ไม่สามารถแก้ได้**
+
+---
+
+# ตาราง Transposition
+
+- สถานะที่ซ้ำกันเกิดขึ้นบ่อยครั้งเนื่องจาก **transposition**: การเรียงสับเปลี่ยนที่แตกต่างกันของลำดับการเคลื่อนไหวจบลงในตำแหน่งเดียวกัน
+- คล้ายกับเซต `closed` ใน `Graph-Search` (บทบรรยายที่ 2) คุ้มค่าที่จะเก็บการประเมินของสถานะเพื่อให้การปรากฏขึ้นอีกครั้งของสถานะไม่ต้องคำนวณใหม่
+- 
+.question[ควรใช้โครงสร้างข้อมูลแบบใดเพื่อเก็บและค้นหาค่าของตำแหน่งอย่างมีประสิทธิภาพ?]
+
+---
+
+# การตัดสินใจแบบเรียลไทม์ที่ไม่สมบูรณ์
+
+- ภายใต้ *ข้อจำกัดของเวลา* การค้นหาวิธีแก้ปัญหาที่แน่นอนไม่สามารถทำได้ในเกมจริงส่วนใหญ่
+- วิธีแก้ปัญหา: ตัดการค้นหาให้เร็วขึ้น
+    - แทนที่ฟังก์ชัน $\text{utility}(s)$ ด้วย **ฟังก์ชันการประเมิน** heuristic $\text{eval}(s)$ ที่ประมาณค่า utility ของสถานะ
+    - แทนที่การทดสอบสถานะสิ้นสุดด้วย **การทดสอบการตัด** ที่ตัดสินใจว่าเมื่อใดจะหยุดการขยายสถานะ
+
+.center.width-100[![](figures/lec3/hminimax.png)]
+
+.question[การค้นหา $\alpha-\beta$ สามารถปรับให้ใช้งาน H-Minimax ได้หรือไม่?]
+
+---
+
+class: middle
+
+## ฟังก์ชันการประเมิน
+
+- ฟังก์ชันการประเมิน $\text{eval}(s)$ ส่งกลับ **การประมาณ** ของ utility ที่คาดหวังของเกมจากตำแหน่ง $s$ ที่กำหนด
+- การคำนวณ *ต้องสั้น* (นั่นคือจุดทั้งหมดที่จะค้นหาให้เร็วขึ้น)
+- ในอุดมคติ การประเมินควร *จัดลำดับ* สถานะในลักษณะเดียวกับใน Minimax
+    - ค่าการประเมินอาจแตกต่างจากค่า minimax ที่แท้จริง ตราบใดที่ลำดับถูกรักษาไว้
+- ในสถานะที่ไม่ใช่สถานะสิ้นสุด ฟังก์ชันการประเมินควรมี *ความสัมพันธ์* อย่างแรงกับโอกาสที่แท้จริงในการชนะ
+
+---
+
+class: middle
+
+## ความสงบ (Quiescence)
+
+.center.width-70[![](figures/lec3/chess-eval.png)]
+
+- สถานะเหล่านี้แตกต่างกันเพียงในตำแหน่งของรุกที่มุมล่างขวา
+- อย่างไรก็ตาม ฝ่ายดำมีข้อได้เปรียบใน (a) แต่ไม่ใช่ใน (b)
+- หากการค้นหาหยุดใน (b) ฝ่ายดำจะไม่เห็นว่าการเคลื่อนไหวครั้งต่อไปของฝ่ายขาวคือการจับควีนของมัน ทำให้ได้เปรียบ
+- การตัดควรใช้เฉพาะกับตำแหน่งที่เป็น **quiescent**
+    - กล่าวคือ สถานะที่ไม่น่าจะแสดงการเปลี่ยนแปลงค่าอย่างรุนแรงในอนาคตอันใกล้
+
+---
+
+# ผลกระทบขอบฟ้า (Horizon effect)
+
+ฟังก์ชันการประเมิน **ไม่สมบูรณ์เสมอ**
+- หากไม่มองลึกพอ *การเคลื่อนไหวที่ไม่ดี* อาจปรากฏเป็น *การเคลื่อนไหวที่ดี* (ตามที่ประมาณโดยฟังก์ชันการประเมิน) เพราะผลที่ตามมาถูกซ่อนไว้เกินขอบเขตการค้นหา
+    - และในทางกลับกัน!
+- บ่อยครั้ง ยิ่งฟังก์ชันการประเมินถูกฝังลึกลงไปในต้นไม้มากเท่าใด คุณภาพของฟังก์ชันการประเมินก็ยิ่งสำคัญน้อยลง
+
+---
+
+class: middle, black-slide
+
+.center[<video controls preload="auto" height="480" width="640">
+  <source src="./figures/lec3/depth2.mp4" type="video/mp4">
+</video>]
+
+.caption[ตัดที่ความลึก 2, การประเมิน = ยิ่งใกล้จุดยิ่งดี]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle, black-slide
+
+.center[<video controls preload="auto" height="480" width="640">
+  <source src="figures/lec3/depth10.mp4" type="video/mp4">
+</video>]
+
+.caption[ตัดที่ความลึก 10, การประเมิน = ยิ่งใกล้จุดยิ่งดี]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+# เกมหลายผู้เล่น
+
+- จะเป็นอย่างไรถ้าเกมไม่ใช่ zero-sum หรือมี *หลายผู้เล่น*?
+- การขยายผลของ Minimax:
+    - สถานะสิ้นสุดถูกติดป้ายด้วย **tuple ของ utility** (1 ค่าต่อผู้เล่น)
+    - สถานะกลางก็ถูกติดป้ายด้วย tuple ของ utility
+    - ผู้เล่นแต่ละคนเพิ่มองค์ประกอบของตนเองให้มากที่สุด
+    - อาจให้ผลเป็นความร่วมมือและการแข่งขันแบบไดนามิก
+
+.center.width-50[![](figures/lec3/multi-agent-tree.png)]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+# เกมสุ่ม (Stochastic games)
+
+---
+
+# เกมสุ่ม
+
+- ในชีวิตจริง เหตุการณ์ภายนอกที่คาดเดาไม่ได้มากมายสามารถทำให้เราตกอยู่ในสถานการณ์ที่ไม่คาดคิดได้
+- เกมที่สะท้อนความไม่แน่นอนนี้เรียกว่า **เกมสุ่ม** รวมถึงองค์ประกอบสุ่ม เช่น:
+    - ความสุ่มที่ชัดเจน: การทอยลูกเต๋า
+    - การกระทำอาจล้มเหลว: เมื่อขับหุ่นยนต์ ล้ออาจลื่น
+
+<br>
+.center.width-40[![](figures/lec3/random-opponent-cartoon.png)]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+- ในต้นไม้เกม องค์ประกอบสุ่มนี้สามารถ **สร้างแบบจำลอง** ด้วย *โหนดโอกาส* ที่แมปคู่สถานะ-การกระทำไปยังชุดของผลลัพธ์ที่เป็นไปได้ พร้อมด้วย *ความน่าจะเป็น* ของแต่ละรายการ
+- สิ่งนี้เทียบเท่ากับการพิจารณาสภาพแวดล้อมเป็น *ผู้เล่นสุ่ม* พิเศษที่เคลื่อนไหวหลังจากผู้เล่นอื่นๆ แต่ละคน
+
+.center.width-30[![](figures/lec3/random-player.png)]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+## ต้นไม้เกมสุ่ม
+
+.center.width-50[![](figures/lec3/stochastic-game-tree.png)]
+
+---
+
+# Expectiminimax
+
+- เนื่องจากความไม่แน่นอนในผลลัพธ์ของการกระทำ สถานะจึงไม่มีค่า $\text{minimax}$ ที่ *แน่นอน* อีกต่อไป
+- อย่างไรก็ตาม เราสามารถคำนวณค่า **คาดหวัง** ของสถานะภายใต้การเล่นที่เหมาะสมโดยฝ่ายตรงข้ามได้
+    - กล่าวคือ ค่าเฉลี่ยของผลลัพธ์ที่เป็นไปได้ทั้งหมดของโหนดโอกาส
+    - ค่า $\text{minimax}$ สอดคล้องกับผลลัพธ์กรณีเลวร้ายที่สุด
+
+.center.width-100[![](figures/lec3/expectiminimax.png)]
+
+.question[การเคลื่อนไหวแบบเหตุผลหมายความว่า agent จะประสบความสำเร็จหรือไม่?]
+
+---
+
+class: middle
+
+## ฟังก์ชันการประเมิน
+
+- เช่นเดียวกับ $\text{minimax}(n)$ ค่าของ $\text{expectiminimax}(n)$ อาจถูกประมาณโดยการหยุดการเรียกซ้ำเร็วและใช้ฟังก์ชันการประเมิน
+- อย่างไรก็ตาม เพื่อให้ได้การเคลื่อนไหวที่ถูกต้อง ฟังก์ชันการประเมินควรเป็น **การเปลี่ยนแปลงเชิงเส้นในเชิงบวก** ของ utility ที่คาดหวังของสถานะ
+    - ไม่เพียงพอที่ฟังก์ชันการประเมินจะรักษาลำดับไว้เท่านั้น
+- หากเราสมมติขอบเขตของฟังก์ชัน utility การค้นหา $\alpha-\beta$ สามารถปรับให้เข้ากับเกมสุ่มได้
+
+<br>
+.center.width-55[![](figures/lec3/chance-order-preserving.png)]
+.caption[การเปลี่ยนแปลงที่รักษาลำดับบนค่าใบไม้เปลี่ยนการเคลื่อนไหวที่ดีที่สุด]
+
+---
+
+# Monte Carlo Tree Search
+
+## การประเมิน Random playout
+
+- เพื่อประเมินสถานะ ให้อัลกอริทึม **เล่นกับตัวเอง** โดยใช้ *การเคลื่อนไหวสุ่ม* หลายพันครั้ง
+- ลำดับของการเคลื่อนไหวสุ่มเรียกว่า *random playout*
+- ใช้สัดส่วนของการชนะเป็นการประเมินสถานะ
+- กลยุทธ์นี้ **ไม่ต้องการความรู้ในโดเมน**!
+    - เพียงแค่ต้องมีเอนจิ้นเกมเท่านั้น
+
+---
+
+class: middle
+
+## Monte Carlo Tree Search
+
+จุดสำคัญของ MCTS คือการวิเคราะห์การเคลื่อนไหวที่มีแนวโน้มดีที่สุด โดยประเมินแบบเพิ่มหน่วยด้วย random playout
+
+แต่ละโหนด $n$ ในต้นไม้การค้นหาปัจจุบันเก็บค่าสองค่า:
+- จำนวนการชนะ $Q(n,p)$ ของผู้เล่น $p$ สำหรับ playout ทั้งหมดที่ผ่าน $n$
+- จำนวน $N(n)$ ของครั้งที่ $n$ ถูกเยี่ยมชม
+
+---
+
+class: middle
+
+อัลกอริทึมค้นหาต้นไม้เกมดังนี้:
+1. *การเลือก (Selection)*: เริ่มจากรูท เลือกโหนดลูกต่อเนื่องลงไปจนถึงโหนด $n$ ที่ยังขยายไม่สมบูรณ์
+2. *การขยาย (Expansion)*: เว้นแต่ว่า $n$ เป็นสถานะสิ้นสุด ให้สร้างโหนดลูกใหม่ $n'$
+3. *การจำลอง (Simulation)*: เล่น random playout จาก $n'$
+4. *การส่งกลับ (Backpropagation)*: ใช้ผลลัพธ์ของ playout เพื่อปรับปรุงข้อมูลในโหนดบนเส้นทางจาก $n'$ ไปยังรูท
+
+ทำซ้ำ 1-4 ตราบใดที่งบประมาณเวลาอนุญาต เลือกการเคลื่อนไหวโดยตรงที่ดีที่สุด
+
+---
+
+class: middle
+
+.center.width-100[![](figures/lec3/mcts1b.png)]
+
+---
+
+class: middle
+
+## การสำรวจและการใช้ประโยชน์
+
+เมื่อมีงบประมาณจำกัดของ random playout ประสิทธิภาพของ MCTS ขึ้นอยู่กับการเลือกโหนดที่ถูกเลือกในขั้นตอน 1 อย่างมาก
+
+ระหว่างการสำรวจกิ่งในขั้นตอนการเลือก นโยบาย UCB1 เลือกโหนดลูก $n'$ ของ $n$ ที่ทำให้มากที่สุด
+$\frac{Q(n',p)}{N(n')} + c \sqrt{\frac{\log N(n)}{N(n')}}.$
+- พจน์แรกสนับสนุนการ *ใช้ประโยชน์* จากโหนดที่ให้ผลตอบแทนสูงกว่า
+- พจน์ที่สอง สนับสนุนการ **สำรวจ** โหนดที่ถูกเยี่ยมชมน้อยกว่า
+- ค่าคงที่ $c>0$ ควบคุมการแลกเปลี่ยนระหว่างการใช้ประโยชน์และการสำรวจ
+
+---
+
+class: middle
+
+# สมมติฐานการสร้างแบบจำลอง
+
+---
+
+class: middle
+
+.center[
+![](figures/lec2/search-problems-models.png)
+
+จะเป็นอย่างไรถ้าสมมติฐานของเราไม่ถูกต้อง?]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle, black-slide
+
+.grid[
+.kol-2-3[
+
+## การตั้งค่า
+
+- $P_1$: Pacman ใช้การค้นหาความลึก 4 ด้วยฟังก์ชันการประเมินที่หลีกเลี่ยงปัญหา โดยสมมติว่าผีทำตาม $P_2$
+- $P_2$: ผีใช้การค้นหาความลึก 2 ด้วยฟังก์ชันการประเมินที่แสวงหา Pacman โดยสมมติว่า Pacman ทำตาม $P_1$
+- $P_3$: Pacman ใช้การค้นหาความลึก 4 ด้วยฟังก์ชันการประเมินที่หลีกเลี่ยงปัญหา โดยสมมติว่าผีทำตาม $P_4$
+- $P_4$: ผีเคลื่อนไหวแบบสุ่ม
+]
+.kol-1-3[.width-100[![](figures/lec3/wa-setup.png)]]
+]
+
+---
+
+class: middle, black-slide
+
+.center[
+<video controls preload="auto" height="400" width="300">
+  <source src="figures/lec3/minimax-vs-adversarial.mp4" type="video/mp4">
+</video>
+
+Minimax Pacman ($P_1$) vs. Adversarial ghost ($P_2$)
+]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle, black-slide
+
+.center[
+<video controls preload="auto" height="400" width="300">
+  <source src="figures/lec3/minimax-vs-random.mp4" type="video/mp4">
+</video>
+
+Minimax Pacman ($P_1$) vs. Random ghost ($P_4$)
+]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle, black-slide
+
+.center[
+<video controls preload="auto" height="400" width="300">
+  <source src="figures/lec3/expectimax-vs-random.mp4" type="video/mp4">
+</video>
+
+Expectiminimax Pacman ($P_3$) vs. Random ghost ($P_4$)
+]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle, black-slide
+
+.center[
+<video controls preload="auto" height="400" width="300">
+  <source src="figures/lec3/expectimax-vs-adversarial.mp4" type="video/mp4">
+</video>
+
+Expectiminimax Pacman ($P_3$) vs. Adversarial ghost ($P_2$)
+]
+
+.footnote[Credits: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+# โปรแกรมเกมที่ทันสมัย
+
+---
+
+# หมากฮอส (Checkers)
+
+## 1951
+
+ผู้เล่นคอมพิวเตอร์คนแรกโดย Christopher Strachey
+
+## 1994
+
+โปรแกรมคอมพิวเตอร์ *Chinook* ยุติการครองราชย์ 40 ปีของแชมป์เปียนมนุษย์ Marion Tinsley
+- ไลบรารีของการเคลื่อนไหวเปิดเกมจากแกรนด์มาสเตอร์
+- อัลกอริทึมการค้นหาลึก
+- ฟังก์ชันการประเมินการเคลื่อนไหวที่ดี (ตาม linear model)
+- ฐานข้อมูลสำหรับตำแหน่งทั้งหมดที่มีแปดตัวหรือน้อยกว่า
+
+---
+
+class: middle
+
+## 2007
+หมากฮอส **ถูกแก้ไขแล้ว** วิธีแก้ปัญหาอ่อนถูกพิสูจน์ทางคอมพิวเตอร์
+- จำนวนการคำนวณที่เกี่ยวข้องคือ $10^{14}$ ในช่วงเวลา 18 ปี
+- การเสมอได้รับการรับประกันเสมอหากไม่มีผู้เล่นคนใดทำผิดพลาด
+
+.center.width-40[![](figures/lec3/checkers-proof.png)]
+
+.footnote[Schaeffer, Jonathan, et al. "Checkers is solved." science 317.5844 (2007): 1518-1522.]
+
+---
+
+# หมากรุก (Chess)
+
+## 1997
+
+- *Deep Blue* เอาชนะแชมป์เปียนมนุษย์ Gary Kasparov
+    - การประเมินตำแหน่ง $200000000$ ครั้งต่อวินาที
+    - ฟังก์ชันการประเมินที่ซับซ้อนมาก
+    - วิธีการที่ไม่เปิดเผยสำหรับการขยายเส้นการค้นหาบางเส้นถึง 40 ply
+- โปรแกรมสมัยใหม่ (เช่น Stockfish หรือ AlphaZero) ดีกว่า แม้จะมีประวัติศาสตร์น้อยกว่า
+- หมากรุกยังคง *ยังไม่ถูกแก้ไข* เนื่องจากความซับซ้อนของเกม
+
+<br>
+.center.width-40[![](figures/lec3/deep-blue.jpg)]
+
+---
+
+# โกะ (Go)
+
+เป็นเวลานาน โกะถูกมองว่าเป็นจอกศักดิ์สิทธิ์ของ AI เนื่องจากขนาดของต้นไม้เกม
+- บนกระดาน 19x19 จำนวนตำแหน่งที่ถูกกฎหมายคือ $\pm 2 \times 10^{170}$
+- ส่งผลให้เกิด **$\pm 10^{800}$ เกม** เมื่อพิจารณาความยาว $400$ หรือน้อยกว่า
+
+<br>
+.center.width-50[![](figures/lec3/go.jpg)]
+
+---
+
+class: middle
+
+## 2010-2014
+การใช้ *Monte Carlo tree search* และ **machine learning** ผู้เล่นคอมพิวเตอร์มาถึงระดับ dan ต่ำ
+
+## 2015-2017
+Google Deepmind ประดิษฐ์ AlphaGo
+
+- 2015: AlphaGo เอาชนะ Fan Hui แชมป์เปียนโกะยุโรป
+- 2016: AlphaGo เอาชนะ Lee Sedol (4-1) แกรนด์มาสเตอร์ 9-dan
+- 2017: AlphaGo เอาชนะ Ke Jie ผู้เล่นมนุษย์อันดับ 1 ของโลก
+
+AlphaGo ผรวม Monte Carlo tree search และ **deep learning** ด้วยการฝึกอบรมอย่างกว้างขวาง ทั้งจากการเล่นของมนุษย์และคอมพิวเตอร์
+
+---
+
+class: middle, black-slide, center
+
+<iframe width="640" height="400" src="https://www.youtube.com/embed/m2QFSocFeOQ" frameborder="0" allowfullscreen></iframe>
+
+.caption[การรายงานข่าวสำหรับชั่วโมงแห่งชัยชนะของ AlphaGo เหนือ Lee Sedol]
+
+---
+
+class: middle
+
+## 2017
+
+AlphaGo Zero ผสม *Monte Carlo tree search* และ **deep learning** ด้วยการฝึกแบบ reinforcement ด้วยการเล่นด้วยตัวเองเพียงอย่างเดียว
+
+.center.width-70[![](figures/lec3/alphagozero-training.gif)]
+
+.footnote[Credits: [AlphaGo Zero: Learning from scratch](https://deepmind.com/blog/alphago-zero-learning-scratch/)]
+
+---
+
+# สรุป
+
+- เกมหลายผู้เล่นเป็นรูปแบบต่างๆ ของปัญหาการค้นหา
+- ความยากคือการพิจารณาข้อเท็จจริงที่ว่าฝ่ายตรงข้ามอาจทำงานได้อย่างไรก็ได้
+    - วิธีแก้ปัญหาที่เหมาะสมคือ **กลยุทธ์** ไม่ใช่ลำดับการกระทำที่คงที่
+- *Minimax* เป็นอัลกอริทึมที่เหมาะสมสำหรับเกม zero-sum สองผู้เล่นแบบกำหนดได้ ผลัดกันเล่น ที่มีข้อมูลสมบูรณ์
+    - เนื่องจากข้อจำกัดของเวลาในทางปฏิบัติ การสำรวจต้นไม้เกมทั้งหมดมักจะ **ไม่สามารถทำได้**
+    - การประมาณสามารถทำได้ด้วย heuristic ลดเวลาการคำนวณ
+    - Minimax สามารถปรับให้เข้ากับเกมสุ่มได้
+    - Minimax สามารถปรับให้เข้ากับเกมที่มีผู้เล่นมากกว่า 2 คนได้
+- พฤติกรรมที่เหมาะสม **สัมพันธ์กัน** และขึ้นอยู่กับสมมติฐานที่เราทำเกี่ยวกับโลก
+
+---
+
+class: end-slide, center
+count: false
+
+จบ
+
+    </textarea>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/contrib/auto-render.min.js"></script>
+    <script>
+        var slideshow = remark.create({
+            highlightStyle: 'github',
+            highlightLines: true,
+            countIncrementalSlides: false,
+            ratio: '16:9'
+        });
+
+        // KaTeX auto-render
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    </script>
+</body>
+</html>

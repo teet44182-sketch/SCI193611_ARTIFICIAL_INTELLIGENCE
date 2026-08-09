@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hexapawn Candy RL Simulator (Grid 4 Columns)</title>
+  <style>
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background: #f8fafc;
+      margin: 0;
+      padding: 32px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .boxes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      justify-content: center;
+    }
+    .box {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px #0002;
+      padding: 13px 13px 9px 13px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .arrows {
+      margin: 8px 0 0 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .arrow {
+      font-size: 22px;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .arrow-label {
+      font-size: 12px;
+    }
+    .remove-btn {
+      background: #dc2626;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 10px;
+      margin-top: 3px;
+      cursor: pointer;
+      padding: 1px 8px;
+    }
+    .btn {
+      margin-top: 8px;
+      padding: 4px 13px;
+      background: #16a34a;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+    .reset-btn {
+      margin: 0 auto 22px auto;
+      display: block;
+      background: #2563eb;
+    }
+    .reset-box-btn {
+      margin-top: 7px;
+      background: #f59e42;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 12px;
+      padding: 2px 13px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .result {
+      margin-top: 4px;
+      min-height: 16px;
+      font-weight: bold;
+      font-size: 13px;
+    }
+    @media (max-width: 700px) {
+      .boxes {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Hexapawn Candy RL Simulator<br>
+      <span style="font-size:16px;font-weight:normal;">
+        (24 กล่อง, Grid 4 Columns, ตัดสีและรีเซ็ตได้)
+      </span>
+    </h2>
+    <button class="btn reset-btn" onclick="resetAll()">Reset ลูกอมทุกกล่อง</button>
+    <div class="boxes" id="boxes"></div>
+  </div>
+  <script>
+    const colorToEmoji = {
+      red: '🍬', green: '🍏', blue: '🟦', yellow: '🟡', orange: '🍊', purple: '🍇'
+    };
+    const colorLabelTH = {
+      red: 'แดง', green: 'เขียว', blue: 'น้ำเงิน', yellow: 'เหลือง', orange: 'ส้ม', purple: 'ม่วง'
+    };
+    const boxesData = [
+      ['blue','green','red'],
+      ['red','blue'],
+      ['red'],
+      ['red','blue','green','orange'],
+      ['red','blue'],
+      ['blue','red','orange'],
+      ['red','blue'],
+      ['red','orange','blue'],
+      ['red','blue'],
+      ['red','blue','green','orange'],
+      ['red','blue'],
+      ['red','blue'],
+      ['green','red'],
+      ['green','red','orange'],
+      ['red','green'],
+      ['red','green'],
+      ['red','green'],
+      ['red','green'],
+      ['green','red'],
+      ['green','red'],
+      ['red','green'],
+      ['green','red'],
+      ['green','red'],
+      ['red']
+    ];
+    function initialCandiesOfBox(boxIdx) {
+      return boxesData[boxIdx].map(c => ({
+        color: c,
+        count: 1
+      }));
+    }
+    function initialCandies() {
+      return boxesData.map((_, idx) => initialCandiesOfBox(idx));
+    }
+    let allCandies = [];
+    let results = [];
+
+    function render() {
+      const boxes = document.getElementById('boxes');
+      boxes.innerHTML = '';
+      boxesData.forEach((colors, idx) => {
+        const box = document.createElement('div');
+        box.className = 'box';
+        box.innerHTML = `<div style="font-weight:bold; margin-bottom:2px;">กล่องที่ ${idx+1}</div>`;
+        const arrowsDiv = document.createElement('div');
+        arrowsDiv.className = 'arrows';
+        allCandies[idx].forEach(candy => {
+          if (candy.count > 0) {
+            const arr = document.createElement('span');
+            arr.className = 'arrow';
+            arr.innerHTML = `
+              <span style="color:${candy.color}; font-size:23px;">${colorToEmoji[candy.color]}</span>
+              <span class="arrow-label" style="color:${candy.color};">${colorLabelTH[candy.color]}</span>
+              <button class="remove-btn" onclick="removeCandy(${idx},'${candy.color}')">ตัดสีนี้</button>
+            `;
+            arrowsDiv.appendChild(arr);
+          }
+        });
+        box.appendChild(arrowsDiv);
+        const btn = document.createElement('button');
+        btn.className = 'btn';
+        btn.textContent = 'สุ่มลูกอม';
+        btn.disabled = allCandies[idx].every(c => c.count === 0);
+        btn.onclick = () => pickCandy(idx);
+        box.appendChild(btn);
+        const resetBoxBtn = document.createElement('button');
+        resetBoxBtn.className = 'reset-box-btn';
+        resetBoxBtn.textContent = 'รีเซ็ตกล่องนี้';
+        resetBoxBtn.onclick = () => resetBox(idx);
+        box.appendChild(resetBoxBtn);
+        const result = document.createElement('div');
+        result.className = 'result';
+        result.innerHTML = results[idx]
+          ? `ผลลัพธ์: <span style="color:${results[idx].color}">${colorLabelTH[results[idx].color]}</span>`
+          : '';
+        box.appendChild(result);
+        boxes.appendChild(box);
+      });
+    }
+    function pickCandy(idx) {
+      const candies = allCandies[idx];
+      const available = candies.filter(c => c.count > 0);
+      if (available.length === 0) {
+        results[idx] = { color: 'black', label: 'หมดลูกอม' };
+        render();
+        return;
+      }
+      const randIdx = Math.floor(Math.random() * available.length);
+      const picked = available[randIdx];
+      for (let c of candies) {
+        if (c.color === picked.color) {
+          c.count -= 1;
+          break;
+        }
+      }
+      results[idx] = { color: picked.color, label: colorLabelTH[picked.color] };
+      render();
+    }
+    function removeCandy(boxIdx, color) {
+      for (let c of allCandies[boxIdx]) {
+        if (c.color === color) {
+          c.count = 0;
+          break;
+        }
+      }
+      results[boxIdx] = '';
+      render();
+    }
+    function resetBox(boxIdx) {
+      allCandies[boxIdx] = initialCandiesOfBox(boxIdx);
+      results[boxIdx] = '';
+      render();
+    }
+    function resetAll() {
+      allCandies = initialCandies();
+      results = Array(boxesData.length).fill('');
+      render();
+    }
+    window.removeCandy = removeCandy;
+    window.resetBox = resetBox;
+    resetAll();
+  </script>
+</body>
+</html>

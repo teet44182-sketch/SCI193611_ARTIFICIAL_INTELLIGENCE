@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.5">
+    <title>Slide Presentation</title>
+    
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+    <script defer src="/Users/aof_mac/Desktop/AI_comsci/SCI193611-ai-master/assets/auto-render.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap');
+        
+        .remark-container {
+            height: 100%;
+            width: 100%;
+        }
+
+        .remark-slide-content {
+            font-size: 1.3em;
+        }
+
+        .remark-slide-content h1 {
+            font-family: 'Sarabun', Lato, sans-serif;
+            font-weight: bold;
+            font-size: 1.8em;
+            margin: 0 0 .5em 0;
+            color: #356aaf;
+        }
+
+        .remark-slide-content h2 {
+            font-family: 'Sarabun', Lato, sans-serif;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 0 0 .5em 0;
+        }
+
+        .remark-slide-content h3 {
+            font-size: 1.0em;
+            font-weight: normal;
+            margin: 0 0 .5em 0;
+        }
+
+        .remark-slide-number {
+            font-size: 0.5em;
+            bottom: 2em;
+        }
+
+        .remark-slide-scaler {
+            box-shadow: 0 0 20px #ccc; 
+        }
+
+        .footnote:before {
+            content: "\2015";
+            display: block;
+        }
+
+        a {
+            color: #5b82b5;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .red {
+            color: #d11a01;
+        }
+
+        .Q, .green {
+            color: #009933;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        em {
+            color: #0288d1;
+            font-style: normal;
+        }
+
+        strong {
+            color: #d11a01;
+            font-style: normal;
+            font-weight: 300;
+        }
+
+        .highlight{ 
+            background-color: #FFFF00; 
+        }
+
+        .smaller {
+            font-size: 1.4em;
+        }
+
+        .smaller-x {
+            font-size: 0.8em;
+        }
+
+        .smaller-xx {
+            font-size: 0.7em;
+        }
+
+        .smaller-xxx {
+            font-size: 0.4em;
+        }
+
+        .katex {
+            color: #356aaf;
+            font-size: 15pt;
+        }
+
+        .black-slide .katex, .black-slide h1 {
+            color: white;
+        }
+
+        .black-slide a, .black-slide .footnote a {
+            color: #89c2ce;
+        }
+
+        .remark-code, .remark-inline-code {
+            font-size: 0.9em;
+        }
+
+        ul > li, ol > li {
+             margin: 0.6em 0;
+        }
+
+        ul > li > ul > li {
+            font-size: 0.8em;
+        }
+
+        .alert {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 2px solid #f5c6cb;
+            border-radius: 5px;
+            width: 95%;
+            display: block;
+            padding: 1em;
+        }
+
+        .question, .success {
+            background-color: rgba(40,167,69,0.25);
+            border: 2px solid rgb(40,167,69);
+            border-radius: 5px;
+            width: 95%;
+            display: block;
+            padding: 1em;
+        }
+
+        .pull-left {
+            float: left;
+            margin-right: 1em;
+        }
+
+        .pull-right {
+            float: right;
+            margin-left: 1em;
+        }
+
+        .width-100 * {
+            width: 100%;
+        }
+
+        .width-50 * {
+            width: 50%;
+        }
+
+        .width-30 * {
+            width: 30%;
+        }
+
+        .width-40 * {
+            width: 40%;
+        }
+
+        .width-60 * {
+            width: 60%;
+        }
+
+        .width-70 * {
+            width: 70%;
+        }
+
+        .title-slide:after {
+            content: '';
+            background: url("/Users/aof_mac/Desktop/AI_comsci/SCI193611-ai-master/assets/logo_ulg.png") no-repeat;
+            background-size: 75% 75%;
+            width: 150px;
+            height: 73px;
+            position: absolute;
+            bottom: -0.5em;
+            left: 0.5em;
+            display: inline-block;
+        }
+
+        .title-slide, .section {
+            vertical-align: middle;
+        }
+
+        .end-slide {
+            background-color: #356aaf;
+            color: white;
+            vertical-align: middle;
+        }
+
+        .black-slide {
+            background-color: black;
+            color: white;
+            border-top: solid 0px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .footnote {
+          position: absolute;
+          bottom: 2em;
+          font-size: 0.5em;
+          opacity: 0.75;
+          margin-left: -5.5em;
+        }
+
+        .footnote a{
+            color: #0288d1;
+        }
+
+        /* Grid CSS */
+        [class*='grid'],
+        [class*='kol-'],
+        .grid:after {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        [class*='kol-'] {
+            float: left;
+            min-height: 1px;
+            padding-right: 20px;
+        }
+
+        [class*='kol-']:last-child {
+            padding-right: 0px;
+        }
+
+        .grid {
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .grid:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .kol-1-1 {
+            width: 100%;
+        }
+
+        .kol-1-2 {
+            width: 50%;
+        }
+
+        .kol-1-3 {
+            width: 33.33%;
+        }
+
+        .kol-2-3 {
+            width: 66.66%;
+        }
+
+        .kol-1-4 {
+            width: 25%;
+        }
+
+        .kol-3-4 {
+            width: 75%;
+        }
+
+    </style>
+</head>
+<body>
+    <textarea id="source">
+class: middle, center, title-slide
+
+# ความรู้เบื้องต้นเกี่ยวกับปัญญาประดิษฐ์
+
+บรรยายครั้งที่ 6: การให้เหตุผลข้ามเวลา
+
+<br><br>
+ผศ. ดร. อิทธิพล ฟองแก้ว<br>
+[ittipon@g.sut.ac.th](mailto:ittipon@g.sut.ac.th)
+
+---
+
+# วันนี้
+
+คงสถานะความเชื่อ (belief state) เกี่ยวกับโลก และอัปเดตเมื่อเวลาผ่านไปและมีหลักฐานใหม่เข้ามา
+
+.grid[
+.kol-1-2[
+- แบบจำลองมาร์คอฟ (Markov models)
+    - กระบวนการมาร์คอฟ (Markov processes)
+    - งานการอนุมาน (Inference tasks)
+    - แบบจำลองมาร์คอฟแบบซ่อนเร้น (Hidden Markov models)
+- ตัวกรอง (Filters)
+    - ตัวกรองคาลมาน (Kalman filter)
+    - ตัวกรองอนุภาค (Particle filter)
+]
+.kol-1-2[.width-100[![](figures/lec6/outline-cartoon.png)]
+]
+]
+
+.alert[อย่ามองข้ามการบรรยายนี้!]
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle, black-slide
+
+.center[
+<video controls preload="auto" height="400" width="640">
+  <source src="./figures/lec6/pacman-no-beliefs.mp4" type="video/mp4">
+</video>
+
+.bold[Pacman แก้แค้น]: จะใช้ประโยชน์จากค่าที่อ่านได้จากโซนาร์ได้อย่างไร?
+]
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+???
+
+---
+
+class: middle
+
+# แบบจำลองมาร์คอฟ (Markov models)
+
+---
+
+class: middle
+
+## การสร้างแบบจำลองการเปลี่ยนแปลงของเวลา
+
+เราจะพิจารณาโลกว่าเป็นชุดของช่วงเวลาที่*ไม่ต่อเนื่อง* (discrete) ซึ่งแต่ละช่วงเวลาประกอบด้วยชุดของตัวแปรสุ่ม:
+- $\mathbf{X}\_t$ แทนเซตของตัวแปรสถานะที่**ไม่สามารถสังเกตได้** (unobservable) ณ เวลา $t$
+- $\mathbf{E}\_t$ แทนเซตของตัวแปรหลักฐานที่*สามารถสังเกตได้* (observable) ณ เวลา $t$
+
+---
+
+class: middle
+
+เราจะระบุ
+- ค่าก่อน (prior) ${\bf P}(\mathbf{X}\_0)$ ที่กำหนดสถานะความเชื่อเริ่มต้นของเราเกี่ยวกับตัวแปรสถานะที่ซ่อนอยู่
+- **แบบจำลองการเปลี่ยนสถานะ (transition model)** ${\bf P}(\mathbf{X}\_t | \mathbf{X}\_{0:t-1})$ (สำหรับ $t > 0$) ที่กำหนดการแจกแจงความน่าจะเป็นของตัวแปรสถานะล่าสุด โดยพิจารณาจากค่าก่อนหน้า (ที่ไม่ได้สังเกต)
+- **แบบจำลองเซ็นเซอร์ (sensor model)** ${\bf P}(\mathbf{E}\_t | \mathbf{X}\_{0:t}, \mathbf{E}\_{0:t-1})$ (สำหรับ $t > 0$) ที่กำหนดการแจกแจงความน่าจะเป็นของตัวแปรหลักฐานล่าสุด โดยพิจารณาจากค่าก่อนหน้าทั้งหมด (ทั้งที่สังเกตได้และไม่ได้สังเกต)
+
+---
+
+# กระบวนการมาร์คอฟ (Markov processes)
+
+## ข้อสมมติของมาร์คอฟ (Markov assumption)
+
+สถานะปัจจุบันของโลกขึ้นอยู่กับสถานะก่อนหน้าทันทีเท่านั้น กล่าวคือ $\mathbf{X}\_t$ ขึ้นอยู่กับเซตย่อยที่มีขอบเขตของ $\mathbf{X}\_{0:t-1}$ เท่านั้น
+
+กระบวนการสุ่มที่สอดคล้องกับข้อสมมตินี้เรียกว่า **กระบวนการมาร์คอฟ (Markov processes)** หรือ **ลูกโซ่มาร์คอฟ (Markov chains)**
+
+## กระบวนการมาร์คอฟอันดับหนึ่ง (First-order Markov processes)
+
+กระบวนการมาร์คอฟที่ $${\bf P}(\mathbf{X}\_t | \mathbf{X}\_{0:t-1}) = {\bf P}(\mathbf{X}\_t | \mathbf{X}\_{t-1})$$
+กล่าวคือ $\mathbf{X}\_t$ และ $\mathbf{X}\_{0:t-2}$ เป็นอิสระต่อกันตามเงื่อนไข (conditionally independent) เมื่อกำหนด $\mathbf{X}\_{t-1}$
+
+<br>
+.center.width-100[![](figures/lec6/markov-process.png)]
+
+---
+
+class: middle
+
+## ข้อสมมติของเซ็นเซอร์มาร์คอฟ (Sensor Markov assumption)
+
+เราตั้งข้อสมมติของเซ็นเซอร์มาร์คอฟ (อันดับหนึ่ง) ว่า $${\bf P}(\mathbf{E}\_t | \mathbf{X}\_{0:t}, \mathbf{E}\_{0:t-1}) = {\bf P}(\mathbf{E}\_t | \mathbf{X}\_{t})$$
+
+## ข้อสมมติของความนิ่ง (Stationarity assumption)
+
+แบบจำลองการเปลี่ยนสถานะและแบบจำลองเซ็นเซอร์จะเหมือนกันสำหรับทุกค่า $t$ (กล่าวคือ กฎทางฟิสิกส์ไม่เปลี่ยนแปลงตามเวลา)
+
+---
+
+# การแจกแจงร่วม (Joint distribution)
+
+<br>
+.center.width-100[![](figures/lec6/smoothing-dbn.svg)]
+<br>
+
+ลูกโซ่มาร์คอฟที่เชื่อมต่อกับแบบจำลองเซ็นเซอร์สามารถแสดงเป็นเครือข่ายแบบเบย์ (Bayesian network) ที่*ขยายได้* (growable) และคลี่ออกไปอย่างไม่สิ้นสุดตามเวลา
+
+*การแจกแจงร่วม*ของตัวแปรทั้งหมดจนถึงเวลา $t$ คือ
+$${\bf P}(\mathbf{X}\_{0:t}, \mathbf{E}\_{1:t}) = {\bf P}(\mathbf{X}\_{0}) \prod\_{i=1}^t {\bf P}(\mathbf{X}\_{i} | \mathbf{X}\_{i-1}) {\bf P}(\mathbf{E}\_{i}|\mathbf{X}\_{i})$$
+
+---
+
+class: middle
+
+## ตัวอย่าง: วันนี้คุณจะพกร่มไปด้วยไหม?
+
+
+.center.width-80[![](figures/lec6/weather-bn.svg)]
+
+.grid[
+.kol-1-2[
+.center.width-100[![](figures/lec6/weather-forecast.png)]
+]
+.kol-1-2[
+- ${\bf P}(\text{Umbrella}\_t | \text{Rain}\_t)$?
+- ${\bf P}(\text{Rain}\_t | \text{Umbrella}\_{0:t-1})$?
+- ${\bf P}(\text{Rain}\_{t+2} | \text{Rain}\_{t})$?
+]]
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+.center.width-60[![](figures/lec6/weather-transition.png)]
+
+แบบจำลองการเปลี่ยนสถานะ ${\bf P}(\text{Rain}\_t | \text{Rain}\_{t-1})$ สามารถแสดงแทนได้ด้วยแผนภาพการเปลี่ยนสถานะ (state transition diagram)
+
+---
+
+# งานการอนุมาน (Inference tasks)
+
+- *การทำนาย (Prediction)*: ${\bf P}(\mathbf{X}\_{t+k}| \mathbf{e}\_{1:t})$ สำหรับ $k>0$
+    - การคำนวณการแจกแจงภายหลัง (posterior distribution) ของสถานะในอนาคต
+    - ใช้สำหรับการประเมินลำดับการกระทำที่เป็นไปได้
+- *การกรอง (Filtering)*: ${\bf P}(\mathbf{X}\_{t}| \mathbf{e}\_{1:t})$
+    - การกรองคือสิ่งที่เอเจนต์ที่มีเหตุผล (rational agent) ทำเพื่อติดตามสถานะที่ซ่อนอยู่ปัจจุบัน $\mathbf{X}\_t$ หรือ **สถานะความเชื่อ (belief state)** ของมัน เพื่อให้สามารถตัดสินใจอย่างมีเหตุผลได้
+- *การปรับให้เรียบ (Smoothing)*: ${\bf P}(\mathbf{X}\_{k}| \mathbf{e}\_{1:t})$ สำหรับ $0 \leq k < t$
+    - การคำนวณการแจกแจงภายหลังของสถานะในอดีต
+    - ใช้เพื่อสร้างการประมาณค่าที่ดีขึ้น เนื่องจากรวมหลักฐานมากขึ้น
+    - จำเป็นสำหรับการเรียนรู้    
+- *คำอธิบายที่น่าจะเป็นไปได้มากที่สุด (Most likely explanation)*: $\arg \max\_{\mathbf{x}\_{1:t}} P(\mathbf{x}\_{1:t}| \mathbf{e}\_{1:t})$
+    - การถอดรหัสช่องสัญญาณที่มีสัญญาณรบกวน, การรู้จำเสียงพูด, ฯลฯ
+
+---
+
+# กรณีพื้นฐาน (Base cases)
+
+.grid[
+.kol-1-2.center[
+.width-80[![](figures/lec6/base-case2.png)]
+
+$\begin{aligned}
+{\bf P}(\mathbf{X}\_2) &= \sum\_{\mathbf{x}\_1} {\bf P}(\mathbf{X}\_2, \mathbf{x}\_1) \\\\
+&= \sum\_{\mathbf{x}\_1} P(\mathbf{x}\_1) {\bf P}(\mathbf{X}\_2 | \mathbf{x}\_1)
+\end{aligned}$
+
+(ทำนาย) ผลัก ${\bf P}(\mathbf{X}\_1)$ ไปข้างหน้าผ่านแบบจำลองการเปลี่ยนสถานะ
+]
+.kol-1-2.center[
+.width-70[![](figures/lec6/base-case1.png)]
+
+$\begin{aligned}
+{\bf P}(\mathbf{X}\_1 | \mathbf{e}\_1) &=\frac{ {\bf P}(\mathbf{e}\_1 | \mathbf{X}\_1) {\bf P}(\mathbf{X}\_1)}{P(\mathbf{e}\_1)} \\\\
+&\propto {\bf P}(\mathbf{e}\_1 | \mathbf{X}\_1) {\bf P}(\mathbf{X}\_1)
+\end{aligned}$
+
+(อัปเดต) อัปเดต ${\bf P}(\mathbf{X}\_1)$ ด้วยหลักฐาน $\mathbf{e}\_1$ โดยใช้แบบจำลองเซ็นเซอร์
+]
+]
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+# การทำนาย (Prediction)
+
+.center.width-50[![](figures/lec6/stationary-cartoon.png)]
+
+เพื่อทำนายอนาคต ${\bf P}(\mathbf{X}\_{t+k}| \mathbf{e}\_{1:t})$:
+- **ผลัก**สถานะความเชื่อก่อนหน้า ${\bf P}(\mathbf{X}\_{t} | \mathbf{e}\_{1:t})$ ผ่านแบบจำลองการเปลี่ยนสถานะ:
+$${\bf P}(\mathbf{X}\_{t+1}| \mathbf{e}\_{1:t}) = \sum\_{\mathbf{x}\_{t}} {\bf P}(\mathbf{X}\_{t+1} | \mathbf{x}\_{t}) P(\mathbf{x}\_{t} | \mathbf{e}\_{1:t})$$
+
+- ทำซ้ำจนถึง $t+k$ โดยใช้ ${\bf P}(\mathbf{X}\_{t+k-1}| \mathbf{e}\_{1:t})$ เพื่อคำนวณ ${\bf P}(\mathbf{X}\_{t+k}| \mathbf{e}\_{1:t})$
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle, black-slide
+
+.center[
+<video controls preload="auto" height="400" width="640">
+  <source src="./figures/lec6/gb-basics.mp4" type="video/mp4">
+</video>]
+
+.center[พลวัตแบบสุ่ม (Random dynamics)]
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle, black-slide
+
+.center[
+<video controls preload="auto" height="400" width="640">
+  <source src="./figures/lec6/gb-circular.mp4" type="video/mp4">
+</video>]
+
+.center[พลวัตแบบวงกลม (Circular dynamics)]
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle, black-slide
+
+.center[
+<video controls preload="auto" height="400" width="640">
+  <source src="./figures/lec6/gb-whirlpool.mp4" type="video/mp4">
+</video>]
+
+.center[พลวัตแบบน้ำวน (Whirlpool dynamics)]
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+.center[
+.width-70[![](figures/lec6/prediction.png)]
+
+.width-70[![](figures/lec6/uncertainty.png)]
+]
+
+เมื่อเวลาผ่านไป ความไม่แน่นอน (uncertainty) มักจะเพิ่มขึ้นเมื่อไม่มีหลักฐานใหม่
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+# การแจกแจงคงที่ (Stationary distributions)
+
+จะเกิดอะไรขึ้นถ้า $t \to \infty$?
+- สำหรับลูกโซ่ส่วนใหญ่ อิทธิพลของการแจกแจงเริ่มต้นจะลดน้อยลงเรื่อยๆ ตามเวลา
+- ในที่สุด การแจกแจงจะลู่เข้าสู่จุดคงที่ เรียกว่า **การแจกแจงคงที่ (stationary distribution)**
+- การแจกแจงนี้เป็นไปตามสมการ
+$${\bf P}(\mathbf{X}\_\infty) = {\bf P}(\mathbf{X}\_{\infty+1}) = \sum\_{\mathbf{x}\_\infty} {\bf P}(\mathbf{X}\_{\infty+1} | \mathbf{x}\_\infty) P(\mathbf{x}\_\infty)$$
+
+---
+
+class: middle
+
+| $\mathbf{X}\_{t-1}$ | $\mathbf{X}\_{t}$ | $P$ |
+| --- | --- | --- |
+| $\text{sun}$ | $\text{sun}$ | 0.9 |
+| $\text{sun}$ | $\text{rain}$ | 0.1 |
+| $\text{rain}$ | $\text{sun}$ | 0.3 |
+| $\text{rain}$ | $\text{rain}$ | 0.7 |
+
+## ตัวอย่าง
+
+$
+\begin{aligned}
+P(\mathbf{X}\_\infty = \text{sun}) =&\, P(\mathbf{X}\_{\infty+1} = \text{sun}) \\\\
+=&\, P(\mathbf{X}\_{\infty+1}=\text{sun} | \mathbf{X}\_{\infty}=\text{sun}) P(\mathbf{X}\_{\infty}=\text{sun})\\\\
+ & + P(\mathbf{X}\_{\infty+1}=\text{sun} | \mathbf{X}\_{\infty}=\text{rain}) P(\mathbf{X}\_{\infty}=\text{rain})\\\\
+=&\, 0.9 P(\mathbf{X}\_{\infty}=\text{sun}) + 0.3 P(\mathbf{X}\_{\infty}=\text{rain})
+\end{aligned}
+$
+
+ดังนั้น $P(\mathbf{X}\_\infty=\text{sun}) = 3 P(\mathbf{X}\_\infty=\text{rain})$
+
+ซึ่งหมายความว่า
+$P(\mathbf{X}\_\infty=\text{sun}) = \frac{3}{4}$ และ
+$P(\mathbf{X}\_\infty=\text{rain}) = \frac{1}{4}$
+
+---
+
+# การกรอง (Filtering)
+
+<br><br>
+
+.center.width-90[![](figures/lec6/observation.png)]
+<br>
+
+.center[เมื่อมีหลักฐานใหม่ ความไม่แน่นอนจะลดลง ความเชื่อจะถูกถ่วงน้ำหนักใหม่ แต่อย่างไร?]
+
+???
+
+$${\bf P}(\mathbf{X}\_{t+1}| \mathbf{e}\_{1:t+1}) \propto {\bf P}(\mathbf{e}\_{t+1} | \mathbf{X}\_{t+1}) {\bf P}(\mathbf{X}\_{t+1} | \mathbf{e}\_{1:t})$$
+
+---
+
+class: middle
+
+## ตัวกรองของเบย์ (Bayes filter)
+
+เอเจนต์จะรักษาการประมาณค่า **สถานะความเชื่อ (belief state)** ${\bf P}(\mathbf{X}\_{t}| \mathbf{e}\_{1:t})$ และอัปเดตเมื่อมีหลักฐานใหม่ $\mathbf{e}\_{t+1}$ เข้ามา
+
+กระบวนการนี้สามารถทำได้โดยใช้กระบวนการประมาณค่าแบบเบย์เวียนซ้ำ ${\bf P}(\mathbf{X}\_{t+1}| \mathbf{e}\_{1:t+1}) = f(\mathbf{e}\_{t+1}, {\bf P}(\mathbf{X}\_{t}| \mathbf{e}\_{1:t}))$ ซึ่งสลับระหว่างสองขั้นตอน:
+- (ขั้นตอนการทำนาย): ฉายภาพสถานะความเชื่อปัจจุบันไปข้างหน้าจาก $t$ ไปยัง $t+1$ ผ่านแบบจำลองการเปลี่ยนสถานะ
+- (ขั้นตอนการอัปเดต): อัปเดตสถานะใหม่นี้โดยใช้หลักฐาน $\mathbf{e}\_{t+1}$
+
+---
+
+class: middle
+
+ในทางคณิตศาสตร์ ตัวกรองของเบย์ถูกกำหนดโดย
+$$
+\begin{aligned}
+{\bf P}(\mathbf{X}\_{t+1}| \mathbf{e}\_{1:t+1}) &= {\bf P}(\mathbf{X}\_{t+1}| \mathbf{e}\_{1:t}, \mathbf{e}\_{t+1}) \\\\
+&\propto {\bf P}(\mathbf{e}\_{t+1}| \mathbf{X}\_{t+1}, \mathbf{e}\_{1:t}) {\bf P}(\mathbf{X}\_{t+1}| \mathbf{e}\_{1:t}) \\\\
+&\propto {\bf P}(\mathbf{e}\_{t+1}| \mathbf{X}\_{t+1}) {\bf P}(\mathbf{X}\_{t+1}| \mathbf{e}\_{1:t}) \\\\
+&\propto {\bf P}(\mathbf{e}\_{t+1}| \mathbf{X}\_{t+1}) \sum\_{\mathbf{x}\_t} {\bf P}(\mathbf{X}\_{t+1}|\mathbf{x}\_t, \mathbf{e}\_{1:t}) P(\mathbf{x}\_t | \mathbf{e}\_{1:t}) \\\\
+&\propto {\bf P}(\mathbf{e}\_{t+1}| \mathbf{X}\_{t+1}) \sum\_{\mathbf{x}\_t} {\bf P}(\mathbf{X}\_{t+1}|\mathbf{x}\_t) P(\mathbf{x}\_t | \mathbf{e}\_{1:t})
+\end{aligned}
+$$
+โดยที่
+- ค่าคงที่การทำให้เป็นบรรทัดฐาน (normalization constant) $$Z = P(\mathbf{e}\_{t+1} | \mathbf{e}\_{1:t}) = \sum\_{\mathbf{x}\_{t+1}} P(\mathbf{e}\_{t+1} | \mathbf{x}\_{t+1}) P(\mathbf{x}\_{t+1} | \mathbf{e}\_{1:t}) $$  ใช้เพื่อทำให้ความน่าจะเป็นรวมกันเป็น 1
+- ในนิพจน์สุดท้าย พจน์แรกและพจน์ที่สองได้มาจากแบบจำลอง ในขณะที่พจน์ที่สามได้มาจากการเรียกซ้ำ
+
+<!-- $P(\mathbf{X}\_{t+1}| \mathbf{e}\_{1:t+1}) = P(\mathbf{X}\_{t+1}| \mathbf{e}\_{1:t}, \mathbf{e}\_{t+1})$<br>
+$\quad = \alpha P(\mathbf{e}\_{t+1}| \mathbf{X}\_{t+1}, \mathbf{e}\_{1:t}) P(\mathbf{X}\_{t+1}| \mathbf{e}\_{1:t}) \quad $<br>
+$\quad = \alpha P(\mathbf{e}\_{t+1}| \mathbf{X}\_{t+1}) P(\mathbf{X}\_{t+1}| \mathbf{e}\_{1:t})$<br>
+$\quad = \alpha P(\mathbf{e}\_{t+1}| \mathbf{X}\_{t+1}) \sum\_{\mathbf{x}\_t} P(\mathbf{X}\_{t+1}|\mathbf{x}\_t, \mathbf{e}\_{1:t}) P(\mathbf{x}\_t | \mathbf{e}\_{1:t}) $<br>
+$\quad = \alpha P(\mathbf{e}\_{t+1}| \mathbf{X}\_{t+1}) \sum\_{\mathbf{x}\_t} P(\mathbf{X}\_{t+1}|\mathbf{x}\_t) P(\mathbf{x}\_t | \mathbf{e}\_{1:t}) $ -->
+
+---
+
+class: middle
+
+เราสามารถคิดว่า ${\bf P}(\mathbf{X}\_t | \mathbf{e}\_{1:t})$ เป็น *ข้อความ* (message) $\mathbf{f}\_{1:t}$ ที่ถูกส่งต่อ **ไปข้างหน้า** (forward) ตามลำดับ ซึ่งถูกแก้ไขโดยการเปลี่ยนสถานะแต่ละครั้งและอัปเดตโดยการสังเกตใหม่แต่ละครั้ง
+
+ดังนั้น กระบวนการนี้สามารถเขียนเป็น $\mathbf{f}\_{1:t+1} \propto \text{forward}(\mathbf{f}\_{1:t}, \mathbf{e}\_{t+1} )$ ความซับซ้อนของมันคงที่ (ทั้งในด้านเวลาและพื้นที่) เทียบกับ $t$
+
+---
+
+class: middle
+
+## ตัวอย่าง
+
+.center.width-50[![](figures/lec6/filtering.png)]
+
+<br>
+
+.grid[
+.kol-1-4[]
+.kol-1-4.center[
+
+| $R\_{t-1}$ | $P(R\_t)$ |
+| ---------- | --------- |
+| $\text{true}$ | $0.7$ |
+| $\text{false}$ | $0.3$ |
+
+]
+.kol-1-4.center[
+
+| $R\_{t}$ | $P(U\_t)$ |
+| ---------- | --------- |
+| $\text{true}$ | $0.9$ |
+| $\text{false}$ | $0.2$ |
+
+]
+]
+
+???
+
+แก้บนกระดานดำ
+
+---
+
+class: middle, black-slide
+
+.center[
+<video controls preload="auto" height="400" width="640">
+  <source src="./figures/lec6/pacman-with-beliefs.mp4" type="video/mp4">
+</video>
+
+Ghostbusters กับตัวกรองของเบย์
+]
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+--
+
+```
+python3 run.py --nghosts 2 --layout maze_small --agentfile sherlockpacman.py --bsagentfile bayesfilter.py --show True
+python3 run.py --nghosts 3 --layout maze_medium --agentfile sherlockpacman.py --bsagentfile bayesfilter.py --show True
+python3 run.py --nghosts 4 --layout maze_huge --agentfile sherlockpacman.py --bsagentfile bayesfilter.py --show True
+
+```
+
+---
+
+# การปรับให้เรียบ (Smoothing)
+
+เราต้องการคำนวณ ${\bf P}(\mathbf{X}\_{k}| \mathbf{e}\_{1:t})$ สำหรับ $0 \leq k < t$
+
+โดยการแบ่งหลักฐาน $\mathbf{e}\_{1:t}$ ออกเป็น $\mathbf{e}\_{1:k}$ และ $\mathbf{e}\_{k+1:t}$ เราจะได้
+$$
+\begin{aligned}
+{\bf P}(\mathbf{X}\_k | \mathbf{e}\_{1:t}) &= {\bf P}(\mathbf{X}\_k | \mathbf{e}\_{1:k}, \mathbf{e}\_{k+1:t}) \\\\
+&\propto {\bf P}(\mathbf{X}\_k | \mathbf{e}\_{1:k}) {\bf P}(\mathbf{e}\_{k+1:t} | \mathbf{X}\_k, \mathbf{e}\_{1:k}) \\\\
+&\propto {\bf P}(\mathbf{X}\_k | \mathbf{e}\_{1:k}) {\bf P}(\mathbf{e}\_{k+1:t} | \mathbf{X}\_k)
+\end{aligned}
+$$
+
+---
+
+class: middle
+
+ให้ข้อความ **ย้อนกลับ** (backward) $\mathbf{b}\_{k+1:t}$ แทน ${\bf P}(\mathbf{e}\_{k+1:t} | \mathbf{X}\_k)$ ดังนั้น
+$${\bf P}(\mathbf{X}\_k | \mathbf{e}\_{1:t}) = \alpha\, \mathbf{f}\_{1:k} \times \mathbf{b}\_{k+1:t},$$
+โดยที่ $\times$ คือการคูณแบบจุดต่อจุดของเวกเตอร์
+
+
+ข้อความย้อนกลับนี้สามารถคำนวณได้โดยใช้การเรียกซ้ำแบบย้อนกลับ:
+
+$$
+\begin{aligned}
+{\bf P}(\mathbf{e}\_{k+1:t} | \mathbf{X}\_k) &= \sum\_{\mathbf{x}\_{k+1}} {\bf P}(\mathbf{e}\_{k+1:t} | \mathbf{X}\_k, \mathbf{x}\_{k+1}) {\bf P}(\mathbf{x}\_{k+1} | \mathbf{X}\_k) \\\\
+&= \sum\_{\mathbf{x}\_{k+1}} P(\mathbf{e}\_{k+1:t} | \mathbf{x}\_{k+1}) {\bf P}(\mathbf{x}\_{k+1} | \mathbf{X}\_k) \\\\
+&= \sum\_{\mathbf{x}\_{k+1}} P(\mathbf{e}\_{k+1} | \mathbf{x}\_{k+1}) P(\mathbf{e}\_{k+2:t} | \mathbf{x}\_{k+1}) {\bf P}(\mathbf{x}\_{k+1} | \mathbf{X}\_k)
+\end{aligned}
+$$
+
+ปัจจัยแรกและปัจจัยสุดท้ายได้มาจากแบบจำลอง ปัจจัยที่สองได้มาจากการเรียกซ้ำ ดังนั้น
+$$\mathbf{b}\_{k+1:t} = \text{backward}(\mathbf{b}\_{k+2:t}, \mathbf{e}\_{k+1} )$$
+
+---
+
+class: middle
+
+## อัลกอริทึมไปข้างหน้า-ย้อนกลับ (Forward-backward algorithm)
+
+.center.width-70[![](figures/lec6/forward-backward.png)]
+
+ความซับซ้อน:
+- การปรับให้เรียบสำหรับช่วงเวลา $k$ ใดๆ ใช้เวลา: $O(t)$
+- การปรับให้เรียบทั้งลำดับ (เนื่องจากการแคช):  $O(t)$
+
+---
+
+class: middle
+
+## ตัวอย่าง
+
+.center.width-50[![](figures/lec6/smoothing.png)]
+
+???
+
+แก้บนกระดานดำ
+
+---
+
+# คำอธิบายที่น่าจะเป็นไปได้มากที่สุด (Most likely explanation)
+
+<br>
+.center.width-80[![](figures/lec6/sherlock-mostlikely.png)]
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle 
+
+.center.width-80[![](figures/lec6/weather.png)]
+
+สมมติว่า $[\text{true}, \text{true}, \text{false}, \text{true}, \text{true}]$ คือลำดับการพกร่ม
+
+- ลำดับของสภาพอากาศที่น่าจะอธิบายสิ่งนี้ได้ดีที่สุดคืออะไร?
+- ในบรรดาลำดับทั้งหมด $2^5$ ลำดับ มีวิธี (ที่มีประสิทธิภาพ) ในการค้นหาลำดับที่น่าจะเป็นไปได้มากที่สุดหรือไม่?
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+ลำดับที่น่าจะเป็นไปได้มากที่สุด **ไม่ใช่** ลำดับของสถานะที่น่าจะเป็นไปได้มากที่สุด!
+
+เส้นทางที่น่าจะเป็นไปได้มากที่สุดไปยังแต่ละ $\mathbf{x}\_{t+1}$ คือเส้นทางที่น่าจะเป็นไปได้มากที่สุดไปยัง *บาง* $\mathbf{x}\_t$ บวกอีกหนึ่งขั้นตอน ดังนั้น
+$$
+\begin{aligned}
+&\max\_{\mathbf{x}\_{1:t}} {\bf P}(\mathbf{x}\_{1:t}, \mathbf{X}\_{t+1} | \mathbf{e}\_{1:t+1}) \\\\
+&\propto {\bf P}(\mathbf{e}\_{t+1}|\mathbf{X}\_{t+1}) \max\_{\mathbf{x}\_t}( {\bf P}(\mathbf{X}\_{t+1} | \mathbf{x}\_t) \max\_{\mathbf{x}\_{1:t-1}} {\bf P}(\mathbf{x}\_{1:t-1}, \mathbf{x}\_{t} | \mathbf{e}\_{1:t}) )
+\end{aligned}
+$$
+
+
+ลองพิจารณาเส้นทางที่ไปถึงสถานะ `Rain 5 = true` 
+
+เนื่องจากคุณสมบัติของมาร์คอฟ จะเห็นได้ว่าเส้นทางที่น่าจะเป็นไปได้มากที่สุดไปยังสถานะ `Rain 5 = true` ประกอบด้วยเส้นทางที่น่าจะเป็นไปได้มากที่สุดไปยังสถานะใดสถานะหนึ่ง ณ เวลา 4 ตามด้วยการเปลี่ยนไปยัง `Rain 5 = true`; และสถานะ ณ เวลา 4 ที่จะกลายเป็นส่วนหนึ่งของเส้นทางไปยัง `Rain 5 = true` คือสถานะใดก็ตามที่ทำให้ความน่าจะเป็นของเส้นทางนั้นสูงสุด
+
+---
+
+class: middle
+
+สิ่งนี้เหมือนกับการกรอง ยกเว้นว่า
+- ข้อความไปข้างหน้า $\mathbf{f}\_{1:t} = {\bf P}(\mathbf{X}\_t | \mathbf{e}\_{1:t})$ ถูกแทนที่ด้วย
+$$\mathbf{m}\_{1:t} = \max\_{\mathbf{x}\_{1:t-1}} {\bf P}(\mathbf{x}\_{1:t-1}, \mathbf{X}\_{t} | \mathbf{e}\_{1:t}),$$
+โดยที่ $\mathbf{m}\_{1:t}(i)$ ให้ความน่าจะเป็นของเส้นทางที่น่าจะเป็นไปได้มากที่สุดไปยังสถานะ $i$
+- การอัปเดตมีการแทนที่ผลรวมด้วยค่าสูงสุด
+
+อัลกอริทึมที่ได้เรียกว่า **อัลกอริทึม Viterbi** ซึ่งคำนวณคำอธิบายที่น่าจะเป็นไปได้มากที่สุดเป็น
+$$\mathbf{m}\_{1:t+1} \propto {\bf P}(\mathbf{e}\_{t+1} | \mathbf{X}\_{t+1}) \max\_{\mathbf{x}\_{t}} {\bf P}(\mathbf{X}\_{t+1} | \mathbf{x}\_{t}) \mathbf{m}\_{1:t}$$ ความซับซ้อนของมันเป็นเชิงเส้นกับ $t$ ซึ่งเป็นความยาวของลำดับ
+
+
+
+*ขั้นตอนแบบง่าย: ใช้การปรับให้เรียบเพื่อคำนวณ $P(X\_k|e\_{1:t})$ จากนั้นแสดงผลลำดับของค่าที่น่าจะเป็นไปได้มากที่สุดสำหรับแต่ละ $k$*
+
+---
+
+class: middle
+
+## ตัวอย่าง
+
+.center.width-50[![](figures/lec6/viterbi.png)]
+
+
+<span class="Q">[Q]</span> คุณจะดึงเส้นทางกลับมาได้อย่างไร นอกเหนือจากความน่าจะเป็นของมัน?
+
+---
+
+# แบบจำลองมาร์คอฟแบบซ่อนเร้น (Hidden Markov models)
+
+จนถึงตอนนี้ เราได้อธิบายกระบวนการมาร์คอฟบนเซตของตัวแปรสถานะ $\mathbf{X}\_t$ และตัวแปรหลักฐาน $\mathbf{E}\_t$ ใดๆ
+- **แบบจำลองมาร์คอฟแบบซ่อนเร้น (HMM)** คือกระบวนการมาร์คอฟที่ทั้งสถานะ $\mathbf{X}\_t$ และหลักฐาน $\mathbf{E}\_t$ เป็นตัวแปรสุ่ม*เดี่ยวที่ไม่ต่อเนื่อง* (single discrete)
+    - $\mathbf{X}\_t = X\_t$, โดยมีโดเมน $D\_{X\_t} = \\\{1, ..., S\\\}$
+    - $\mathbf{E}\_t = E\_t$, โดยมีโดเมน $D\_{E\_t} = \\\{1, ..., R\\\}$
+- โครงสร้างที่จำกัดนี้ช่วยให้สามารถปรับสูตรอัลกอริทึมไปข้างหน้า-ย้อนกลับในรูปของการดำเนินการเมทริกซ์-เวกเตอร์ได้
+
+---
+
+class: middle
+
+## หมายเหตุเกี่ยวกับคำศัพท์
+
+ผู้เขียนบางคนแบ่งแบบจำลองมาร์คอฟออกเป็นสองประเภท ขึ้นอยู่กับการสังเกตสถานะของระบบ:
+- สถานะของระบบที่สังเกตได้: ลูกโซ่มาร์คอฟ (Markov chains)
+- สถานะของระบบที่สังเกตได้บางส่วน: แบบจำลองมาร์คอฟแบบซ่อนเร้น (Hidden Markov models)
+
+ในที่นี้เราจะใช้คำศัพท์ตามตำราเรียนตามที่กำหนดไว้ในสไลด์ก่อนหน้า
+
+---
+
+class: middle
+
+## อัลกอริทึมเมทริกซ์แบบง่าย
+
+- ค่าก่อน ${\bf P}(X\_0)$ จะกลายเป็นเวกเตอร์คอลัมน์ (ที่ทำให้เป็นบรรทัดฐาน) $\mathbf{f}\_0 \in \mathbb{R}_+^S$
+- แบบจำลองการเปลี่ยนสถานะ ${\bf P}(X\_t | X\_{t-1})$ จะกลายเป็น **เมทริกซ์การเปลี่ยนสถานะ (transition matrix)** $\mathbf{T}$ ขนาด $S \times S$ โดยที่ $$\mathbf{T}\_{ij} = P(X\_t=j | X\_{t-1}=i)$$
+- แบบจำลองเซ็นเซอร์ ${\bf P}(E\_t | X\_t)$ ถูกกำหนดเป็น **เมทริกซ์เซ็นเซอร์ (sensor matrix)** $\mathbf{B}$ ขนาด $S \times R$ โดยที่
+$$\mathbf{B}\_{ij} = P(E\_t=j | X\_t=i)$$
+
+---
+
+class: middle
+
+- ให้เมทริกซ์การสังเกต $\mathbf{O}\_t$ เป็นเมทริกซ์ทแยงมุมที่มีสมาชิกเป็นคอลัมน์ $e\_t$ ของเมทริกซ์เซ็นเซอร์ $\mathbf{B}$
+- ถ้าเราใช้เวกเตอร์คอลัมน์แทนข้อความไปข้างหน้าและย้อนกลับ เราจะได้
+$$\mathbf{f}\_{1:t+1} = \alpha \mathbf{O}\_{t+1} \mathbf{T}^T \mathbf{f}\_{1:t}$$
+$$\mathbf{b}\_{k+1:t} = \mathbf{T} \mathbf{O}\_{k+1} \mathbf{b}\_{k+2:t},$$
+โดยที่ $\mathbf{b}\_{t+1:t}$ เป็นเวกเตอร์ที่มีค่าเป็นหนึ่งทั้งหมดขนาด $S$
+- ดังนั้นอัลกอริทึมไปข้างหน้า-ย้อนกลับต้องการเวลา $O(S^2t)$ และพื้นที่ $O(St)$
+---
+
+class: middle
+
+## ตัวอย่าง
+
+สมมติว่า $[\text{true}, \text{true}, \text{false}, \text{true}, \text{true}]$ คือลำดับการพกร่ม
+
+$$
+\begin{aligned}
+\mathbf{f}\_0 &= \left(\begin{matrix}
+    0.5 \\\\
+    0.5
+\end{matrix}\right)\\\\
+\mathbf{T} &= \left(\begin{matrix}
+0.7 & 0.3 \\\\
+0.3 & 0.7
+\end{matrix}\right)\\\\
+\mathbf{B} &= \left(\begin{matrix}
+0.9 & 0.1 \\\\
+0.2 & 0.8
+\end{matrix}\right)\\\\
+\mathbf{O}\_1 = \mathbf{O}\_2 = \mathbf{O}\_4 = \mathbf{O}\_5 &= \left(\begin{matrix}
+0.9 & 0.0 \\\\
+0.0 & 0.2
+\end{matrix}\right) \\\\
+\mathbf{O}\_3 &= \left(\begin{matrix}
+0.1 & 0.0 \\\\
+0.0 & 0.8
+\end{matrix}\right)
+\end{aligned}
+$$
+
+ดูการทำงานได้ที่ `code/lecture6-forward-backward.ipynb`
+
+---
+
+class: middle
+
+## การแจกแจงคงที่ (Stationary distribution)
+
+การแจกแจงคงที่ $\mathbf{f}$ ของ HMM คือการแจกแจงที่
+$$\mathbf{f} = \mathbf{T}^T \mathbf{f}$$
+ดังนั้น การแจกแจงคงที่จึงสอดคล้องกับเวกเตอร์ลักษณะเฉพาะ (eigenvector) (ที่ทำให้เป็นบรรทัดฐาน) ของเมทริกซ์การเปลี่ยนสถานะที่สลับเปลี่ยน (transposed) ซึ่งมีค่าลักษณะเฉพาะ (eigenvalue) เท่ากับ 1
+
+---
+
+class: middle
+
+# ตัวกรอง (Filters)
+
+---
+
+class: middle
+
+.center.width-30[![](figures/lec6/robot-helicopter.png)]
+
+สมมติว่าเราต้องการติดตามตำแหน่งและความเร็วของหุ่นยนต์จากการสังเกตที่มีสัญญาณรบกวนซึ่งรวบรวมเมื่อเวลาผ่านไป
+
+ในทางคณิตศาสตร์ เราต้องการประมาณค่าตัวแปรสถานะ**ต่อเนื่อง** (continuous) เช่น
+- ตำแหน่ง $\mathbf{X}\_t$ ของหุ่นยนต์ ณ เวลา $t$
+- ความเร็ว $\mathbf{\dot{X}}\_t$ ของหุ่นยนต์ ณ เวลา $t$
+
+เราสมมติว่าช่วงเวลาเป็นแบบ*ไม่ต่อเนื่อง* (discrete)
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+# ตัวแปรต่อเนื่อง (Continuous variables)
+
+ให้ $X: \Omega \to D\_X$ เป็นตัวแปรสุ่ม
+- เมื่อ $D\_X$ เป็นอนันต์แบบนับไม่ได้ (uncountably infinite) (เช่น $D\_X = \mathbb{R}$) $X$ จะถูกเรียกว่า *ตัวแปรสุ่มต่อเนื่อง*
+- ถ้า $X$ เป็นแบบต่อเนื่องสัมบูรณ์ (absolutely continuous) การแจกแจงความน่าจะเป็นของมันจะถูกอธิบายโดย **ฟังก์ชันความหนาแน่น (density function)** $p$ ที่กำหนดความน่าจะเป็นให้กับช่วงใดๆ $[a,b] \subseteq D\_X$ โดยที่
+$$P(a < X \leq b) = \int\_a^b p(x) dx,$$
+โดยที่ $p$ เป็นฟังก์ชันต่อเนื่องเป็นช่วงๆ ที่ไม่เป็นลบ และ $$\int\_{D\_X} p(x)dx=1$$
+
+---
+
+class: middle
+
+## การแจกแจงเอกรูป (Uniform)
+
+.center.width-40[![](figures/lec6/uniform.png)]
+
+การแจกแจงเอกรูป $\mathcal{U}(a,b)$ ถูกอธิบายโดยฟังก์ชันความหนาแน่น
+$$
+p(x) = \begin{cases}
+\frac{1}{b-a} & \text{if } x \in \[a,b\]\\\\
+0 & \text{otherwise}
+\end{cases}$$
+โดยที่ $a \in \mathbb{R}$ และ $b \in \mathbb{R}$ คือขอบเขตของมัน
+
+---
+
+class: middle
+
+## การแจกแจงปกติ (Normal)
+
+.center.width-40[![](figures/lec6/normal.png)]
+
+การแจกแจงปกติ (หรือเกาส์เซียน) $\mathcal{N}(\mu,\sigma)$ ถูกอธิบายโดยฟังก์ชันความหนาแน่น
+$$p(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
+โดยที่ $\mu \in \mathbb{R}$ และ $\sigma \in \mathbb{R}^+$ คือพารามิเตอร์ค่าเฉลี่ยและส่วนเบี่ยงเบนมาตรฐานของมัน
+
+???
+
+แสดงความคิดเห็นว่า
+- $\mu$ คือตำแหน่ง
+- $\sigma$ คือความกว้างของโค้งปกติ
+
+---
+
+class: middle
+
+## การแจกแจงปกติหลายตัวแปร (Multivariate normal)
+
+.center.width-60[![](figures/lec6/mvn.png)]
+
+การแจกแจงปกติหลายตัวแปรขยายไปสู่ตัวแปรสุ่ม $n$ ตัว ฟังก์ชันความหนาแน่น (ร่วม) ของมันถูกกำหนดเป็น
+$$p(\mathbf{x}=x\_1, ..., x\_n) = \frac{1}{\sqrt{(2\pi)^n|\mathbf{\Sigma}|}} \exp\left(-\frac{1}{2} (\mathbf{x}-\mathbf{m})^T \mathbf{\Sigma}^{-1} (\mathbf{x}-\mathbf{m}) \right) $$
+โดยที่ $\mathbf{m} \in \mathbb{R}^n$ และ $\mathbf{\Sigma} \in \mathbb{R}^{n\times n}$ เป็นเมทริกซ์บวกกึ่งแน่นอน (positive semi-definite)
+
+---
+
+class: middle
+
+## สูตรสรุปสำหรับแบบจำลองเกาส์เซียน (Särkkä, 2013)
+
+ถ้า $\mathbf{x}$ และ $\mathbf{y}$ มีการแจกแจงเกาส์เซียนร่วม
+$$
+\begin{aligned}
+p\left(\begin{matrix}
+\mathbf{x} \\\\
+\mathbf{y} 
+\end{matrix}\right) = \mathcal{N}\left( \left(\begin{matrix}
+\mathbf{x} \\\\
+\mathbf{y} 
+\end{matrix}\right) \bigg\vert \left(\begin{matrix}
+\mathbf{a} \\\\
+\mathbf{b} 
+\end{matrix}\right), \left(\begin{matrix}
+\mathbf{A} & \mathbf{C} \\\\
+\mathbf{C}^T & \mathbf{B}
+\end{matrix}\right) \right),
+\end{aligned}
+$$
+แล้วการแจกแจงขอบ (marginal) และการแจกแจงมีเงื่อนไข (conditional) ของ $\mathbf{x}$ และ $\mathbf{y}$ จะเป็น
+$$
+\begin{aligned}
+p(\mathbf{x}) &= \mathcal{N}(\mathbf{x}|\mathbf{a}, \mathbf{A}) \\\\
+p(\mathbf{y}) &= \mathcal{N}(\mathbf{y}|\mathbf{b}, \mathbf{B}) \\\\
+p(\mathbf{x}|\mathbf{y}) &= \mathcal{N}(\mathbf{x}|\mathbf{a}+\mathbf{C}\mathbf{B}^{-1}(\mathbf{y}-\mathbf{b}), \mathbf{A}-\mathbf{C}\mathbf{B}^{-1}\mathbf{C}^T) \\\\
+p(\mathbf{y}|\mathbf{x}) &= \mathcal{N}(\mathbf{y}|\mathbf{b}+\mathbf{C}^T\mathbf{A}^{-1}(\mathbf{x} - \mathbf{a}) , \mathbf{B}-\mathbf{C}^T\mathbf{A}^{-1}\mathbf{C})
+\end{aligned}
+$$
+
+---
+
+class: middle
+
+ถ้าตัวแปรสุ่ม $\mathbf{x}$ และ $\mathbf{y}$ มีการแจกแจงความน่าจะเป็นแบบเกาส์เซียน
+$$
+\begin{aligned}
+p(\mathbf{x}) &= \mathcal{N}(\mathbf{x}|\mathbf{m}, \mathbf{P}) \\\\
+p(\mathbf{y}|\mathbf{x}) &= \mathcal{N}(\mathbf{y}|\mathbf{H}\mathbf{x}+\mathbf{u}, \mathbf{R}),
+\end{aligned}
+$$
+แล้วการแจกแจงร่วมของ $\mathbf{x}$ และ $\mathbf{y}$ จะเป็นแบบเกาส์เซียนด้วย
+$$
+\begin{aligned}
+p\left(\begin{matrix}
+\mathbf{x} \\\\
+\mathbf{y} 
+\end{matrix}\right) = \mathcal{N}\left( \left(\begin{matrix}
+\mathbf{x} \\\\
+\mathbf{y} 
+\end{matrix}\right) \bigg\vert \left(\begin{matrix}
+\mathbf{m} \\\\
+\mathbf{H}\mathbf{m}+\mathbf{u} 
+\end{matrix}\right), \left(\begin{matrix}
+\mathbf{P} & \mathbf{P}\mathbf{H}^T \\\\
+\mathbf{H}\mathbf{P} & \mathbf{H}\mathbf{P}\mathbf{H}^T + \mathbf{R} 
+\end{matrix}\right) \right)
+\end{aligned}
+$$
+
+---
+
+# ตัวกรองของเบย์แบบต่อเนื่อง (Continuous Bayes filter)
+
+ตัวกรองของเบย์ขยายไปสู่ตัวแปรสถานะและหลักฐาน**ต่อเนื่อง** $\mathbf{X}\_{t}$ และ $\mathbf{E}\_{t}$
+
+ผลรวมจะถูกแทนที่ด้วยปริพันธ์ และฟังก์ชันมวลความน่าจะเป็นจะถูกแทนที่ด้วยฟังก์ชันความหนาแน่นของความน่าจะเป็น ทำให้ได้ความสัมพันธ์แบบเบย์เวียนซ้ำ
+$$
+\begin{aligned}
+p(\mathbf{x}\_{t+1}| \mathbf{e}\_{1:t+1}) &\propto\, p(\mathbf{e}\_{t+1}| \mathbf{x}\_{t+1}) \int p(\mathbf{x}\_{t+1}|\mathbf{x}\_t) p(\mathbf{x}\_t | \mathbf{e}\_{1:t}) d{\mathbf{x}\_t},
+\end{aligned}
+$$
+โดยที่ค่าคงที่การทำให้เป็นบรรทัดฐานคือ
+$$Z = \int p(\mathbf{e}\_{t+1} | \mathbf{x}\_{t+1}) p(\mathbf{x}\_{t+1} | \mathbf{e}\_{1:t}) d\mathbf{x}\_{t+1}$$
+
+---
+
+# ตัวกรองคาลมาน (Kalman filter)
+
+**ตัวกรองคาลมาน** เป็นกรณีพิเศษของตัวกรองของเบย์ ซึ่งสมมติว่า:
+- ค่าก่อนเป็นแบบเกาส์เซียน
+- แบบจำลองการเปลี่ยนสถานะเป็นแบบเกาส์เซียนเชิงเส้น
+- แบบจำลองเซ็นเซอร์เป็นแบบเกาส์เซียนเชิงเส้น
+
+.grid[
+.kol-1-2.center[
+<br><br><br>
+![](figures/lec6/lg-model1.png)
+
+$p(\mathbf{x}\_{t+1} | \mathbf{x}\_t) = \mathcal{N}(\mathbf{x}\_{t+1} | \mathbf{A} \mathbf{x}\_t + \mathbf{b}, \mathbf{\Sigma}\_{\mathbf{x}})$
+
+แบบจำลองการเปลี่ยนสถานะ
+
+]
+.kol-1-2.center[
+![](figures/lec6/lg-model2.png)
+
+$p(\mathbf{e}\_{t} | \mathbf{x}\_t) = \mathcal{N}(\mathbf{e}\_t | \mathbf{C} \mathbf{x}\_t + \mathbf{d}, \mathbf{\Sigma}\_{\mathbf{e}})$
+
+แบบจำลองเซ็นเซอร์
+]
+]
+
+---
+
+class: middle
+
+## การกรองการแจกแจงแบบเกาส์เซียน
+
+- .italic[ขั้นตอนการทำนาย:]<br><br>
+ถ้าการแจกแจง $p(\mathbf{x}\_t | \mathbf{e}\_{1:t})$ เป็นแบบเกาส์เซียน และแบบจำลองการเปลี่ยนสถานะ $p(\mathbf{x}\_{t+1} | \mathbf{x}\_{t})$ เป็นแบบเกาส์เซียนเชิงเส้น แล้วการแจกแจงที่ทำนายล่วงหน้าหนึ่งขั้นตอนที่ได้จาก
+$$p(\mathbf{x}\_{t+1} | \mathbf{e}\_{1:t}) = \int p(\mathbf{x}\_{t+1} | \mathbf{x}\_{t}) p(\mathbf{x}\_{t} | \mathbf{e}\_{1:t}) d\mathbf{x}\_t $$
+ก็จะเป็นการแจกแจงแบบเกาส์เซียนเช่นกัน
+- .italic[ขั้นตอนการอัปเดต:]<br><br>
+ถ้าการทำนาย $p(\mathbf{x}\_{t+1} | \mathbf{e}\_{1:t})$ เป็นแบบเกาส์เซียน และแบบจำลองเซ็นเซอร์ $p(\mathbf{e}\_{t+1} | \mathbf{x}\_{t+1})$ เป็นแบบเกาส์เซียนเชิงเส้น แล้วหลังจากการปรับเงื่อนไขด้วยหลักฐานใหม่ การแจกแจงที่อัปเดตแล้ว
+$$p(\mathbf{x}\_{t+1} | \mathbf{e}\_{1:t+1}) \propto p(\mathbf{e}\_{t+1} | \mathbf{x}\_{t+1}) p(\mathbf{x}\_{t+1} | \mathbf{e}\_{1:t})$$
+ก็จะเป็นการแจกแจงแบบเกาส์เซียนเช่นกัน
+
+---
+
+class: middle
+
+ดังนั้น สำหรับตัวกรองคาลมาน $p(\mathbf{x}\_t | \mathbf{e}\_{1:t})$ จะเป็นการแจกแจงปกติหลายตัวแปร $\mathcal{N}(\mathbf{x}\_t | \mathbf{\mu}\_t, \mathbf{\Sigma}\_t)$ สำหรับทุกค่า $t$
+
+- การกรองจะลดรูปลงเหลือเพียงการคำนวณพารามิเตอร์ $\mu_t$ และ $\mathbf{\Sigma}\_t$
+- ในทางตรงกันข้าม สำหรับกระบวนการทั่วไป (ที่ไม่ใช่เชิงเส้น, ไม่ใช่เกาส์เซียน) คำอธิบายของการแจกแจงภายหลังจะเติบโต**อย่างไม่มีขีดจำกัด** เมื่อ $t \to \infty$
+
+---
+
+class: middle
+
+## ตัวอย่าง 1 มิติ
+
+การเดินสุ่มแบบเกาส์เซียน (Gaussian random walk):
+- ค่าก่อนแบบเกาส์เซียน: $$p(x\_0) = \mathcal{N}(x\_0 | \mu\_0, \sigma\_0^2) $$
+- แบบจำลองการเปลี่ยนสถานะจะเพิ่มการรบกวนแบบสุ่มที่มีความแปรปรวนคงที่:
+    $$p(x\_{t+1}|x\_t) =  \mathcal{N}(x\_{t+1}|x\_t, \sigma\_x^2)$$
+- แบบจำลองเซ็นเซอร์ให้ค่าการวัดที่มีสัญญาณรบกวนแบบเกาส์เซียนที่มีความแปรปรวนคงที่:
+    $$p(e\_{t}|x\_t) =  \mathcal{N}(e\_t | x\_t, \sigma\_e^2)$$
+
+---
+
+class: middle
+
+การแจกแจงที่ทำนายล่วงหน้าหนึ่งขั้นตอนคือ
+$$
+\begin{aligned}
+p(x\_1) &= \int p(x\_1 | x\_0) p(x\_0) dx\_0 \\\\
+&\propto \int \exp\left(-\frac{1}{2} \frac{(x\_{1} - x\_0)^2}{\sigma\_x^2}\right) \exp\left(-\frac{1}{2} \frac{(x\_0 - \mu\_0)^2}{\sigma\_0^2}\right) dx\_0 \\\\
+&\propto \int \exp\left( -\frac{1}{2} \frac{\sigma\_0^2 (x\_1 - x\_0)^2 + \sigma\_x^2(x\_0 - \mu\_0)^2}{\sigma\_0^2 \sigma\_x^2} \right) dx\_0 \\\\
+&... \,\, \text{(จัดรูปโดยการทำให้เป็นกำลังสองสมบูรณ์)} \\\\
+&\propto \exp\left( -\frac{1}{2} \frac{(x\_1 - \mu\_0)^2}{\sigma\_0^2 + \sigma\_x^2} \right) \\\\
+&= \mathcal{N}(x\_1 | \mu\_0, \sigma\_0^2 + \sigma\_x^2)
+\end{aligned}
+$$
+
+โปรดทราบว่าผลลัพธ์เดียวกันนี้สามารถหาได้โดยใช้เอกลักษณ์ของแบบจำลองเกาส์เซียนแทน
+
+---
+
+class: middle
+
+สำหรับขั้นตอนการอัปเดต เราต้องปรับเงื่อนไขตามการสังเกต ณ เวลาแรก:
+$$
+\begin{aligned}
+p(x\_1 | e\_1) &\propto p(e\_1 | x\_1) p(x\_1) \\\\
+&\propto \exp\left(-\frac{1}{2} \frac{(e\_{1} - x\_1)^2}{\sigma\_e^2}\right)  \exp\left( -\frac{1}{2} \frac{(x\_1 - \mu\_0)^2}{\sigma\_0^2 + \sigma\_x^2} \right) \\\\
+&\propto \exp\left( -\frac{1}{2} \frac{\left(x\_1 - \frac{(\sigma\_0^2 + \sigma\_x^2) e\_1 + \sigma\_e^2 \mu\_0}{\sigma\_0^2 + \sigma\_x^2 + \sigma\_e^2}\right)^2}{\frac{(\sigma\_0^2 + \sigma\_x^2)\sigma\_e^2}{\sigma\_0^2 + \sigma\_x^2 + \sigma\_e^2}} \right) \\\\
+&= \mathcal{N}\left(x\_1 \bigg\vert \frac{(\sigma\_0^2 + \sigma\_x^2) e\_1 + \sigma\_e^2 \mu\_0}{\sigma\_0^2 + \sigma\_x^2 + \sigma\_e^2}, \frac{(\sigma\_0^2 + \sigma\_x^2)\sigma\_e^2}{\sigma\_0^2 + \sigma\_x^2 + \sigma\_e^2}\right)
+\end{aligned}
+$$
+
+---
+
+class: middle
+
+.center.width-30[![](figures/lec6/walk.png)]
+
+โดยสรุป สมการอัปเดตเมื่อมีหลักฐานใหม่ $e\_{t+1}$ คือ:
+$$
+\begin{aligned}
+\mu\_{t+1} &= \frac{(\sigma\_t^2 + \sigma\_x^2) e\_{t+1} + \sigma\_e^2 \mu\_t }{\sigma\_t^2 + \sigma\_x^2 + \sigma\_e^2} \\\\
+\sigma\_{t+1}^2 &= \frac{(\sigma_t^2 + \sigma\_x^2) \sigma\_e^2}{\sigma\_t^2 + \sigma\_x^2 + \sigma\_e^2}
+\end{aligned}
+$$
+
+---
+
+เราสามารถตีความ
+การคำนวณค่าเฉลี่ยใหม่ $\mu\_{t+1}$ ว่าเป็นเพียงค่าเฉลี่ยถ่วงน้ำหนักของการสังเกตใหม่
+$e\_{t+1}$ และค่าเฉลี่ยเก่า $\mu\_t$
+- ถ้าการสังเกตไม่น่าเชื่อถือ แล้ว $\sigma\_e^2$ จะมีค่ามาก และเราจะให้ความสำคัญกับค่าเฉลี่ยเก่ามากกว่า
+- ถ้าการสังเกตน่าเชื่อถือ แล้วเราจะให้ความสำคัญกับหลักฐานมากกว่าและให้ความสำคัญกับค่าเฉลี่ยเก่าน้อยลง
+- ถ้าค่าเฉลี่ยเก่าไม่น่าเชื่อถือ ($\sigma\_t^2$ มีค่ามาก) หรือกระบวนการคาดเดาได้ยากมาก
+($\sigma\_x^2$ มีค่ามาก) แล้วเราจะให้ความสำคัญกับการสังเกตมากกว่า
+
+---
+
+class: middle
+
+## การอัปเดตคาลมานทั่วไป
+
+การสืบทอดเดียวกันนี้ขยายไปสู่การแจกแจงปกติหลายตัวแปร
+
+สมมติว่าแบบจำลองการเปลี่ยนสถานะและเซ็นเซอร์เป็น
+$$
+\begin{aligned}
+p(\mathbf{x}\_{t+1} | \mathbf{x}\_t) &= \mathcal{N}(\mathbf{x}\_{t+1} | \mathbf{F} \mathbf{x}\_t, \mathbf{\Sigma}\_{\mathbf{x}}) \\\\
+p(\mathbf{e}\_{t} | \mathbf{x}\_t) &= \mathcal{N}(\mathbf{e}\_{t} | \mathbf{H} \mathbf{x}\_t, \mathbf{\Sigma}\_{\mathbf{e}}),
+\end{aligned}
+$$
+เราจะได้สมการอัปเดตทั่วไปดังนี้:
+$$
+\begin{aligned}
+\mu\_{t+1} &= \mathbf{F}\mathbf{\mu}\_t + \mathbf{K}\_{t+1} (\mathbf{e}\_{t+1} - \mathbf{H} \mathbf{F} \mathbf{\mu}\_t) \\\\
+\mathbf{\Sigma}\_{t+1} &= (\mathbf{I} - \mathbf{K}\_{t+1} \mathbf{H}) (\mathbf{F}\mathbf{\Sigma}\_t \mathbf{F}^T + \mathbf{\Sigma}\_x) \\\\
+\mathbf{K}\_{t+1} &= (\mathbf{F}\mathbf{\Sigma}\_t \mathbf{F}^T + \mathbf{\Sigma}\_x) \mathbf{H}^T (\mathbf{H}(\mathbf{F}\mathbf{\Sigma}\_t \mathbf{F}^T + \mathbf{\Sigma}\_x)\mathbf{H}^T + \mathbf{\Sigma}\_e)^{-1}
+\end{aligned}$$
+โดยที่ $\mathbf{K}\_{t+1}$ คือเมทริกซ์เกนคาลมาน (Kalman gain matrix)
+
+---
+
+โปรดทราบว่า $\mathbf{\Sigma}\_{t+1}$ และ $\mathbf{K}\_{t+1}$ ไม่ขึ้นอยู่กับหลักฐาน ดังนั้นจึงสามารถคำนวณแบบออฟไลน์ได้
+
+สมการเหล่านี้มีความหมายที่เข้าใจได้ง่าย
+
+พิจารณา
+การอัปเดตสำหรับค่าประมาณสถานะเฉลี่ย $\mu\_{t+1}$
+- พจน์ $\mathbf{F}\mathbf{\mu}\_t$ คือสถานะที่ทำนาย ณ เวลา $t + 1$
+- ดังนั้น
+$\mathbf{H} \mathbf{F} \mathbf{\mu}\_t$ คือการสังเกตที่ทำนาย
+- ดังนั้น พจน์ $\mathbf{e}\_{t+1} - \mathbf{H} \mathbf{F} \mathbf{\mu}\_t$ แทนข้อผิดพลาดใน
+การสังเกตที่ทำนาย
+- สิ่งนี้ถูกคูณด้วย $ \mathbf{K}\_{t+1}$ เพื่อแก้ไขสถานะที่ทำนาย; ดังนั้น
+$ \mathbf{K}\_{t+1}$ คือตัวชี้วัดว่าจะให้ความสำคัญกับการสังเกตใหม่เทียบกับการทำนายมากน้อยเพียงใด
+
+---
+
+class: middle
+
+## คอมพิวเตอร์นำทางของอพอลโล
+
+คอมพิวเตอร์นำทางของอพอลโล (Apollo Guidance Computer) ใช้ตัวกรองคาลมานเพื่อประมาณตำแหน่งของยานอวกาศ ตัวกรองคาลมานถูกใช้เพื่อรวมข้อมูลใหม่เข้ากับการวัดตำแหน่งในอดีตเพื่อสร้างค่าประมาณตำแหน่งที่ดีที่สุดของยานอวกาศ
+
+.grid[
+.kol-1-3[.width-100[![](figures/lec6/agc.jpeg)]]
+.kol-2-3[.width-100[![](figures/lec6/apollo.png)]]
+]
+
+.footnote[ที่มา: [ซอร์สโค้ดของอพอลโล-11](https://github.com/chrislgarry/Apollo-11/blob/4f3a1d4374d4708737683bed78a501a321b6042c/Comanche055/MEASUREMENT_INCORPORATION.agc#L208)]
+
+---
+
+class: middle
+
+.center.width-75[![](figures/lec6/moon.png)]
+
+.center[สาธิต: [การติดตามวัตถุในอวกาศโดยใช้ตัวกรองคาลมาน](https://demonstrations.wolfram.com/TrackingAnObjectInSpaceUsingTheKalmanFilter/)]
+
+---
+
+class: middle
+
+## การดูดกลืนข้อมูลสำหรับการพยากรณ์อากาศ
+
+ในการพยากรณ์อากาศ การกรองถูกใช้เพื่อรวมการสังเกตการณ์บรรยากาศเข้ากับแบบจำลองเชิงตัวเลขเพื่อประมาณสถานะปัจจุบันของมัน
+สิ่งนี้เรียกว่า **การดูดกลืนข้อมูล (data assimilation)**
+
+จากนั้น แบบจำลองจะถูกใช้เพื่อทำนายสถานะในอนาคตของบรรยากาศ
+
+---
+
+class: middle, black-slide
+
+.center[
+<iframe width="640" height="400" src="https://www.youtube.com/embed/9c4kXW7btBE?cc_load_policy=1&hl=en&version=3" frameborder="0" allowfullscreen></iframe>
+]
+
+---
+
+class: middle
+
+## การดูดกลืนข้อมูลสำหรับการพยากรณ์อากาศ
+
+ในการพยากรณ์อากาศ การกรองถูกใช้เพื่อรวมการสังเกตการณ์บรรยากาศเข้ากับแบบจำลองเชิงตัวเลขเพื่อประมาณสถานะปัจจุบันของมัน
+สิ่งนี้เรียกว่า **การดูดกลืนข้อมูล (data assimilation)**
+
+จากนั้น แบบจำลองจะถูกใช้เพื่อทำนายสถานะในอนาคตของบรรยากาศ
+
+---
+
+class: middle, black-slide
+
+.center[
+<iframe width="640" height="400" src="https://www.youtube.com/embed/9c4kXW7btBE?cc_load_policy=1&hl=en&version=3" frameborder="0" allowfullscreen></iframe>
+]
+
+---
+
+# เครือข่ายเบย์แบบพลวัต (Dynamic Bayesian networks)
+
+.grid[
+.kol-2-3[.center.width-70[![](figures/lec6/dbn-cartoon.png)]]
+.kol-1-3[.center.width-80[![](figures/lec6/robot-dbn1.svg)]]
+]
+
+เครือข่ายเบย์แบบพลวัต (Dynamic Bayesian networks - DBNs) สามารถใช้ในการติดตามตัวแปรหลายตัวเมื่อเวลาผ่านไป โดยใช้แหล่งข้อมูลหลายแหล่ง แนวคิดคือ:
+- ทำซ้ำโครงสร้างเครือข่ายเบย์คงที่ในแต่ละช่วงเวลา $t$
+- ตัวแปรจากเวลา $t$ ขึ้นอยู่กับตัวแปรจาก $t-1$
+
+DBNs เป็นการขยายแนวคิดของ HMMs และตัวกรองคาลมาน
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+.pull-right[![](figures/lec6/icu.png)]
+
+## การประยุกต์ใช้: การเฝ้าระวังในห้องไอซียู
+
+.center.width-60[![](figures/lec6/icu-data.png)]
+
+---
+
+class: middle
+
+## การอนุมานที่แม่นยำ (Exact inference)
+
+.center.width-100[![](figures/lec6/dbn-unrolling.svg)]
+
+คลี่เครือข่ายออกตามเวลาและใช้อัลกอริทึมการอนุมานที่แม่นยำใดๆ (เช่น การกำจัดตัวแปร)
+- ปัญหา: ค่าใช้จ่ายในการอนุมานสำหรับการอัปเดตแต่ละครั้งจะเพิ่มขึ้นตาม $t$
+- การกรองแบบรวบยอด (Rollup filtering): เพิ่มช่วงเวลา $t+1$ แล้วหาผลรวมของช่วงเวลา $t$ โดยใช้การกำจัดตัวแปร
+    - ปัจจัยที่ใหญ่ที่สุดคือ $O(d^{n+k})$ และค่าใช้จ่ายในการอัปเดตทั้งหมดต่อขั้นตอนคือ $O(nd^{n+k})$
+    - ดีกว่า HMMs ซึ่งเป็น $O(d^{2n})$ แต่ยังคง**ไม่สามารถทำได้จริง**สำหรับตัวแปรจำนวนมาก
+
+---
+
+# ตัวกรองอนุภาค (Particle filter)
+
+แนวคิดพื้นฐาน:
+- รักษาประชากรจำกัดของตัวอย่าง เรียกว่า **อนุภาค (particles)**
+    - การแสดงความเชื่อของเราคือรายการของอนุภาค $N$ ตัว
+- ตรวจสอบให้แน่ใจว่าอนุภาคติดตามบริเวณที่มีความน่าจะเป็นสูงของปริภูมิสถานะ
+- ทิ้งตัวอย่างที่มีน้ำหนักต่ำมากตามหลักฐาน
+- ทำซ้ำตัวอย่างที่มีน้ำหนักสูง
+
+วิธีนี้สามารถปรับขนาดให้เข้ากับมิติที่สูงได้!
+
+.center.width-65[![](figures/lec6/robot.png)]
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+## วงจรการอัปเดต
+
+.center.width-100[![](figures/lec6/particle-filter.png)]
+
+.footnote[ที่มา: [CS188](https://inst.eecs.berkeley.edu/~cs188/), UC Berkeley.]
+
+---
+
+class: middle
+
+.center.width-100[![](figures/lec6/pf-algorithm.png)]
+
+---
+
+class: middle
+
+## การหาตำแหน่งหุ่นยนต์ (Robot localization)
+
+.center.width-50[![](figures/lec6/pf-demo.png)]
+
+.center[(ดูการสาธิต)]
+
+---
+
+# สรุป
+
+- แบบจำลองเชิงเวลาใช้ตัวแปรสถานะและเซ็นเซอร์ที่ทำซ้ำเมื่อเวลาผ่านไป
+    - จุดประสงค์คือเพื่อรักษาสถานะความเชื่อเมื่อเวลาผ่านไปและเมื่อมีหลักฐานมากขึ้น
+- ข้อสมมติของมาร์คอฟและความนิ่งหมายความว่าเราต้องระบุเพียง
+    - แบบจำลองการเปลี่ยนสถานะ ${\bf P}(\mathbf{X}\_{t+1} | \mathbf{X}\_t)$
+    - แบบจำลองเซ็นเซอร์ ${\bf P}(\mathbf{E}\_t | \mathbf{X}\_t)$
+- งานการอนุมานรวมถึงการกรอง, การทำนาย, การปรับให้เรียบ และการค้นหาลำดับที่น่าจะเป็นไปได้มากที่สุด
+- อัลกอริธึมตัวกรองทั้งหมดมีพื้นฐานมาจากแนวคิดหลักของ
+    - การฉายภาพสถานะความเชื่อปัจจุบันผ่านแบบจำลองการเปลี่ยนสถานะ
+    - การอัปเดตการทำนายตามหลักฐานใหม่
+
+---
+
+class: end-slide, center
+count: false
+The end.
+
+
+    </textarea>
+    
+    <script src="/Users/aof_mac/Desktop/AI_comsci/SCI193611-ai-master/assets/remark.min.js"></script>
+    <script>
+        var slideshow = remark.create({
+            highlightStyle: 'github',
+            highlightLines: true,
+            countIncrementalSlides: false,
+            ratio: '16:9'
+        });
+
+        // KaTeX auto-render
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        });
+    </script>
+</body>
+</html>
