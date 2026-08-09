@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>การแก้ปัญหาด้วยการค้นหา (Solving Problems by Searching)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Basic Styles --- */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            overflow: hidden;
+        }
+
+        /* --- Slide Container --- */
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none; /* Hide all slides by default */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            box-sizing: border-box;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex; /* Show active slide */
+            opacity: 1;
+        }
+
+        /* --- Slide Content --- */
+        .slide-content {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .slide h1 {
+            font-size: 3.5em;
+            color: #005a9c;
+            margin-bottom: 0.5em;
+        }
+
+        .slide h2 {
+            font-size: 2.5em;
+            color: #0078d4;
+            border-bottom: 3px solid #0078d4;
+            padding-bottom: 10px;
+            margin-bottom: 1em;
+        }
+        
+        .slide h3 {
+            font-size: 1.8em;
+            color: #333;
+            text-align: left;
+            width: 100%;
+            margin-top: 1.5em;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.4em;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .slide ul {
+            list-style-type: disc;
+            padding-left: 40px;
+            margin-top: 0.5em;
+        }
+        
+        .slide strong {
+            color: #d9534f;
+        }
+
+        /* --- Code Blocks --- */
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 1em;
+            overflow-x: auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* --- Images --- */
+        .slide img {
+            max-width: 80%;
+            max-height: 400px;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+        }
+
+        /* --- Navigation Controls --- */
+        .nav-controls {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-button:hover {
+            background-color: #005a9c;
+        }
+
+        #slide-counter {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        /* --- Paginate --- */
+        .paginate {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 1em;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Title -->
+    <div class="slide active">
+        <div class="slide-content">
+            <h1>การแก้ปัญหาด้วยการค้นหา (Solving Problems by Searching)</h1>
+            <p style="text-align:center; font-size: 1.5em;"><strong>ภาพรวมของอัลกอริทึมการค้นหาแบบคลาสสิกในปัญญาประดิษฐ์</strong><br>จากไฟล์ <code>search.ipynb</code></p>
+        </div>
+        <div class="paginate">1 / 15</div>
+    </div>
+
+    <!-- Slide 2: Overview -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>ภาพรวมของ Notebook</h2>
+            <ul>
+                <li><strong>การนิยามปัญหา (Problem Definition)</strong>: วิธีการกำหนดปัญหอย่างเป็นทางการ</li>
+                <li><strong>โครงสร้างโหนด (Node Structure)</strong>: ส่วนประกอบของโหนดในแผนภูมิต้นไม้การค้นหา</li>
+                <li><strong>อัลกอริทึมการค้นหา (Search Algorithms)</strong>:
+                    <ul>
+                        <li>การค้นหาแบบไม่มีข้อมูล (Uninformed Search)</li>
+                        <li>การค้นหาแบบมีข้อมูล (Informed Search)</li>
+                    </ul>
+                </li>
+                <li><strong>เทคนิคการค้นหาขั้นสูง</strong>: Hill Climbing, Simulated Annealing, Genetic Algorithm</li>
+                <li><strong>ตัวอย่าง</strong>: การค้นหาเส้นทางบนแผนที่ และปัญหา N-Queens</li>
+            </ul>
+        </div>
+        <div class="paginate">2 / 15</div>
+    </div>
+
+    <!-- Slide 3: Problem Definition -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>การนิยาม "ปัญหา" (Problem)</h2>
+            <p>ในการแก้ปัญหา เราต้องนิยามปัญหาให้ชัดเจนก่อนเพื่อหลีกเลี่ยงความกำกวม คลาส <code>Problem</code> ในไฟล์ <code>search.py</code> เป็นโครงสร้างพื้นฐานสำหรับนิยามปัญหาต่างๆ</p>
+            <h3>ส่วนประกอบหลักของปัญหา:</h3>
+            <ul>
+                <li><strong>สถานะเริ่มต้น (Initial State)</strong>: จุดเริ่มต้นของปัญหา</li>
+                <li><strong>การกระทำที่เป็นไปได้ (Actions)</strong>: สิ่งที่สามารถทำได้ในแต่ละสถานะ</li>
+                <li><strong>ผลลัพธ์ (Result)</strong>: สถานะที่เกิดขึ้นหลังจากการกระทำ</li>
+                <li><strong>เงื่อนไขเป้าหมาย (Goal Test)</strong>: วิธีตรวจสอบว่าถึงเป้าหมายแล้วหรือไม่</li>
+                <li><strong>ค่าใช้จ่ายของเส้นทาง (Path Cost)</strong>: ต้นทุนในการเดินทางจากสถานะหนึ่งไปยังอีกสถานะหนึ่ง</li>
+            </ul>
+        </div>
+        <div class="paginate">3 / 15</div>
+    </div>
+
+    <!-- Slide 4: GraphProblem -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>`GraphProblem`: ปัญหาบนกราฟ</h2>
+            <p>Notebook นี้ใช้ <code>GraphProblem</code> ซึ่งเป็นคลาสย่อยของ <code>Problem</code> เพื่อแทนปัญหาการค้นหาเส้นทางบนแผนที่ โดยที่:</p>
+            <ul>
+                <li><strong>สถานะ (States)</strong> คือ เมืองต่างๆ</li>
+                <li><strong>การกระทำ (Actions)</strong> คือ เมืองเพื่อนบ้านที่สามารถไปได้</li>
+                <li><strong>ค่าใช้จ่าย (Path Cost)</strong> คือ ระยะทางระหว่างเมือง</li>
+            </ul>
+            <pre><code>class GraphProblem(Problem):
+    def __init__(self, initial, goal, graph):
+        Problem.__init__(self, initial, goal)
+        self.graph = graph
+
+    def actions(self, A):
+        return list(self.graph.get(A).keys())
+
+    def result(self, state, action):
+        return action
+</code></pre>
+        </div>
+        <div class="paginate">4 / 15</div>
+    </div>
+
+    <!-- Slide 5: Node Structure -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>การทำความเข้าใจ "โหนด" (Node)</h2>
+            <p><code>Node</code> คือโครงสร้างข้อมูลที่ใช้สร้างแผนภูมิต้นไม้การค้นหา (Search Tree) เพื่อติดตามเส้นทางที่สำรวจไปแล้ว ประกอบด้วย:</p>
+            <ul>
+                <li><code>state</code>: สถานะปัจจุบัน (เช่น ชื่อเมือง)</li>
+                <li><code>parent</code>: โหนดที่เป็นต้นกำเนิดของโหนดนี้ (โหนดก่อนหน้า)</li>
+                <li><code>action</code>: การกระทำที่นำมาสู่สถานะนี้</li>
+                <li><code>path_cost</code>: ค่าใช้จ่ายทั้งหมดจากสถานะเริ่มต้นมาถึงโหนดนี้</li>
+            </ul>
+            <pre><code>class Node:
+    def __init__(self, state, parent=None, action=None, path_cost=0):
+        self.state = state
+        self.parent = parent
+        self.action = action
+        self.path_cost = path_cost
+</code></pre>
+        </div>
+        <div class="paginate">5 / 15</div>
+    </div>
+
+    <!-- Slide 6: Search Algorithms Overview -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>ภาพรวมอัลกอริทึมการค้นหา</h2>
+            <p>อัลกอริทึมการค้นหาสามารถแบ่งได้เป็น 2 ประเภทหลัก:</p>
+            <h3>การค้นหาแบบไม่มีข้อมูล (Uninformed Search)</h3>
+            <p>อัลกอริทึมเหล่านี้จะสำรวจพื้นที่การค้นหาอย่างเป็นระบบ โดยไม่มีข้อมูลอื่นใดนอกจากนิยามของปัญหา เหมาะสำหรับปัญหาที่ไม่ซับซ้อนมากนัก</p>
+            <h3>การค้นหาแบบมีข้อมูล (Informed Search)</h3>
+            <p>อัลกอริทึมเหล่านี้จะใช้ความรู้เฉพาะของปัญหา หรือที่เรียกว่า <strong>ฮิวริสติก (Heuristics)</strong> เพื่อช่วยนำทางการค้นหาไปยังเป้าหมายอย่างมีประสิทธิภาพมากขึ้น</p>
+        </div>
+        <div class="paginate">6 / 15</div>
+    </div>
+
+    <!-- Slide 7: Uninformed Search -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>การค้นหาแบบไม่มีข้อมูล (Uninformed Search)</h2>
+            <h3>Breadth-First Search (BFS)</h3>
+            <ul>
+                <li><strong>หลักการ</strong>: สำรวจโหนดในระดับเดียวกันให้ครบก่อนที่จะลงไประดับถัดไป (สำรวจในแนวกว้าง)</li>
+                <li><strong>โครงสร้างข้อมูล</strong>: ใช้คิว (Queue) แบบ FIFO (First-In, First-Out)</li>
+                <li><strong>คุณสมบัติ</strong>:
+                    <ul>
+                        <li><strong>Complete</strong>: หาคำตอบเจอเสมอ (ถ้ามี)</li>
+                        <li><strong>Optimal</strong>: หาคำตอบที่ดีที่สุดเสมอ (ถ้าค่าใช้จ่ายของทุกการกระทำเท่ากัน)</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3>Depth-First Search (DFS)</h3>
+            <ul>
+                <li><strong>หลักการ</strong>: สำรวจลงไปในแนวดิ่งให้ลึกที่สุดเท่าที่จะทำได้ ก่อนจะย้อนกลับมาสำรวจเส้นทางอื่น</li>
+                <li><strong>โครงสร้างข้อมูล</strong>: ใช้สแต็ก (Stack) แบบ LIFO (Last-In, First-Out)</li>
+                <li><strong>คุณสมบัติ</strong>:
+                    <ul>
+                        <li><strong>Not Complete</strong>: อาจติดอยู่ในลูปอนันต์</li>
+                        <li><strong>Not Optimal</strong>: อาจไม่เจอคำตอบที่ดีที่สุด</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="paginate">7 / 15</div>
+    </div>
+    
+    <!-- Slide 8: Romania Map -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>ตัวอย่าง: แผนที่ประเทศโรมาเนีย</h2>
+            <p>Notebook แสดงการทำงานของอัลกอริทึมต่างๆ บนแผนที่ประเทศโรมาเนีย เพื่อค้นหาเส้นทางจากเมือง <strong>Arad</strong> ไปยัง <strong>Bucharest</strong></p>
+            <img src="https://raw.githubusercontent.com/aimacode/aima-java/aima3e/aima-gui/src/main/resources/aima/gui/images/romania-map.png" alt="">
+            <p>ตัวอย่างนี้ช่วยให้เห็นภาพว่าแต่ละอัลกอริทึมสำรวจพื้นที่การค้นหาแตกต่างกันอย่างไร</p>
+        </div>
+        <div class="paginate">8 / 15</div>
+    </div>
+
+    <!-- Slide 9: Heuristics -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>ฮิวริสติก (Heuristics) สำหรับ Informed Search</h2>
+            <p>ฮิวริสติก คือฟังก์ชัน <code>h(n)</code> ที่ใช้ <strong>ประมาณการ</strong> ค่าใช้จ่ายจากสถานะปัจจุบัน <code>n</code> ไปยังสถานะเป้าหมาย</p>
+            <ul>
+                <li>เป็น "การคาดเดาอย่างมีหลักการ" เพื่อนำทางการค้นหา</li>
+                <li>ไม่จำเป็นต้องแม่นยำ 100% แต่ยิ่งใกล้เคียงความจริงเท่าไหร่ อัลกอริทึมก็จะยิ่งมีประสิทธิภาพมากขึ้นเท่านั้น</li>
+                <li><strong>ตัวอย่าง</strong>: ระยะทางเส้นตรงระหว่างสองเมืองบนแผนที่ เป็นฮิวริสติกที่ดีสำหรับปัญหาการค้นหาเส้นทาง</li>
+            </ul>
+        </div>
+        <div class="paginate">9 / 15</div>
+    </div>
+
+    <!-- Slide 10: Informed Search -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>อัลกอริทึมการค้นหาแบบมีข้อมูล (Informed Search)</h2>
+            <h3>Greedy Best-First Search</h3>
+            <ul>
+                <li><strong>หลักการ</strong>: เลือกขยายโหนดที่ดูเหมือนจะอยู่ "ใกล้" เป้าหมายมากที่สุด โดยพิจารณาจากค่าฮิวริสติก <code>h(n)</code> เพียงอย่างเดียว</li>
+                <li><strong>คุณสมบัติ</strong>:
+                    <ul>
+                        <li><strong>Greedy (ตะกละ)</strong>: พยายามไปให้ถึงเป้าหมายเร็วที่สุด แต่อาจไม่เจอเส้นทางที่ดีที่สุด (Not Optimal)</li>
+                    </ul>
+                </li>
+            </ul>
+            <h3>A* Search</h3>
+            <ul>
+                <li><strong>หลักการ</strong>: เป็นการผสมผสานระหว่างค่าใช้จ่ายจริงจากจุดเริ่มต้น <code>g(n)</code> และค่าใช้จ่ายประมาณการไปยังเป้าหมาย <code>h(n)</code> เพื่อหาเส้นทางที่ดีที่สุด</li>
+                <li><strong>ฟังก์ชันการประเมิน</strong>: <code>f(n) = g(n) + h(n)</code></li>
+                <li><strong>คุณสมบัติ</strong>:
+                    <ul>
+                        <li><strong>Complete</strong> and <strong>Optimal</strong>: หาคำตอบที่ดีที่สุดเจอเสมอ หากฮิวริสติกเป็นแบบ Admissible (ไม่ประมาณค่าสูงเกินจริง)</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="paginate">10 / 15</div>
+    </div>
+    
+    <!-- Slide 11: Other Techniques -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>เทคนิคการค้นหาอื่นๆ</h2>
+            <p>Notebook ยังครอบคลุมเทคนิคการค้นหาขั้นสูงสำหรับปัญหา Optimization:</p>
+            <ul>
+                <li><strong>Hill Climbing</strong>: อัลกอริทึมการค้นหาเฉพาะที่ (Local Search) ที่พยายามหาค่าที่ดีที่สุดโดยการขยับไปยัง "เพื่อนบ้าน" ที่ดีกว่าเสมอ แต่อาจติดอยู่ใน "Local Optimum"</li>
+                <li><strong>Simulated Annealing</strong>: คล้ายกับ Hill Climbing แต่ยอมรับการเคลื่อนที่ที่ "แย่ลง" ได้ในบางครั้ง (ขึ้นอยู่กับ "อุณหภูมิ") เพื่อหลีกเลี่ยงการติดอยู่ใน Local Optimum</li>
+                <li><strong>Genetic Algorithm</strong>: ได้รับแรงบันดาลใจจากวิวัฒนาการตามธรรมชาติ โดยใช้แนวคิดของ Population, Fitness, Crossover และ Mutation ในการหาคำตอบ</li>
+            </ul>
+        </div>
+        <div class="paginate">11 / 15</div>
+    </div>
+
+    <!-- Slide 12: N-Queens Problem -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>ปัญหา N-Queens</h2>
+            <p>อีกหนึ่งตัวอย่างที่น่าสนใจใน Notebook คือปัญหา N-Queens ซึ่งคือการวางควีน N ตัวบนกระดานขนาด N×N โดยไม่มีควีนตัวใดกินกันได้ (อยู่ในแถว, คอลัมน์ หรือแนวทแยงเดียวกัน)</p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Eight-queens-on-8x8-chessboard.svg/300px-Eight-queens-on-8x8-chessboard.svg.png" alt="">
+            <p>Notebook นี้แสดงวิธีการแก้ปัญหาด้วยอัลกอริทึม <code>astar_search</code> และ <code>depth_first_tree_search</code> พร้อมทั้งแสดงผลลัพธ์บนกระดาน</p>
+        </div>
+        <div class="paginate">12 / 15</div>
+    </div>
+
+    <!-- Slide 13: Simple Problem Solving Agent -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>Simple Problem Solving Agent</h2>
+            <p>The <code>SimpleProblemSolvingAgentProgram</code> provides a framework for an agent that can:</p>
+            <ol style="text-align: left;">
+                <li><strong>Formulate</strong> a goal and a problem.</li>
+                <li><strong>Search</strong> for a sequence of actions to solve it.</li>
+                <li><strong>Execute</strong> the actions.</li>
+            </ol>
+            <p>This demonstrates a basic intelligent agent that can plan its actions.</p>
+        </div>
+        <div class="paginate">13 / 15</div>
+    </div>
+
+    <!-- Slide 14: Conclusion -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>สรุป</h2>
+            <p>Notebook <code>search.ipynb</code> นี้เป็นแหล่งข้อมูลที่ยอดเยี่ยมในการเรียนรู้เกี่ยวกับการแก้ปัญหาด้วยการค้นหาแบบคลาสสิกในปัญญาประดิษฐ์</p>
+            <h3>ประเด็นสำคัญ:</h3>
+            <ul>
+                <li>ความสำคัญของการนิยามปัญหาและโหนดอย่างเป็นทางการ</li>
+                <li>ความแตกต่างและคุณสมบัติของ Uninformed และ Informed Search</li>
+                <li>การใช้ฮิวริสติกเพื่อเพิ่มประสิทธิภาพในการค้นหา</li>
+                <li>การประยุกต์ใช้อัลกอริทึมต่างๆ ในการแก้ปัญหาจริง เช่น การค้นหาเส้นทางและ N-Queens</li>
+            </ul>
+        </div>
+        <div class="paginate">14 / 15</div>
+    </div>
+
+    <!-- Slide 15: Thank You -->
+    <div class="slide">
+        <div class="slide-content">
+            <h1>ขอบคุณครับ!</h1>
+        </div>
+        <div class="paginate">15 / 15</div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+        <button id="prev-btn" class="nav-button">ก่อนหน้า</button>
+        <span id="slide-counter"></span>
+        <button id="next-btn" class="nav-button">ถัดไป</button>
+    </div>
+
+    <script>
+        // --- JavaScript for Slide Navigation ---
+        const slides = document.querySelectorAll('.slide');
+        const slideCounter = document.getElementById('slide-counter');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+            });
+
+            // Show the target slide
+            slides[index].classList.add('active');
+            currentSlide = index;
+
+            // Update counter
+            updateCounter();
+        }
+
+        function updateCounter() {
+            slideCounter.textContent = `สไลด์ ${currentSlide + 1} / ${slides.length}`;
+        }
+
+        function nextSlide() {
+            let next = currentSlide + 1;
+            if (next >= slides.length) {
+                next = 0; // Loop back to the first slide
+            }
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            let prev = currentSlide - 1;
+            if (prev < 0) {
+                prev = slides.length - 1; // Loop to the last slide
+            }
+            showSlide(prev);
+        }
+
+        // Event Listeners
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // Initial setup
+        showSlide(0);
+    </script>
+
+</body>
+</html>
